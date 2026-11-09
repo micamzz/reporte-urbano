@@ -1,0 +1,141 @@
+.seccionReportesRecientes {
+  background-color: #f4f6f8;
+  padding: 0rem 2rem 4rem 2rem; 
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.encabezadoReportesRecientes {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.tituloReportesRecientes {
+  color: #007bbf;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.subtituloReportesRecientes {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+}
+
+.grillaReportesRecientes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.tarjetaReporteReciente {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cabeceraTarjetaReporte {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badgeEstado {
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.badgeCategoria {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: capitalize;
+}
+
+.tituloTarjetaReporte {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0.4rem 0 0.2rem 0;
+}
+
+.direccionTarjetaReporte {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.botonAfectado {
+  background-color: #f8fafc;
+  color: #007bbf;
+  border: 1px solid #007bbf;
+  padding: 0.55rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.botonAfectado:hover {
+  background-color: #007bbf;
+  color: #ffffff;
+}
+
+.tarjetaReporteReciente {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.tarjetaReporteReciente:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 123, 191, 0.12);
+  border-color: #cbd5e1;
+}
+
+.fechaTarjetaReporte {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+  margin-top: 0.2rem;
+}
+
+.enlaceVerMasDetalle {
+  display: inline-block;
+  color: #007bbf;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: 0.4rem;
+}
+
+.enlaceVerMasDetalle:hover {
+  text-decoration: underline;
+}
+
+.contenedorAccionesTarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

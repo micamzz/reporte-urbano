@@ -1,0 +1,84 @@
+.encabezadoPrincipal {
+  background-color: #ffffff;
+  height: 75px;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* le sacaria la sombra */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 1000;
+}
+
+.contenedorLogo {
+  display: flex;
+  align-items: center;
+}
+
+.enlaceLogo {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.imagenLogoHeader {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.navegacionMenu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.enlaceNavegacion {
+  text-decoration: none;
+  color: #333333;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: color 0.2s;
+}
+
+.enlaceNavegacion:hover {
+  color: #007bbf;
+}
+
+.botonIngresar {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  background-color: #007bbf;
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 1.3rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.botonIngresar:hover {
+  background-color: #005f94;
+}
+
+/* Estilo para el estado cuando el usuario está logueado */
+.botonMiPerfil {
+  background-color: #f4f6f8;
+  color: #007bbf;
+  border: 1px solid #007bbf;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.botonMiPerfil:hover {
+  background-color: #007bbf;
+  color: #ffffff;
+}

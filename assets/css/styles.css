@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+@import url('header.css');
+@import url('hero.css');
+@import url('pasos.css');
+@import url('footer.css');
+@import url('reportesRecientes.css');
+@import url('carrusel.css');
+
+.cuerpoPagina {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f4f6f8;
+  color: #333333;
+}
+
+.color{
+  color:#338edd;
+  font-weight: bold;
+
+}
+
+.color2{
+  color:#5aa45e;
+  font-weight: bold;
+}
+
+a{
+  text-decoration: none;
+}

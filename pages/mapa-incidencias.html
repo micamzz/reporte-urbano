@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa de Incidencias - Municipio de Ituzaingó</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
+  <!-- CSS Modularizado -->
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/header.css">
+  <link rel="stylesheet" href="../assets/css/mapa-incidencias.css">
+  <link rel="stylesheet" href="../assets/css/footer.css">
+</head>
+<body class="cuerpoPagina">
+
+  <!-- CONTENEDOR HEADER MODULAR -->
+  <div id="contenedorHeader"></div>
+
+  <!-- PANTALLA DE MAPA INTERACTIVO -->
+  <main class="seccionMapaGrande">
+    
+    <!-- FILTROS POR CATEGORÍA EN LA PARTE SUPERIOR -->
+    <div class="contenedorFiltrosSuperiores">
+      <button class="botonFiltroFlotante filtroActivo" data-categoria="todos">Todos (<span id="totalReportes">20</span>)</button>
+      <button class="botonFiltroFlotante" data-categoria="bache">Baches</button>
+      <button class="botonFiltroFlotante" data-categoria="luminaria">Luminarias</button>
+      <button class="botonFiltroFlotante" data-categoria="arbolado">Arbolado</button>
+      <button class="botonFiltroFlotante" data-categoria="transito">Tránsito</button>
+    </div>
+
+    <!-- BOTÓN IR AL FOOTER (ARRIBA A LA DERECHA) -->
+    <button class="botonIrAlFooter" onclick="document.getElementById('contenedorFooter').scrollIntoView({ behavior: 'smooth' })" title="Ir al footer">
+      ↓
+    </button>
+
+    <!-- BOTÓN DE REPORTAR UN PROBLEMA (ABAJO EN EL MEDIO) -->
+    <div class="contenedorCtaInferior">
+      <!-- <button class="botonReportarInferior" id="btnNuevoReporteMapa">
+        REPORTAR UN PROBLEMA
+      </button> -->
+
+       <a href="/pages/reporte.html" class="botonReportarInferior" >REPORTAR UN PROBLEMA</a>
+    </div>
+
+    <!-- MAPA LEAFLET INTERACTIVO -->
+    <div id="mapaPantallaCompleta" class="elementoMapaPantallaCompleta"></div>
+
+  </main>
+
+  <!-- CONTENEDOR FOOTER MODULAR -->
+  <div id="contenedorFooter"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <!-- Script específico para el mapa interactivo -->
+  <script type="module" src="../assets/js/mapa-incidencias.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ingresá a Reporte Urbano para gestionar tus reportes vecinales.">
+  <title>Ingresar - Reporte Urbano</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/header.css">
+  <link rel="stylesheet" href="../assets/css/footer.css">
+  <link rel="stylesheet" href="../assets/css/login.css">
+</head>
+<body class="cuerpoPagina">
+  <div id="contenedorHeader"></div>
+
+  <main class="seccionAcceso">
+    <section class="tarjetaAcceso" aria-labelledby="tituloAcceso">
+      <div class="encabezadoAcceso">
+        <h1 id="tituloAcceso">Ingresá a tu cuenta</h1>
+        <p>Accedé para seguir tus reportes y aportar a tu barrio.</p>
+      </div>
+
+      <form id="formularioLogin" class="formularioAcceso" novalidate>
+        <div class="campoAcceso">
+          <label for="emailLogin">Correo electrónico</label>
+          <input id="emailLogin" name="email" type="email" autocomplete="email" placeholder="nombre@correo.com" aria-describedby="errorEmail" required>
+          <span class="errorCampo" id="errorEmail" aria-live="polite"></span>
+        </div>
+
+        <div class="campoAcceso">
+          <label for="passwordLogin">Contraseña</label>
+          <input id="passwordLogin" name="password" type="password" autocomplete="current-password" placeholder="Ingresá tu contraseña" aria-describedby="errorPassword" required>
+          <span class="errorCampo" id="errorPassword" aria-live="polite"></span>
+        </div>
+
+        <button class="botonAcceso" type="submit">Ingresar</button>
+        <a class="enlaceOlvidePassword" href="#" id="enlaceRecuperar">Olvidé mi contraseña</a>
+        <p class="leyendaRegistro">¿No estás registrado? <a href="/pages/registro.html">Creá una cuenta</a></p>
+        <p class="mensajeAcceso" id="mensajeAcceso" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <div id="contenedorFooter"></div>
+  <script type="module" src="../assets/js/login.js"></script>
+</body>
+</html>

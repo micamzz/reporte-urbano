@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Creá una cuenta de Reporte Urbano.">
+  <title>Crear cuenta - Reporte Urbano</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/header.css">
+  <link rel="stylesheet" href="../assets/css/footer.css">
+  <link rel="stylesheet" href="../assets/css/login.css">
+</head>
+<body class="cuerpoPagina">
+  <div id="contenedorHeader"></div>
+
+  <main class="seccionAcceso">
+    <section class="tarjetaAcceso" aria-labelledby="tituloRegistro">
+      <div class="encabezadoAcceso">
+        <h1 id="tituloRegistro">Crear una cuenta</h1>
+        <p>Registrate para seguir tus reportes y participar en tu barrio.</p>
+      </div>
+
+      <form id="formularioRegistro" class="formularioAcceso" novalidate>
+        <div class="campoAcceso">
+          <label for="nombreRegistro">Nombre</label>
+          <input id="nombreRegistro" name="nombre" type="text" autocomplete="name" placeholder="Tu nombre" aria-describedby="errorNombre" required>
+          <span class="errorCampo" id="errorNombre" aria-live="polite"></span>
+        </div>
+
+        <div class="campoAcceso">
+          <label for="emailRegistro">Correo electrónico</label>
+          <input id="emailRegistro" name="email" type="email" autocomplete="email" placeholder="nombre@correo.com" aria-describedby="errorEmail" required>
+          <span class="errorCampo" id="errorEmail" aria-live="polite"></span>
+        </div>
+
+        <div class="campoAcceso">
+          <label for="passwordRegistro">Contraseña</label>
+          <input id="passwordRegistro" name="password" type="password" autocomplete="new-password" placeholder="Al menos 8 caracteres" aria-describedby="errorPassword" required>
+          <span class="errorCampo" id="errorPassword" aria-live="polite"></span>
+        </div>
+
+        <button class="botonAcceso" type="submit">Crear cuenta</button>
+        <p class="mensajeAcceso" id="mensajeRegistro" role="status" aria-live="polite"></p>
+        <p class="leyendaRegistro">¿Ya tenés una cuenta? <a href="/pages/login.html">Ingresá</a></p>
+      </form>
+    </section>
+  </main>
+
+  <div id="contenedorFooter"></div>
+  <script type="module" src="../assets/js/registro.js"></script>
+</body>
+</html>

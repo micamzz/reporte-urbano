@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte Urbano - Municipio de Ituzaingó</title>
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- AGREGAR A TODAS LAS PAGINAS PARA QUE FUNCIONEN LOS ICONOS DEL FOOTER -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <!-- CSS Modularizado -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/header.css">
+  <link rel="stylesheet" href="assets/css/hero-compacto.css">
+  <link rel="stylesheet" href="assets/css/pasos.css">
+  <link rel="stylesheet" href="assets/css/reportes-recientes.css">
+  <link rel="stylesheet" href="assets/css/footer.css">
+  <!-- Estilos del carrusel -->
+  <link rel="stylesheet" href="assets/css/carrusel.css">
+</head>
+<body class="cuerpoPagina">
+
+  <!-- CONTENEDOR HEADER MODULAR -->
+  <div id="contenedorHeader"></div>
+
+  <main class="contenidoPrincipal">
+    
+    <!-- HERO COMPACTO (MAPA CHICO + TEXTO + CTA) -->
+    <section class="seccionHeroCompacto">
+      <div class="contenedorHeroInterior">
+        
+        <!-- Bloque izquierdo de texto y llamado a la acción -->
+        <div class="bloqueHeroTexto">
+          <h1 class="tituloPrincipalHero">Reportá baches, luminarias, arbolados y tránsito en tu barrio</h1>
+          <!-- <button class="botonReportarPrincipal" id="btnNuevoReporteIndex"> REPORTAR UN PROBLEMA</button> -->
+          <a href="pages/reporte.html"class="botonReportarPrincipal">REPORTAR UN PROBLEMA</a>
+        </div>
+
+        <!-- Bloque derecho con el mapa chico -->
+        <div class="bloqueHeroMapa">
+          <div class="contenedorMapaChico">
+            <div id="mapaPrevisualizacion" class="mapaChico"></div>
+            <a href="pages/mapa-incidencias.html" class="botonAmpliarMapa">Ampliar ⤢</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN CÓMO REPORTAR -->
+    <section class="seccionPasos">
+  <h2 class="tituloPasos"> ¿CÓMO REPORTAR UN PROBLEMA? </h2>
+  <div class="grillaPasos">
+    
+    <div class="tarjetaPaso">
+      <div class="numeroPasoContenedor paso-1">1</div>
+      <h3 class="tituloPaso">¿Dónde está el problema?</h3>
+      <p class="descripcionPaso">Selecciona la ubicación.</p>
+    </div>
+
+    <div class="tarjetaPaso">
+      <div class="numeroPasoContenedor paso-2">2</div>
+      <h3 class="tituloPaso">Detallá y subí una foto</h3>
+      <p class="descripcionPaso">Seleccioná la categoría, describí lo que pasa y adjuntá una imagen como evidencia.</p>
+    </div>
+
+    <div class="tarjetaPaso">
+      <div class="numeroPasoContenedor paso-3">3</div>
+      <h3 class="tituloPaso">Hacé el seguimiento</h3>
+      <p class="descripcionPaso">Recibí un número de caso para consultar en todo momento el estado de la resolución.</p>
+    </div>
+
+  </div>
+</section>
+
+
+    <!-- SECCIÓN CARRUSEL DE MANTENIMIENTO URBANO -->
+    <section class="seccionCarrusel">
+      <div class="encabezadoCarrusel">
+        <h2 class="tituloCarrusel">TRABAJOS DE MANTENIMIENTO EN EL MUNICIPIO</h2>
+        <p class="subtituloCarrusel">Conoce las obras y tareas diarias de <span class="color">reporte </span><span class="color2">urbano </span>en Ituzaingó</p>
+      </div>
+
+      <div class="contenedorCarrusel">
+        <div class="trackCarrusel" id="trackCarrusel">
+          <div class="diapositivaCarrusel activa">
+            <img src="public/img/bache1.jpg" alt="Reparación de bache en la vía pública">
+            <!-- <div class="pieImagenCarrusel">Reparación y asfalto de baches en el distrito</div> -->
+          </div>
+          <div class="diapositivaCarrusel">
+            <img src="public/img/bache2.jpg" alt="Bacheo frente al Teatro Gran Ituzaingó">
+            <!-- <div class="pieImagenCarrusel">Trabajos de bacheo sobre la zona céntrica (Teatro Gran Ituzaingó)</div> -->
+          </div>
+          <div class="diapositivaCarrusel">
+            <img src="public/img/luminaria1.jpg" alt="Mantenimiento de luminarias públicas">
+            <!-- <div class="pieImagenCarrusel">Reparación y modernización de luminarias led</div> -->
+          </div>
+          <div class="diapositivaCarrusel">
+            <img src="public/img/pozo-agua.jpg" alt="Solución de pozo de agua y cañerías">
+            <!-- <div class="pieImagenCarrusel">Reparación de fugas y pozos de agua en la vía pública</div> -->
+          </div>
+          <div class="diapositivaCarrusel">
+            <img src="public/img/retiro-poda.jpg" alt="Retiro de podas domiciliarias">
+            <!-- <div class="pieImagenCarrusel">Recolección de restos de poda domiciliaria e higiene urbana</div> -->
+          </div>
+          <div class="diapositivaCarrusel">
+            <img src="public/img/cordon-cuneta.jpg" alt="Reparación de cordones y pintura peatonal">
+            <!-- <div class="pieImagenCarrusel">Reparación de cordones cuneta y demarcación de sendas peatonales</div> -->
+          </div>
+        </div>
+
+        <!-- Botones de navegación -->
+       <button class="botonCarrusel anterior" id="btnAntCarrusel" aria-label="Anterior">&#10094;</button>
+<button class="botonCarrusel siguiente" id="btnSigCarrusel" aria-label="Siguiente">&#10095;</button>
+
+        <!-- Puntos indicadores -->
+        <div class="indicadoresCarrusel" id="indicadoresCarrusel">
+          <span class="puntoCarrusel activo" data-slide="0"></span>
+          <span class="puntoCarrusel" data-slide="1"></span>
+          <span class="puntoCarrusel" data-slide="2"></span>
+          <span class="puntoCarrusel" data-slide="3"></span>
+          <span class="puntoCarrusel" data-slide="4"></span>
+          <span class="puntoCarrusel" data-slide="5"></span>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- REPORTES RECIENTES -->
+    <section class="seccionReportesRecientes" id="seccionEstadisticas">
+      <div class="encabezadoReportesRecientes">
+        <h2 class="tituloReportesRecientes">REPORTES RECIENTES EN EL BARRIO</h2>
+        <p class="subtituloReportesRecientes">Consulta las incidencias informadas por los vecinos de Ituzaingó</p>
+      </div>
+      <div class="grillaReportesRecientes" id="contenedorTarjetasRecientes">
+        <!-- Tarjetas dinámicas generadas desde index.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CONTENEDOR FOOTER MODULAR -->
+  <div id="contenedorFooter"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <!-- Script modular para el Index -->
+  <script type="module" src="assets/js/index.js"></script>
+  <script src="assets/js/carrusel.js"></script>
+</body>
+</html>

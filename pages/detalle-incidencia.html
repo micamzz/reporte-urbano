@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle de Incidencia - Municipio de Ituzaingó</title>
+  
+  <!-- CSS Modularizado -->
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/header.css">
+  <link rel="stylesheet" href="../assets/css/detalle-incidencia.css">
+  <link rel="stylesheet" href="../assets/css/footer.css">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="cuerpoPagina">
+
+  <!-- CONTENEDOR HEADER MODULAR -->
+  <div id="contenedorHeader"></div>
+
+  <main class="contenidoPrincipalDetalle">
+    <!-- 🔹 BOTÓN DINÁMICO QUE REGRESA A LA PÁGINA ANTERIOR DE DONDE VINO EL USUARIO -->
+    <button class="botonVolverDinamico" onclick="window.history.back()">
+      Atras
+    </button>
+
+    <!-- CONTENEDOR DINÁMICO DEL DETALLE -->
+    <div id="contenedorDetalle" class="tarjetaDetallePrincipal">
+      <p class="textoCargando">Cargando información del reporte...</p>
+    </div>
+  </main>
+
+  <!-- CONTENEDOR FOOTER MODULAR -->
+  <div id="contenedorFooter"></div>
+
+  <!-- Script exclusivo para la pantalla de Detalle -->
+  <script type="module" src="../assets/js/detalle-incidencia.js"></script>
+</body>
+</html>

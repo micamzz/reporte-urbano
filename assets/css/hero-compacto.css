@@ -1,0 +1,118 @@
+.seccionHeroCompacto {
+  background: linear-gradient(135deg, #e6f0fa 0%, #f0f7e6 100%);
+  padding: 3rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contenedorHeroInterior {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+.bloqueHeroTexto {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tituloPrincipalHero {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #004d7c;
+  line-height: 1.3;
+}
+
+.botonReportarPrincipal {
+  background-color: #007bbf;
+  color: #ffffff;
+  border: none;
+  padding: 1rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  width: fit-content;
+  box-shadow: 0 4px 14px rgba(0, 123, 191, 0.3);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.botonReportarPrincipal:hover {
+  background-color: #005f94;
+  transform: translateY(-2px);
+}
+
+.bloqueHeroMapa {
+  flex: 0.8;
+  display: flex;
+  justify-content: center;
+}
+
+.contenedorMapaChico {
+  position: relative;
+  width: 380px;
+  height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.mapaChico {
+  width: 100%;
+  height: 100%;
+}
+
+.botonAmpliarMapa {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 1000;
+  background-color: #ffffff;
+  color: #333333;
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: background-color 0.2s;
+}
+
+.botonAmpliarMapa:hover {
+  background-color: #f1f5f9;
+}
+
+.seccionHeroCompacto {
+  position: relative;
+  width: 100%;
+  background-color: #ffffff;
+  /* Fondo dinámico con gradientes suaves */
+  background-image:
+    radial-gradient(circle at 85% 30%, rgba(186, 230, 253, 0.5) 0%, transparent 45%),
+    radial-gradient(circle at 15% 70%, rgba(207, 250, 254, 0.4) 0%, transparent 40%);
+  overflow: hidden;
+}
+
+/* Para resaltar las palabras clave en el título */
+.tituloPrincipalHero span.resaltado {
+  background-color: rgba(186, 230, 253, 0.45);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.seccionHeroCompacto {
+  position: relative;
+  width: 100%;
+  padding: 40px 20px;
+  overflow: hidden;
+  background-color: #f2f9f5;
+  background-image:
+    radial-gradient(ellipse at 75% 20%, rgba(186, 230, 253, 0.75) 0%, rgba(186, 230, 253, 0) 50%),
+    radial-gradient(circle at 45% 60%, rgba(207, 240, 253, 0.6) 0%, rgba(207, 240, 253, 0) 45%);
+  background-repeat: no-repeat;
+}

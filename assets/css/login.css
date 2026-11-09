@@ -1,0 +1,157 @@
+.seccionAcceso {
+  min-height: calc(100vh - 75px);
+  padding: 3.5rem 1.25rem;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #e6f0fa 0%, #f0f7e6 100%);
+}
+
+.tarjetaAcceso {
+  width: min(100%, 440px);
+  box-sizing: border-box;
+  padding: 2rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.12);
+}
+
+.enlaceOlvidePassword:hover {
+  text-decoration: underline;
+}
+
+.encabezadoAcceso {
+  margin: 0 0 1.25rem;
+}
+
+.encabezadoAcceso h1 {
+  margin: 0.5rem 0;
+  color: #004d7c;
+  font-size: 1.7rem;
+}
+
+.encabezadoAcceso p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.formularioAcceso {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.campoAcceso {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.campoAcceso label {
+  color: #1e293b;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.campoAcceso input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 46px;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  color: #333333;
+  font: inherit;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campoAcceso input:focus-visible {
+  border-color: #007bbf;
+  box-shadow: 0 0 0 3px rgba(0, 123, 191, 0.16);
+}
+
+.campoAcceso input[aria-invalid="true"] {
+  border-color: #dc2626;
+}
+
+.errorCampo {
+  min-height: 1rem;
+  color: #b91c1c;
+  font-size: 0.75rem;
+}
+
+.botonAcceso {
+  min-height: 46px;
+  margin-top: 0.25rem;
+  border: 0;
+  border-radius: 7px;
+  background: #007bbf;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.botonAcceso:hover {
+  background: #005f94;
+}
+
+.botonAcceso:focus-visible,
+.enlaceOlvidePassword:focus-visible {
+  outline: 3px solid rgba(0, 123, 191, 0.35);
+  outline-offset: 3px;
+}
+
+.enlaceOlvidePassword {
+  align-self: center;
+  color: #007bbf;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.leyendaRegistro {
+  margin: 0.25rem 0 0;
+  color: #64748b;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.leyendaRegistro a {
+  color: #007bbf;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.leyendaRegistro a:hover {
+  text-decoration: underline;
+}
+
+.leyendaRegistro a:focus-visible {
+  outline: 3px solid rgba(0, 123, 191, 0.35);
+  outline-offset: 3px;
+}
+
+.mensajeAcceso {
+  min-height: 1rem;
+  margin: 0;
+  color: #475569;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+@media (max-width: 576px) {
+  .seccionAcceso {
+    padding: 2rem 1rem;
+  }
+
+  .tarjetaAcceso {
+    padding: 1.5rem;
+  }
+}
