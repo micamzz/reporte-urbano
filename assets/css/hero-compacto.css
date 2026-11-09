@@ -1,118 +1,192 @@
 .seccionHeroCompacto {
-  background: linear-gradient(135deg, #e6f0fa 0%, #f0f7e6 100%);
-  padding: 3rem 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 38px max(24px, 5.2vw) 44px;
+  background: radial-gradient(ellipse at 30% 85%, #e6f3ff, transparent 65%), #f8fbff;
+  color: #092553;
+}
+
+.seccionHeroCompacto::before,
+.seccionHeroCompacto::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 28%;
+  z-index: -1;
+  clip-path: url(#recorteFotoHero);
+}
+
+.seccionHeroCompacto::before {
+  background: linear-gradient(to right, transparent 55%, #8cdb3e 75%);
+  translate: 0 10px;
+}
+
+.seccionHeroCompacto::after {
+  background: url('../../public/img/hero-ituzaingo.png') center / cover no-repeat;
 }
 
 .contenedorHeroInterior {
-  max-width: 1200px;
-  width: 100%;
-  display: flex;
-  gap: 3rem;
+  max-width: 1560px;
+  min-height: 370px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: clamp(28px, 4vw, 72px);
   align-items: center;
 }
 
 .bloqueHeroTexto {
-  flex: 1.2;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  min-width: 0;
+  position: relative;
+  padding: 28px 0 0;
+}
+
+.bloqueHeroTexto::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 46px;
+  height: 3px;
+  border-radius: 4px;
+  background: #45b51c;
 }
 
 .tituloPrincipalHero {
-  font-size: 2rem;
+  margin: 12px 0 14px;
+  font-size: clamp(36px, 3.7vw, 64px);
   font-weight: 700;
-  color: #004d7c;
-  line-height: 1.3;
+  line-height: 1.04;
+  letter-spacing: -1.8px;
+  color: #092553;
+}
+
+.descripcionHero {
+  max-width: 420px;
+  margin: 0 0 30px;
+  font-size: clamp(16px, 1.35vw, 23px);
+  line-height: 1.5;
+}
+
+.accionesHero {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.botonReportarPrincipal,
+.botonVerMapaHero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 56px;
+  box-sizing: border-box;
+  padding: 12px 20px;
+  border: 1.5px solid #0068c8;
+  border-radius: 15px;
+  font-size: clamp(13px, 1.16vw, 19px);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s, box-shadow 0.2s;
 }
 
 .botonReportarPrincipal {
-  background-color: #007bbf;
-  color: #ffffff;
-  border: none;
-  padding: 1rem 1.8rem;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  width: fit-content;
-  box-shadow: 0 4px 14px rgba(0, 123, 191, 0.3);
-  transition: transform 0.2s, background-color 0.2s;
+  color: #fff;
+  background: #0068be;
 }
 
-.botonReportarPrincipal:hover {
-  background-color: #005f94;
-  transform: translateY(-2px);
+.botonVerMapaHero {
+  color: #092553;
+  background: #ffffffed;
 }
 
-.bloqueHeroMapa {
-  flex: 0.8;
-  display: flex;
-  justify-content: center;
+.accionesHero svg {
+  width: 26px;
+  height: 28px;
+  flex-shrink: 0;
 }
+
+.botonReportarPrincipal:hover { background: #005399; }
+.botonVerMapaHero:hover { background: #eaf4ff; }
+.accionesHero a:focus-visible,
+.botonAmpliarMapa:focus-visible {
+  outline: 3px solid #45b51c;
+  outline-offset: 4px;
+}
+
+.bloqueHeroMapa { min-width: 0; }
 
 .contenedorMapaChico {
   position: relative;
-  width: 380px;
-  height: 280px;
-  border-radius: 12px;
+  isolation: isolate;
+  width: 100%;
+  height: clamp(300px, 23vw, 400px);
+  box-sizing: border-box;
+  border: 10px solid #fff;
+  border-radius: 32px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 32px #08295330;
 }
 
-.mapaChico {
-  width: 100%;
-  height: 100%;
-}
+.mapaChico { width: 100%; height: 100%; background: #e8edf1; }
 
 .botonAmpliarMapa {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 12px;
+  right: 12px;
   z-index: 1000;
-  background-color: #ffffff;
-  color: #333333;
-  text-decoration: none;
-  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 14px;
+  border-radius: 9px;
+  background: #fff;
+  color: #092553;
+  font-size: 12px;
   font-weight: 700;
-  padding: 0.5rem 0.8rem;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  transition: background-color 0.2s;
+  box-shadow: 0 3px 12px #102a4326;
 }
 
-.botonAmpliarMapa:hover {
-  background-color: #f1f5f9;
+.botonAmpliarMapa svg { width: 17px; height: 17px; }
+.botonAmpliarMapa:hover { background: #edf6ff; }
+
+@media (min-width: 1500px) {
+  .contenedorHeroInterior { min-height: 425px; }
+  .accionesHero a { min-height: 64px; padding-inline: 24px; }
 }
 
-.seccionHeroCompacto {
-  position: relative;
-  width: 100%;
-  background-color: #ffffff;
-  /* Fondo dinámico con gradientes suaves */
-  background-image:
-    radial-gradient(circle at 85% 30%, rgba(186, 230, 253, 0.5) 0%, transparent 45%),
-    radial-gradient(circle at 15% 70%, rgba(207, 250, 254, 0.4) 0%, transparent 40%);
-  overflow: hidden;
+@media (max-width: 1050px) {
+  .contenedorHeroInterior { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .seccionHeroCompacto::before,
+  .seccionHeroCompacto::after { left: 28%; }
+  .descripcionHero { max-width: 370px; }
+  .accionesHero { gap: 10px; }
+  .accionesHero a { min-height: 48px; padding: 10px 14px; }
 }
 
-/* Para resaltar las palabras clave en el título */
-.tituloPrincipalHero span.resaltado {
-  background-color: rgba(186, 230, 253, 0.45);
-  padding: 2px 8px;
-  border-radius: 6px;
-}
-
-.seccionHeroCompacto {
-  position: relative;
-  width: 100%;
-  padding: 40px 20px;
-  overflow: hidden;
-  background-color: #f2f9f5;
-  background-image:
-    radial-gradient(ellipse at 75% 20%, rgba(186, 230, 253, 0.75) 0%, rgba(186, 230, 253, 0) 50%),
-    radial-gradient(circle at 45% 60%, rgba(207, 240, 253, 0.6) 0%, rgba(207, 240, 253, 0) 45%);
-  background-repeat: no-repeat;
+@media (max-width: 700px) {
+  .seccionHeroCompacto { padding: 32px 20px; }
+  .contenedorHeroInterior { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .seccionHeroCompacto::before,
+  .seccionHeroCompacto::after {
+    inset: 52% -15% 0 0;
+    clip-path: none;
+    border-radius: 45% 0 0 0;
+  }
+  .tituloPrincipalHero { font-size: clamp(36px, 7vw, 48px); }
+  .descripcionHero { max-width: 490px; margin-bottom: 22px; }
+  .accionesHero a { flex: 1 1 220px; }
+  .contenedorMapaChico { height: 310px; border-width: 7px; border-radius: 24px; }
+  .portadaUrbana .encabezadoPrincipal {
+    height: auto;
+    min-height: 75px;
+    padding: 14px 20px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .portadaUrbana .navegacionMenu {
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+  .portadaUrbana .enlaceNavegacion { font-size: 0.75rem; }
 }

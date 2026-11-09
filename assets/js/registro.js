@@ -1,5 +1,5 @@
 import { cargarComponentesModulares } from './utils/include.js';
-import { actualizarBotonHeader } from './auth.js';
+import { actualizarBotonHeader, registrarUsuario, validarPasswordRegistro } from './auth.js';
 
 const formulario = document.getElementById('formularioRegistro');
 const nombre = document.getElementById('nombreRegistro');
@@ -30,7 +30,7 @@ function validarEmail() {
 function validarPassword() {
   let error = '';
   if (!password.value) error = 'Ingresá una contraseña.';
-  else if (password.value.length < 8) error = 'La contraseña debe tener al menos 8 caracteres.';
+  else if (!validarPasswordRegistro(password.value)) error = 'Usá al menos 8 caracteres, una mayúscula y un símbolo permitido: ! @ # $ % & * ? . _ + - =';
   mostrarError(password, 'errorPassword', error);
   return !error;
 }
@@ -63,7 +63,15 @@ formulario.addEventListener('submit', (evento) => {
     primerInvalido.focus();
     return;
   }
-  mensaje.textContent = 'El registro todavía no está conectado a un servicio, por lo que la cuenta no se guardó.';
+  try {
+    registrarUsuario(nombre.value, email.value, password.value);
+    formulario.reset();
+    document.getElementById('popupRegistroExitoso').showModal();
+  } catch (error) {
+    mensaje.textContent = error.message === 'Ya existe una cuenta con ese correo.'
+      ? error.message
+      : 'No se pudo guardar la cuenta. Revisá que el almacenamiento local esté habilitado en tu navegador.';
+  }
 });
 
 document.addEventListener('DOMContentLoaded', async () => {

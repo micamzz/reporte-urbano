@@ -74,3 +74,90 @@
 .numeroPasoContenedor.paso-3 {
   background-color: #f49153;
 }
+/* Presentacion exclusiva de los pasos en la portada. */
+.pasosInicio {
+  padding: 34px max(24px, 5.2vw) 42px;
+  background: linear-gradient(170deg, #fff 0%, #f4f9ff 65%, #e8f3ff 100%);
+  color: #092553;
+}
+
+.pasosInicio .tituloPasos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin: 0 0 30px;
+  color: #092553;
+  font-size: clamp(26px, 2.4vw, 42px);
+  letter-spacing: -0.8px;
+}
+
+.pasosInicio .tituloPasos::before,
+.pasosInicio .tituloPasos::after {
+  content: '';
+  width: clamp(35px, 7vw, 115px);
+  height: 3px;
+  border-radius: 3px;
+  background: #4abc1d;
+}
+
+.pasosInicio .grillaPasos {
+  max-width: 1560px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.pasosInicio .tarjetaPaso {
+  flex-direction: row;
+  gap: 20px;
+  padding: 26px 24px;
+  border: 1px solid #e6efff;
+  border-bottom-color: #b8d4ff;
+  border-radius: 26px;
+  background: linear-gradient(135deg, #fff, #f6faff);
+  box-shadow: 0 9px 18px #3178bb12;
+  text-align: left;
+}
+
+.pasosInicio .numeroPasoContenedor {
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  background: #d8f5c9;
+  color: #087841;
+  font-size: 25px;
+  box-shadow: none;
+}
+
+.pasosInicio .paso-2 { background: #c5efff; color: #0073ce; }
+.pasosInicio .iconoPaso { flex: 0 0 56px; width: 56px; height: 60px; color: #09824c; }
+.pasosInicio .tarjetaPaso:nth-child(2) .iconoPaso { color: #0073ce; }
+.pasosInicio .contenidoPaso { min-width: 0; }
+.pasosInicio .tituloPaso { margin: 0 0 5px; color: #092553; font-size: clamp(15px, 1.2vw, 20px); }
+.pasosInicio .descripcionPaso { margin: 0; color: #092553; font-size: clamp(13px, 1vw, 17px); line-height: 1.45; }
+
+@media (max-width: 1200px) and (min-width: 901px) {
+  .pasosInicio .grillaPasos { gap: 16px; }
+  .pasosInicio .tarjetaPaso { gap: 12px; padding: 22px 16px; }
+  .pasosInicio .iconoPaso { flex-basis: 40px; width: 40px; height: 48px; }
+  .pasosInicio .numeroPasoContenedor { flex-basis: 34px; width: 34px; height: 34px; font-size: 22px; }
+}
+
+@media (max-width: 900px) {
+  .pasosInicio .grillaPasos { grid-template-columns: 1fr; max-width: 620px; gap: 18px; }
+  .pasosInicio .tarjetaPaso { padding: 22px 24px; }
+  .pasosInicio .tituloPaso { font-size: 18px; }
+  .pasosInicio .descripcionPaso { font-size: 15px; }
+}
+
+@media (max-width: 480px) {
+  .pasosInicio { padding: 30px 20px; }
+  .pasosInicio .tituloPasos { gap: 14px; font-size: 24px; }
+  .pasosInicio .tituloPasos::before,
+  .pasosInicio .tituloPasos::after { width: 24px; }
+  .pasosInicio .tarjetaPaso { gap: 14px; padding: 22px 16px; border-radius: 22px; }
+  .pasosInicio .iconoPaso { flex-basis: 42px; width: 42px; height: 48px; }
+  .pasosInicio .numeroPasoContenedor { flex-basis: 34px; width: 34px; height: 34px; font-size: 22px; }
+  .pasosInicio .tituloPaso { font-size: 16px; }
+}

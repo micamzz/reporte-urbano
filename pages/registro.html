@@ -36,7 +36,8 @@
 
         <div class="campoAcceso">
           <label for="passwordRegistro">Contraseña</label>
-          <input id="passwordRegistro" name="password" type="password" autocomplete="new-password" placeholder="Al menos 8 caracteres" aria-describedby="errorPassword" required>
+          <input id="passwordRegistro" name="password" type="password" autocomplete="new-password" placeholder="Al menos 8 caracteres" minlength="8" aria-describedby="ayudaPassword errorPassword" required>
+          <small id="ayudaPassword">Al menos 8 caracteres, una mayúscula y un símbolo: ! @ # $ % &amp; * ? . _ + - =</small>
           <span class="errorCampo" id="errorPassword" aria-live="polite"></span>
         </div>
 
@@ -46,6 +47,12 @@
       </form>
     </section>
   </main>
+
+  <dialog id="popupRegistroExitoso" class="popupRegistro" aria-labelledby="tituloRegistroExitoso" aria-describedby="descripcionRegistroExitoso">
+    <h2 id="tituloRegistroExitoso">Cuenta registrada exitosamente</h2>
+    <p id="descripcionRegistroExitoso">Ya podés iniciar sesión con tu correo y contraseña.</p>
+    <a class="botonAcceso" href="/pages/login.html" autofocus>Ir al login</a>
+  </dialog>
 
   <div id="contenedorFooter"></div>
   <script type="module" src="../assets/js/registro.js"></script>

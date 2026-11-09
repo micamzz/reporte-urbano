@@ -21,7 +21,7 @@
   <!-- Estilos del carrusel -->
   <link rel="stylesheet" href="assets/css/carrusel.css">
 </head>
-<body class="cuerpoPagina">
+<body class="cuerpoPagina portadaUrbana">
 
   <!-- CONTENEDOR HEADER MODULAR -->
   <div id="contenedorHeader"></div>
@@ -30,20 +30,36 @@
     
     <!-- HERO COMPACTO (MAPA CHICO + TEXTO + CTA) -->
     <section class="seccionHeroCompacto">
+      <svg width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute;">
+        <defs>
+          <clipPath id="recorteFotoHero" clipPathUnits="objectBoundingBox">
+            <path d="M .27,0 H 1 V .86 C .92,.97 .81,1 .65,1 H .44 C .32,1 .22,.84 .145,.65 Q .105,.53 .145,.43 L .25,.025 Q .26,0 .27,0 Z"/>
+          </clipPath>
+        </defs>
+      </svg>
       <div class="contenedorHeroInterior">
         
         <!-- Bloque izquierdo de texto y llamado a la acción -->
         <div class="bloqueHeroTexto">
-          <h1 class="tituloPrincipalHero">Reportá baches, luminarias, arbolados y tránsito en tu barrio</h1>
-          <!-- <button class="botonReportarPrincipal" id="btnNuevoReporteIndex"> REPORTAR UN PROBLEMA</button> -->
-          <a href="pages/reporte.html"class="botonReportarPrincipal">REPORTAR UN PROBLEMA</a>
+          <h1 class="tituloPrincipalHero">Tu barrio, más<br> cuidado</h1>
+          <p class="descripcionHero">Reportá baches, luminarias, arbolados y tránsito de forma simple y ayudá a mejorar el espacio público.</p>
+          <div class="accionesHero">
+            <a href="pages/reporte.html" class="botonReportarPrincipal">
+              <!-- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 14-5v14L3 14zM17 9l4-2v10l-4-2M6 15l1 6h4l-2-5"/></svg> -->
+              Reportar un problema
+            </a>
+            <!-- <a href="pages/mapa-incidencias.html" class="botonVerMapaHero">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              Ver mapa de incidencias
+            </a> -->
+          </div>
         </div>
 
         <!-- Bloque derecho con el mapa chico -->
         <div class="bloqueHeroMapa">
           <div class="contenedorMapaChico">
             <div id="mapaPrevisualizacion" class="mapaChico"></div>
-            <a href="pages/mapa-incidencias.html" class="botonAmpliarMapa">Ampliar ⤢</a>
+            <a href="pages/mapa-incidencias.html" class="botonAmpliarMapa">Ampliar mapa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M10 3H3v18h18v-7"/></svg></a>
           </div>
         </div>
 
@@ -51,26 +67,29 @@
     </section>
 
     <!-- SECCIÓN CÓMO REPORTAR -->
-    <section class="seccionPasos">
-  <h2 class="tituloPasos"> ¿CÓMO REPORTAR UN PROBLEMA? </h2>
+    <section class="seccionPasos pasosInicio" id="como-reportar" aria-labelledby="tituloComoFunciona">
+  <h2 class="tituloPasos" id="tituloComoFunciona">¿Cómo funciona?</h2>
   <div class="grillaPasos">
     
     <div class="tarjetaPaso">
       <div class="numeroPasoContenedor paso-1">1</div>
-      <h3 class="tituloPaso">¿Dónde está el problema?</h3>
-      <p class="descripcionPaso">Selecciona la ubicación.</p>
+      <!-- <svg class="iconoPaso" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M28 40H10a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h6m13 0h6a3 3 0 0 1 3 3v13M15 17h16M15 24h11M15 31h6"/><rect x="16" y="3" width="13" height="7" rx="2"/><path d="m28 32 11-11 6 6-11 11-8 2zM36 24l6 6"/></svg> -->
+      <div class="contenidoPaso"><h3 class="tituloPaso">Contanos el problema</h3>
+      <p class="descripcionPaso">Completá un formulario con los detalles.</p></div>
     </div>
 
     <div class="tarjetaPaso">
       <div class="numeroPasoContenedor paso-2">2</div>
-      <h3 class="tituloPaso">Detallá y subí una foto</h3>
-      <p class="descripcionPaso">Seleccioná la categoría, describí lo que pasa y adjuntá una imagen como evidencia.</p>
+      <!-- <svg class="iconoPaso" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 15 20-11 20 11-20 11zM4 24l20 11 20-11M4 33l20 11 20-11"/></svg> -->
+      <div class="contenidoPaso"><h3 class="tituloPaso">Lo gestionamos</h3>
+      <p class="descripcionPaso">Recibimos tu reporte y lo derivamos al área correspondiente.</p></div>
     </div>
 
     <div class="tarjetaPaso">
       <div class="numeroPasoContenedor paso-3">3</div>
-      <h3 class="tituloPaso">Hacé el seguimiento</h3>
-      <p class="descripcionPaso">Recibí un número de caso para consultar en todo momento el estado de la resolución.</p>
+      <!-- <svg class="iconoPaso" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="20"/><path d="m14 24 7 7 14-15"/></svg> -->
+      <div class="contenidoPaso"><h3 class="tituloPaso">Seguimiento</h3>
+      <p class="descripcionPaso">Podés ver el estado del reporte en el mapa.</p></div>
     </div>
 
   </div>

@@ -1,5 +1,5 @@
 import { cargarComponentesModulares } from './utils/include.js';
-import { actualizarBotonHeader } from './auth.js';
+import { actualizarBotonHeader, iniciarSesion } from './auth.js';
 
 const formulario = document.getElementById('formularioLogin');
 const email = document.getElementById('emailLogin');
@@ -53,7 +53,16 @@ formulario.addEventListener('submit', (evento) => {
   const passwordValida = validarPassword();
   if (!emailValido) email.focus();
   else if (!passwordValida) password.focus();
-  else mensaje.textContent = 'El acceso todavía no está conectado a un servicio de autenticación.';
+  else {
+    try {
+      iniciarSesion(email.value, password.value);
+      window.location.href = '/index.html';
+    } catch (error) {
+      mensaje.textContent = error.message === 'El correo o la contraseña son incorrectos.'
+        ? error.message
+        : 'No se pudo acceder al almacenamiento local. Revisá que esté habilitado en tu navegador.';
+    }
+  }
 });
 
 document.getElementById('enlaceRecuperar').addEventListener('click', (evento) => {

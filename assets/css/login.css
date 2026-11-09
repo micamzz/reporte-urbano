@@ -138,6 +138,40 @@
   outline-offset: 3px;
 }
 
+.popupRegistro {
+  box-sizing: border-box;
+  width: min(440px, calc(100% - 2rem));
+  margin: auto;
+  padding: 2rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.2);
+}
+
+.popupRegistro::backdrop {
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.popupRegistro h2 {
+  margin: 0 0 1rem;
+  color: #004d7c;
+  font-size: 1.5rem;
+}
+
+.popupRegistro p {
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.popupRegistro .botonAcceso {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .mensajeAcceso {
   min-height: 1rem;
   margin: 0;
