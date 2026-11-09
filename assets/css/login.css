@@ -1,142 +1,192 @@
 .seccionAcceso {
-  min-height: calc(100vh - 75px);
-  padding: 3.5rem 1.25rem;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-sizing: border-box;
+  min-height: min(650px, calc(100svh - 75px));
+  padding: 20px;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, #e6f0fa 0%, #f0f7e6 100%);
+  color: #0c2b58;
+  background: radial-gradient(ellipse at 15% 0, #dfedff, transparent 65%), #f4f9ff;
+}
+
+.seccionAcceso::before,
+.seccionAcceso::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.seccionAcceso::before {
+  width: 75%;
+  height: 75%;
+  top: -35%;
+  left: -30%;
+  border-radius: 0 0 90% 0;
+  background: linear-gradient(130deg, #d9ecff, #ffffffd9);
+}
+
+.seccionAcceso::after {
+  width: 80%;
+  height: 48%;
+  right: -42%;
+  bottom: -27%;
+  border-radius: 90% 0 0 0;
+  transform: rotate(-18deg);
+  background: linear-gradient(110deg, #81d33e, #b0e579);
+  box-shadow: -30px -30px 0 #bde99c40;
+}
+
+.accesoLogin {
+  background: radial-gradient(ellipse at 35% 45%, #ffffff 0%, #f3f8ff 65%, #eaf3ff 100%);
+}
+
+.accesoLogin::before {
+  width: 46%;
+  height: 46%;
+  left: -22%;
+  top: -27%;
+  border-radius: 0 0 100% 0;
+  background: linear-gradient(125deg, #76cb36, #a4df64);
+  box-shadow: 42px 16px 0 #cce8ba80;
+}
+
+.accesoLogin::after {
+  width: 62%;
+  height: 47%;
+  right: -32%;
+  bottom: -29%;
+  border-radius: 100% 0 0 0;
+  background: linear-gradient(110deg, #8bd247, #b0e17b);
+  box-shadow: -32px -30px 0 #d1eac280;
+}
+
+.fotoAcceso {
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 0 calc(50% + 236px);
+  background: url('../../public/img/hero-ituzaingo.png') 22% center / auto 100% no-repeat;
+  mask-image: linear-gradient(to right, transparent 0%, #0009 40%, #000c 100%), linear-gradient(to bottom, #000 0%, #000 48%, transparent 92%);
+  mask-composite: intersect;
+  pointer-events: none;
 }
 
 .tarjetaAcceso {
-  width: min(100%, 440px);
   box-sizing: border-box;
-  padding: 2rem;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.12);
+  width: min(100%, 440px);
+  padding: 20px 28px;
+  border: 1px solid #ffffff;
+  border-radius: 28px;
+  background: #fffffffa;
+  box-shadow: 0 12px 34px #2d64971a;
 }
 
-.enlaceOlvidePassword:hover {
-  text-decoration: underline;
-}
-
-.encabezadoAcceso {
-  margin: 0 0 1.25rem;
-}
-
+.encabezadoAcceso { margin-bottom: 16px; text-align: center; }
+.logoAcceso { display: inline-block; margin-bottom: 8px; }
+.logoAcceso img { display: block; width: 160px; max-width: 100%; height: auto; }
 .encabezadoAcceso h1 {
-  margin: 0.5rem 0;
-  color: #004d7c;
-  font-size: 1.7rem;
+  margin: 0 0 8px;
+  color: #0c2b58;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
 }
 
-.encabezadoAcceso p {
-  margin: 0;
-  color: #64748b;
-  font-size: 0.88rem;
-  line-height: 1.5;
+.accesoLogin .encabezadoAcceso h1::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin: 10px auto;
+  border-radius: 3px;
+  background: #5dbd24;
 }
 
-.formularioAcceso {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-}
-
-.campoAcceso {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.campoAcceso label {
-  color: #1e293b;
-  font-size: 0.82rem;
-  font-weight: 700;
-}
-
+.encabezadoAcceso p { margin: 0; color: #586477; font-size: 13px; line-height: 1.45; }
+.formularioAcceso { display: flex; flex-direction: column; gap: 4px; }
+.campoAcceso { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.campoAcceso label { color: #182b46; font-size: 14px; font-weight: 600; }
+.entradaAcceso { position: relative; }
 .campoAcceso input {
   box-sizing: border-box;
   width: 100%;
-  min-height: 46px;
-  padding: 0.75rem 0.85rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 7px;
-  color: #333333;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #bfcee1;
+  border-radius: 9px;
+  background: #fcfdff;
+  color: #182b46;
   font: inherit;
-  font-size: 0.85rem;
-  outline: none;
+  font-size: 14px;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.campoAcceso input:focus-visible {
-  border-color: #007bbf;
-  box-shadow: 0 0 0 3px rgba(0, 123, 191, 0.16);
-}
-
-.campoAcceso input[aria-invalid="true"] {
-  border-color: #dc2626;
-}
-
-.errorCampo {
-  min-height: 1rem;
-  color: #b91c1c;
-  font-size: 0.75rem;
-}
-
-.botonAcceso {
-  min-height: 46px;
-  margin-top: 0.25rem;
+.entradaAcceso input { padding-left: 42px; }
+.entradaAcceso input.conVisibilidad { padding-right: 48px; }
+.campoAcceso input::placeholder { color: #788497; opacity: 1; }
+.campoAcceso input:focus-visible { outline: none; border-color: #0070c8; box-shadow: 0 0 0 3px #007bc01c; }
+.campoAcceso input[aria-invalid='true'] { border-color: #c43c3c; }
+.iconoEntrada { position: absolute; left: 14px; top: 12px; display: flex; pointer-events: none; color: #8592a5; }
+.iconoEntrada svg, .alternarPassword svg { width: 20px; height: 20px; }
+.alternarPassword {
+  position: absolute;
+  right: 3px;
+  top: 0;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
   border: 0;
   border-radius: 7px;
-  background: #007bbf;
-  color: #ffffff;
+  color: #6d7b90;
+  background: transparent;
+  cursor: pointer;
+}
+.alternarPassword:hover { color: #0068be; background: #eaf3fc; }
+.errorCampo { min-height: 12px; color: #b72e2e; font-size: 12px; line-height: 1.4; }
+.campoAcceso small { color: #66758a; font-size: 11px; line-height: 1.55; overflow-wrap: anywhere; }
+.botonAcceso {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 44px;
+  margin-top: 6px;
+  padding: 10px 18px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: linear-gradient(115deg, #0070bf, #005fae);
+  color: #fff;
   font: inherit;
-  font-size: 0.9rem;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 5px 12px #0070bf1a;
+  transition: filter 0.2s;
 }
-
-.botonAcceso:hover {
-  background: #005f94;
-}
-
-.botonAcceso:focus-visible,
-.enlaceOlvidePassword:focus-visible {
-  outline: 3px solid rgba(0, 123, 191, 0.35);
+.accesoRegistro .botonAcceso { background: linear-gradient(115deg, #52a326, #489624); box-shadow: 0 5px 12px #4b9b241a; }
+.botonAcceso:hover { filter: brightness(0.93); }
+.botonAcceso:focus-visible, .alternarPassword:focus-visible, .logoAcceso:focus-visible, .leyendaRegistro a:focus-visible, .enlaceOlvidePassword:focus-visible {
+  outline: 3px solid #007bc066;
   outline-offset: 3px;
 }
-
-.enlaceOlvidePassword {
-  align-self: center;
-  color: #007bbf;
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-decoration: none;
-}
-
 .leyendaRegistro {
-  margin: 0.25rem 0 0;
-  color: #64748b;
-  font-size: 0.82rem;
+  margin: 12px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid #dce3ec;
+  color: #586477;
+  font-size: 13px;
+  line-height: 1.6;
   text-align: center;
 }
-
-.leyendaRegistro a {
-  color: #007bbf;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.leyendaRegistro a:hover {
-  text-decoration: underline;
-}
-
-.leyendaRegistro a:focus-visible {
-  outline: 3px solid rgba(0, 123, 191, 0.35);
-  outline-offset: 3px;
-}
+.leyendaRegistro a { color: #0068be; font-weight: 700; text-decoration: none; }
+.leyendaRegistro a:hover { text-decoration: underline; }
+.enlaceOlvidePassword { align-self: flex-end; color: #0068be; font-size: 12px; line-height: 1.5; text-decoration: none; }
+.enlaceOlvidePassword:hover { text-decoration: underline; }
+.mensajeAcceso { margin: 0; color: #a92e2e; font-size: 12px; line-height: 1.5; text-align: center; overflow-wrap: anywhere; }
+.mensajeAcceso:empty { display: none; }
 
 .popupRegistro {
   box-sizing: border-box;
@@ -172,20 +222,13 @@
   text-decoration: none;
 }
 
-.mensajeAcceso {
-  min-height: 1rem;
-  margin: 0;
-  color: #475569;
-  font-size: 0.8rem;
-  text-align: center;
-}
 
 @media (max-width: 576px) {
-  .seccionAcceso {
-    padding: 2rem 1rem;
-  }
+  .seccionAcceso { min-height: 0; padding: 24px 16px; }
+  .tarjetaAcceso { padding: 22px; border-radius: 22px; }
+  .seccionAcceso::after { right: -45%; bottom: -25%; }
+}
 
-  .tarjetaAcceso {
-    padding: 1.5rem;
-  }
+@media (max-width: 900px) {
+  .fotoAcceso { display: none; }
 }

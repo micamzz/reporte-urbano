@@ -14,11 +14,13 @@
 <body class="cuerpoPagina">
   <div id="contenedorHeader"></div>
 
-  <main class="seccionAcceso">
+  <main class="seccionAcceso accesoLogin">
+    <div class="fotoAcceso" aria-hidden="true"></div>
     <section class="tarjetaAcceso" aria-labelledby="tituloAcceso">
       <div class="encabezadoAcceso">
-        <h1 id="tituloAcceso">Ingresá a tu cuenta</h1>
-        <p>Accedé para seguir tus reportes y aportar a tu barrio.</p>
+        <a class="logoAcceso" href="/index.html" aria-label="Reporte Urbano: ir al inicio"><img src="/public/img/logo.png" alt="Reporte Urbano"></a>
+        <h1 id="tituloAcceso">Iniciar sesión</h1>
+        <p>Accedé a tu cuenta para reportar problemas, seguir su estado y más.</p>
       </div>
 
       <form id="formularioLogin" class="formularioAcceso" novalidate>
@@ -34,9 +36,9 @@
           <span class="errorCampo" id="errorPassword" aria-live="polite"></span>
         </div>
 
-        <button class="botonAcceso" type="submit">Ingresar</button>
-        <a class="enlaceOlvidePassword" href="#" id="enlaceRecuperar">Olvidé mi contraseña</a>
-        <p class="leyendaRegistro">¿No estás registrado? <a href="/pages/registro.html">Creá una cuenta</a></p>
+        <a class="enlaceOlvidePassword" href="#" id="enlaceRecuperar" aria-describedby="mensajeAcceso">¿Olvidaste tu contraseña?</a>
+        <button class="botonAcceso" type="submit">Iniciar sesión</button>
+        <p class="leyendaRegistro">¿No tenés una cuenta? <a href="/pages/registro.html">Registrate</a></p>
         <p class="mensajeAcceso" id="mensajeAcceso" role="status" aria-live="polite"></p>
       </form>
     </section>
@@ -44,5 +46,6 @@
 
   <div id="contenedorFooter"></div>
   <script type="module" src="../assets/js/login.js"></script>
+  <script type="module" src="../assets/js/ui-acceso.js"></script>
 </body>
 </html>

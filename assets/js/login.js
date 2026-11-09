@@ -65,7 +65,7 @@ formulario.addEventListener('submit', (evento) => {
   }
 });
 
-document.getElementById('enlaceRecuperar').addEventListener('click', (evento) => {
+document.getElementById('enlaceRecuperar')?.addEventListener('click', (evento) => {
   evento.preventDefault();
   mensaje.textContent = 'La recuperación de contraseña todavía no está disponible.';
 });

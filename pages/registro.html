@@ -14,11 +14,12 @@
 <body class="cuerpoPagina">
   <div id="contenedorHeader"></div>
 
-  <main class="seccionAcceso">
+  <main class="seccionAcceso accesoRegistro">
     <section class="tarjetaAcceso" aria-labelledby="tituloRegistro">
       <div class="encabezadoAcceso">
-        <h1 id="tituloRegistro">Crear una cuenta</h1>
-        <p>Registrate para seguir tus reportes y participar en tu barrio.</p>
+        <a class="logoAcceso" href="/index.html" aria-label="Reporte Urbano: ir al inicio"><img src="/public/img/logo.png" alt="Reporte Urbano"></a>
+        <h1 id="tituloRegistro">Crear cuenta</h1>
+        <p>Registrate para reportar incidencias y hacer un seguimiento de tus reclamos.</p>
       </div>
 
       <form id="formularioRegistro" class="formularioAcceso" novalidate>
@@ -43,7 +44,7 @@
 
         <button class="botonAcceso" type="submit">Crear cuenta</button>
         <p class="mensajeAcceso" id="mensajeRegistro" role="status" aria-live="polite"></p>
-        <p class="leyendaRegistro">¿Ya tenés una cuenta? <a href="/pages/login.html">Ingresá</a></p>
+        <p class="leyendaRegistro">¿Ya tenés una cuenta? <a href="/pages/login.html">Iniciá sesión</a></p>
       </form>
     </section>
   </main>
@@ -56,5 +57,6 @@
 
   <div id="contenedorFooter"></div>
   <script type="module" src="../assets/js/registro.js"></script>
+  <script type="module" src="../assets/js/ui-acceso.js"></script>
 </body>
 </html>
