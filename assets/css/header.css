@@ -14,9 +14,6 @@
 .contenedorLogo {
   display: flex;
   align-items: center;
-}
-
-.portadaUrbana .contenedorLogo {
   margin-left: max(0px, calc(5.2vw - 2rem), calc((100% - 1560px) / 2));
 }
 
@@ -85,4 +82,21 @@
 .botonMiPerfil:hover {
   background-color: #007bbf;
   color: #ffffff;
+}
+
+@media (max-width: 700px) {
+  .encabezadoPrincipal {
+    height: auto;
+    min-height: 75px;
+    padding: 14px 20px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .navegacionMenu {
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+
+  .enlaceNavegacion { font-size: 0.75rem; }
 }

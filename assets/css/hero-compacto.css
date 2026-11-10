@@ -177,16 +177,4 @@
   .descripcionHero { max-width: 490px; margin-bottom: 22px; }
   .accionesHero a { flex: 1 1 220px; }
   .contenedorMapaChico { height: 310px; border-width: 7px; border-radius: 24px; }
-  .portadaUrbana .encabezadoPrincipal {
-    height: auto;
-    min-height: 75px;
-    padding: 14px 20px;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  .portadaUrbana .navegacionMenu {
-    flex-wrap: wrap;
-    gap: 12px 18px;
-  }
-  .portadaUrbana .enlaceNavegacion { font-size: 0.75rem; }
 }
