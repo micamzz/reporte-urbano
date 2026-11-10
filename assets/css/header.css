@@ -16,6 +16,10 @@
   align-items: center;
 }
 
+.portadaUrbana .contenedorLogo {
+  margin-left: max(0px, calc(5.2vw - 2rem), calc((100% - 1560px) / 2));
+}
+
 .enlaceLogo {
   display: inline-block;
   text-decoration: none;

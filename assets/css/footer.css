@@ -1,179 +1,85 @@
-/* ==========================================
-   PIE DE PÁGINA (FOOTER) - REPORTE URBANO
-   Municipio de Ituzaingó
-   ========================================== */
-
 .piePagina {
-  background-color: #1e1e1e;
-  color: #ffffff;
-  padding: 3rem 2rem 1.5rem 2rem;
   position: relative;
+  margin-top: 48px;
+  padding: 26px max(24px, 5.2vw) 20px;
+  background: #062c4d;
+  color: #e3edf6;
+  font-size: 13px;
+  line-height: 1.55;
 }
 
-/* --- FILAS Y COLUMNAS PRINCIPALES --- */
+.curvaFooter {
+  position: absolute;
+  top: -47px;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  pointer-events: none;
+}
+
 .contenedorFooterFilas {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 2rem;
-  max-width: 1100px;
-  margin: 0 auto 2.5rem auto;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.9fr) minmax(0, 1.9fr) minmax(0, 1.1fr);
+  gap: clamp(20px, 2.4vw, 40px);
+  width: 100%;
+  align-items: start;
+  margin: 0 auto 24px;
 }
 
-.columnaFooter {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.columnaFooter { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; min-width: 0; }
+.marcaFooter { padding-right: 24px; border-right: 1px solid #8cb3d14d; }
+.logoFooter { display: inline-block; max-width: 100%; }
+.logoFooter img { display: block; width: 220px; max-width: 100%; height: auto; }
+.descripcionFooter { max-width: 245px; margin: 8px 0 0; color: #d2e0ed; font-size: 14px; line-height: 1.65; }
+.tituloColumnaFooter { margin: 0 0 6px; color: #fff; font-size: 19px; font-weight: 700; line-height: 1.3; }
+.tituloColumnaFooter::after { content: ''; display: block; width: 58px; height: 3px; margin-top: 10px; border-radius: 3px; background: #84cf2d; }
+.navegacionFooter a { display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; color: #e3edf6; text-decoration: none; }
+.textoEnlaceFooter { display: block; min-width: 0; font-size: 14px; font-weight: 400; line-height: 1.5; color: inherit; overflow-wrap: break-word; }
+.navegacionFooter svg, .detalleContactoFooter svg { width: 20px; height: 20px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.detalleContactoFooter { display: flex; align-items: center; gap: 10px; margin: 0; min-width: 0; color: #e3edf6; font-size: 14px; line-height: 1.5; text-decoration: none; }
+.detalleContactoFooter span { min-width: 0; overflow-wrap: anywhere; }
+.datosContactoFooter { display: grid; gap: 12px; width: 100%; }
+.sedeFooter { min-width: 0; }
+.tituloSedeFooter { margin: 0 0 3px; color: #fff; font-size: 12px; font-weight: 700; }
+.textoInfoFooter { margin: 0; color: #d2e0ed; font-size: 12px; }
+.enlaceCorreoFooter { color: #b5df88; font-size: 11px; overflow-wrap: anywhere; text-decoration: none; }
+.emergenciasFooter { display: flex; align-items: baseline; gap: 4px 12px; flex-wrap: wrap; }
+.emergenciasFooter .tituloSedeFooter { flex-basis: 100%; }
+.socialFooter { align-self: stretch; width: 100%; }
+.contenedorRedesSociales { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0; }
+.enlaceRedSocial { display: inline-flex; justify-content: center; align-items: center; box-sizing: border-box; width: 36px; height: 36px; border: 1px solid #99b8d1; border-radius: 9px; color: #e5eff8; text-decoration: none; transition: background-color 0.2s, color 0.2s; }
+.enlaceRedSocial svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.enlaceRedSocial:hover { background: #ffffff14; color: #b5df88; }
+.ilustracionFooter { display: block; width: 100%; max-width: 300px; height: auto; align-self: flex-end; margin-top: auto; transform: translateY(calc(24px + 13%)); clip-path: inset(0 0 12% 0); opacity: 0.5; pointer-events: none; }
+.contenedorSubFooter { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 24px; margin: 0 auto; padding: 16px 48px 0 0; border-top: 1px solid #94afc65e; }
+.enlacesSecundariosFooter { display: flex; flex-wrap: wrap; gap: 6px 10px; }
+.enlaceSecundario { color: #d2e0ed; text-decoration: none; font-size: 10px; }
+.separadorFooter { color: #7c9ab4; font-size: 10px; }
+.textoCopyright { order: -1; margin: 0; color: #d2e0ed; font-size: 11px; }
+.piePagina a:hover { text-decoration: underline; }
+.piePagina a:focus-visible, .botonVolverArriba:focus-visible { outline: 2px solid #9cdb5b; outline-offset: 4px; }
+.botonVolverArriba { position: absolute; bottom: 16px; right: max(24px, 5.2vw); display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #89a7c1; border-radius: 8px; color: #e5eff8; background: transparent; cursor: pointer; }
+.botonVolverArriba svg { width: 18px; height: 18px; }
+.botonVolverArriba:hover { background: #ffffff14; }
+
+@media (min-width: 1200px) {
+  .datosContactoFooter { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .emergenciasFooter { grid-column: 1 / -1; }
 }
 
-.tituloColumnaFooter {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 0.5rem;
-  border-bottom: 2px solid #8cb727;
-  padding-bottom: 0.4rem;
-  width: max-content;
+@media (max-width: 1100px) {
+  .contenedorFooterFilas { grid-template-columns: 1fr 1fr; gap: 28px 40px; }
+  .marcaFooter { border-right: 0; padding-right: 0; }
+  .socialFooter { justify-content: flex-start; }
+  .ilustracionFooter { max-width: 250px; }
 }
 
-.textoInfoFooter {
-  font-size: 0.8rem;
-  color: #cccccc;
-  margin: 0;
-}
-
-.enlaceCorreoFooter {
-  font-size: 0.8rem;
-  color: #8cb727;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.enlaceCorreoFooter:hover {
-  text-decoration: underline;
-}
-
-/* --- REDES SOCIALES E ÍCONOS --- */
-.contenedorRedesSociales {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 1.2rem 0;
-  max-width: 1100px;
-  margin: 0 auto 1.5rem auto;
-}
-
-.contenedorRedesSociales::before,
-.contenedorRedesSociales::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background-color: #555555;
-}
-
-.enlaceRedSocial {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  text-decoration: none;
-  transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Tamaño uniforme para FontAwesome (facebook, instagram, youtube) y la radio (gv-icon-778) */
-.enlaceRedSocial i,
-.enlaceRedSocial .fa {
-  font-size: 1.2rem;
-  line-height: 1;
-  display: inline-block;
-}
-
-
-/* --- SUBFOOTER, ENLACES SECUNDARIOS Y COPYRIGHT --- */
-.contenedorSubFooter {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-.enlacesSecundariosFooter {
-  display: flex;
-  justify-content: center;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-}
-
-.enlaceSecundario {
-  color: #aaaaaa;
-  text-decoration: none;
-  font-size: 0.75rem;
-  font-weight: 600;
-  transition: color 0.2s ease;
-}
-
-.enlaceSecundario:hover {
-  color: #ffffff;
-}
-
-.separadorFooter {
-  color: #555555;
-  font-size: 0.75rem;
-}
-
-.textoCopyright {
-  font-size: 0.7rem;
-  color: #777777;
-}
-
-/* --- BOTÓN VOLVER ARRIBA --- */
-.botonVolverArriba {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background-color: #007bbf;
-  color: #ffffff;
-  border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 700;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.botonVolverArriba:hover {
-  background-color: #005f94;
-  transform: translateY(-2px);
-}
-
-/* --- DISEÑO RESPONSIVE (MÓVILES) --- */
 @media (max-width: 576px) {
-  .piePagina {
-    padding: 2rem 1rem 1.5rem 1rem;
-  }
-
-  .contenedorRedesSociales {
-    gap: 1rem;
-    padding: 1rem 0;
-  }
-
-  .enlaceRedSocial {
-    width: 36px;
-    height: 36px;
-  }
-
-  .enlaceRedSocial i,
-  .enlaceRedSocial .fa {
-    font-size: 1.05rem;
-  }
-
-  .botonVolverArriba {
-    bottom: 15px;
-    right: 15px;
-  }
+  .piePagina { margin-top: 32px; padding: 20px 20px 18px; }
+  .curvaFooter { top: -31px; height: 32px; }
+  .contenedorFooterFilas { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .descripcionFooter { max-width: 320px; }
+  .ilustracionFooter { max-width: 200px; align-self: flex-end; }
+  .contenedorSubFooter { align-items: flex-start; flex-direction: column; padding-right: 34px; }
+  .botonVolverArriba { right: 20px; bottom: 18px; }
 }

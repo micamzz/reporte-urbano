@@ -7,7 +7,9 @@ export async function cargarComponentesModulares() {
 
     const respuestaFooter = await fetch('/partials/footer.html');
     if (respuestaFooter.ok) {
-      document.getElementById('contenedorFooter').innerHTML = await respuestaFooter.text();
+      const documentoFooter = new DOMParser().parseFromString(await respuestaFooter.text(), 'text/html');
+      const footer = documentoFooter.querySelector('footer');
+      if (footer) document.getElementById('contenedorFooter').replaceChildren(footer);
     }
   } catch (error) {
     console.error('Error al cargar componentes parciales:', error);

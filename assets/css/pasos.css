@@ -86,10 +86,27 @@
   align-items: center;
   justify-content: center;
   gap: 30px;
-  margin: 0 0 30px;
+}
+
+.portadaUrbana :is(.tituloPasos, .tituloCarrusel, .tituloReportesRecientes) {
+  margin: 0;
+  font-family: inherit;
+  font-weight: 700;
   color: #092553;
   font-size: clamp(26px, 2.4vw, 42px);
   letter-spacing: -0.8px;
+}
+
+.portadaUrbana :is(.pasosInicio, .seccionCarrusel, .seccionReportesRecientes) {
+  padding-block: 32px;
+}
+
+.portadaUrbana :is(.tituloPasos, .encabezadoCarrusel, .encabezadoReportesRecientes) {
+  margin: 0 0 24px;
+}
+
+.portadaUrbana :is(.subtituloCarrusel, .subtituloReportesRecientes) {
+  margin: 8px 0 0;
 }
 
 .pasosInicio .tituloPasos::before,
@@ -135,7 +152,15 @@
 .pasosInicio .tarjetaPaso:nth-child(2) .iconoPaso { color: #0073ce; }
 .pasosInicio .contenidoPaso { min-width: 0; }
 .pasosInicio .tituloPaso { margin: 0 0 5px; color: #092553; font-size: clamp(15px, 1.2vw, 20px); }
-.pasosInicio .descripcionPaso { margin: 0; color: #092553; font-size: clamp(13px, 1vw, 17px); line-height: 1.45; }
+.pasosInicio .descripcionPaso { margin: 0; }
+
+.portadaUrbana :is(.descripcionPaso, .subtituloCarrusel, .subtituloReportesRecientes) {
+  font-family: inherit;
+  font-size: clamp(13px, 1vw, 17px);
+  font-weight: 400;
+  color: #092553;
+  line-height: 1.45;
+}
 
 @media (max-width: 1200px) and (min-width: 901px) {
   .pasosInicio .grillaPasos { gap: 16px; }
@@ -148,12 +173,13 @@
   .pasosInicio .grillaPasos { grid-template-columns: 1fr; max-width: 620px; gap: 18px; }
   .pasosInicio .tarjetaPaso { padding: 22px 24px; }
   .pasosInicio .tituloPaso { font-size: 18px; }
-  .pasosInicio .descripcionPaso { font-size: 15px; }
+  .portadaUrbana :is(.descripcionPaso, .subtituloCarrusel, .subtituloReportesRecientes) { font-size: 15px; }
 }
 
 @media (max-width: 480px) {
   .pasosInicio { padding: 30px 20px; }
-  .pasosInicio .tituloPasos { gap: 14px; font-size: 24px; }
+  .pasosInicio .tituloPasos { gap: 14px; }
+  .portadaUrbana :is(.tituloPasos, .tituloCarrusel, .tituloReportesRecientes) { font-size: 24px; }
   .pasosInicio .tituloPasos::before,
   .pasosInicio .tituloPasos::after { width: 24px; }
   .pasosInicio .tarjetaPaso { gap: 14px; padding: 22px 16px; border-radius: 22px; }
