@@ -1,6 +1,8 @@
 import { cargarComponentesModulares } from './utils/include.js';
 import { actualizarBotonHeader, iniciarSesion } from './auth.js';
-import { destinoTrasLogin } from './retorno-login.js';
+import { destinoTrasLogin, conservarRetornoEnlaces } from './retorno-login.js';
+
+conservarRetornoEnlaces();
 
 const formulario = document.getElementById('formularioLogin');
 const email = document.getElementById('emailLogin');

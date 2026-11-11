@@ -1,5 +1,8 @@
 import { cargarComponentesModulares } from './utils/include.js';
 import { actualizarBotonHeader, registrarUsuario, validarPasswordRegistro } from './auth.js';
+import { conservarRetornoEnlaces } from './retorno-login.js';
+
+conservarRetornoEnlaces();
 
 const formulario = document.getElementById('formularioRegistro');
 const nombre = document.getElementById('nombreRegistro');

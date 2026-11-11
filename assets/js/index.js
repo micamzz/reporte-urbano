@@ -1,4 +1,7 @@
 import { actualizarApoyos } from './apoyos-ui.js';
+import { configurarEnlacesReporte } from './acceso-reporte.js';
+
+configurarEnlacesReporte();
 import { obtenerReportes, textoSeguro, imagenSegura } from './reportes.js';
 import { cargarComponentesModulares } from './utils/include.js';
 import { actualizarBotonHeader } from './auth.js';

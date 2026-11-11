@@ -1,4 +1,7 @@
 import { obtenerReportes, textoSeguro, imagenSegura } from './reportes.js';
+import { configurarEnlacesReporte } from './acceso-reporte.js';
+
+configurarEnlacesReporte();
 import { cargarComponentesModulares } from './utils/include.js';
 import { actualizarBotonHeader } from './auth.js';
 

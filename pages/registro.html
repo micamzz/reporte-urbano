@@ -44,7 +44,7 @@
 
         <button class="botonAcceso" type="submit">Crear cuenta</button>
         <p class="mensajeAcceso" id="mensajeRegistro" role="status" aria-live="polite"></p>
-        <p class="leyendaRegistro">¿Ya tenés una cuenta? <a href="/pages/login.html">Iniciá sesión</a></p>
+        <p class="leyendaRegistro">¿Ya tenés una cuenta? <a href="/pages/login.html" data-conservar-retorno>Iniciá sesión</a></p>
       </form>
     </section>
   </main>
@@ -52,7 +52,7 @@
   <dialog id="popupRegistroExitoso" class="popupRegistro" aria-labelledby="tituloRegistroExitoso" aria-describedby="descripcionRegistroExitoso">
     <h2 id="tituloRegistroExitoso">Cuenta registrada exitosamente</h2>
     <p id="descripcionRegistroExitoso">Ya podés iniciar sesión con tu correo y contraseña.</p>
-    <a class="botonAcceso" href="/pages/login.html" autofocus>Ir al login</a>
+    <a class="botonAcceso" href="/pages/login.html" data-conservar-retorno autofocus>Ir al login</a>
   </dialog>
 
   <div id="contenedorFooter"></div>

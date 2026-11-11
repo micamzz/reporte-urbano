@@ -101,8 +101,52 @@ test('vuelve al origen y lo conserva al iniciar sesión', async () => {
   assert.match(retorno.enlaceLoginIncidencia(1), /origen%3Dinicio/);
 });
 
+test('conserva volver entre login y registro hasta autenticar, sin registrar apoyos', async () => {
+  const { retorno, auth, apoyo } = await entorno();
+  const loginInicial = new URL(retorno.enlaceLoginIncidencia(2), 'http://localhost');
+  assert.equal(retorno.destinoTrasLogin(loginInicial.search), '/pages/detalle-incidencia.html?id=2');
+  const registro = new URL(retorno.enlaceAccesoConRetorno('/pages/registro.html', loginInicial.search), 'http://localhost');
+  assert.equal(registro.searchParams.get('volver'), loginInicial.searchParams.get('volver'));
+  const loginPosterior = new URL(retorno.enlaceAccesoConRetorno('/pages/login.html', registro.search), 'http://localhost');
+  assert.equal(loginPosterior.searchParams.get('volver'), loginInicial.searchParams.get('volver'));
+  auth.registrarUsuario('Vecino', 'nuevo@example.com', 'Prueba2026!');
+  assert.equal(auth.obtenerUsuarioActual(), null); // El registro actual requiere login posterior.
+  auth.iniciarSesion('nuevo@example.com', 'Prueba2026!');
+  assert.equal(retorno.destinoTrasLogin(loginPosterior.search), '/pages/detalle-incidencia.html?id=2');
+  assert.equal(apoyo.obtenerApoyos(2).length, 0);
+  const origen = '?volver=' + encodeURIComponent('/pages/detalle-incidencia.html?id=2&origen=inicio');
+  const registroConOrigen = new URL(retorno.enlaceAccesoConRetorno('/pages/registro.html', origen), 'http://localhost');
+  assert.equal(retorno.destinoTrasLogin(registroConOrigen.search), '/pages/detalle-incidencia.html?id=2&origen=inicio');
+});
+
+test('enlaces normales sin retorno y rechazo de destinos externos o inválidos en ambos sentidos', async () => {
+  const { retorno } = await entorno();
+  for (const ruta of ['/pages/login.html', '/pages/registro.html']) {
+    assert.equal(retorno.enlaceAccesoConRetorno(ruta, ''), ruta);
+    for (const destino of ['https://externo.example/pages/detalle-incidencia.html?id=1', '//externo.example', 'javascript:alert(1)', '/pages/detalle-incidencia.html', '/pagina-inexistente.html']) {
+      const busqueda = '?volver=' + encodeURIComponent(destino);
+      assert.equal(retorno.enlaceAccesoConRetorno(ruta, busqueda), ruta);
+      assert.equal(retorno.destinoTrasLogin(busqueda), '/index.html');
+    }
+  }
+});
+
+test('actualiza el enlace a registro y ambos enlaces de regreso al login', async () => {
+  const { retorno, contexto } = await entorno();
+  contexto.window.location.search = '?volver=' + encodeURIComponent('/pages/detalle-incidencia.html?id=3&origen=mapa');
+  const enlaces = ['/pages/registro.html', '/pages/login.html', '/pages/login.html'].map(ruta => ({
+    href: ruta, getAttribute() { return this.href; }, setAttribute(nombre, valor) { this.href = valor; }
+  }));
+  contexto.document.querySelectorAll = () => enlaces;
+  retorno.conservarRetornoEnlaces();
+  for (const enlace of enlaces) {
+    assert.equal(new URL(enlace.href, 'http://localhost').searchParams.get('volver'), '/pages/detalle-incidencia.html?id=3&origen=mapa');
+  }
+});
+
 test('guarda reportes con seguimiento de ocho dígitos, los integra al listado y permite apoyarlos', async () => {
   const e = await entorno();
+  e.auth.iniciarSesion('test@unlam.com', 'Unlam2026!');
   e.contexto.crypto = require('node:crypto').webcrypto;
   const modulo = await e.cargar('guardar-reporte.js'); await modulo.evaluate();
   const datos = new FormData();
@@ -130,6 +174,7 @@ test('guarda reportes con seguimiento de ocho dígitos, los integra al listado y
 
 test('las fotos se almacenan como datos persistentes y no como URLs temporales', async () => {
   const e = await entorno();
+  e.auth.iniciarSesion('test@unlam.com', 'Unlam2026!');
   e.contexto.crypto = require('node:crypto').webcrypto;
   e.contexto.FileReader = class {
     readAsDataURL() { this.result = 'data:image/png;base64,aW1hZ2Vu'; this.onload(); }
@@ -142,6 +187,46 @@ test('las fotos se almacenan como datos persistentes y no como URLs temporales',
   assert.equal(reporte.fotografias.length, 1);
   assert.match(reporte.imagen, /^data:image\/png;base64,/);
   assert.equal(JSON.parse(e.localStorage.getItem('reportesUsuario'))[0].fotografias[0], reporte.imagen);
+});
+
+test('acceso a Nuevo Reporte, retorno por registro y cierre de sesión', async () => {
+  const e = await entorno();
+  const contenido = { hidden: true };
+  const enlaces = [{ href: '/pages/reporte.html' }, { href: '/pages/reporte.html' }];
+  const eventos = new Map();
+  let redireccion;
+  e.contexto.document.querySelector = () => contenido;
+  e.contexto.document.querySelectorAll = () => enlaces;
+  e.contexto.document.addEventListener = (nombre, callback) => eventos.set(nombre, callback);
+  e.contexto.window.location.replace = url => { redireccion = url; };
+  const modulo = await e.cargar('acceso-reporte.js'); await modulo.evaluate();
+  const acceso = modulo.namespace;
+  acceso.configurarEnlacesReporte();
+  assert.match(enlaces[0].href, /^\/pages\/login.html\?volver=/);
+  assert.equal(acceso.exigirSesionReporte(), false);
+  assert.equal(contenido.hidden, true);
+  const login = new URL(redireccion, 'http://localhost');
+  assert.equal(e.retorno.destinoTrasLogin(login.search), '/pages/reporte.html');
+  const registro = new URL(e.retorno.enlaceAccesoConRetorno('/pages/registro.html', login.search), 'http://localhost');
+  const vueltaLogin = new URL(e.retorno.enlaceAccesoConRetorno('/pages/login.html', registro.search), 'http://localhost');
+  e.auth.registrarUsuario('Vecino', 'reporte@example.com', 'Prueba2026!');
+  assert.equal(e.auth.obtenerUsuarioActual(), null);
+  e.auth.iniciarSesion('reporte@example.com', 'Prueba2026!');
+  assert.equal(e.retorno.destinoTrasLogin(vueltaLogin.search), '/pages/reporte.html');
+  assert.equal(enlaces[0].href, '/pages/reporte.html');
+  assert.equal(enlaces[1].href, '/pages/reporte.html');
+  assert.equal(acceso.exigirSesionReporte(), true);
+  assert.equal(contenido.hidden, false);
+  e.auth.cerrarSesion();
+  assert.equal(acceso.exigirSesionReporte(), false);
+  assert.equal(contenido.hidden, true);
+  assert.match(enlaces[0].href, /^\/pages\/login.html\?volver=/);
+  assert.equal(e.retorno.destinoTrasLogin(''), '/index.html');
+  assert.equal(e.retorno.destinoTrasLogin('?volver=https://externo.example/pages/reporte.html'), '/index.html');
+  assert.equal(e.retorno.destinoTrasLogin('?volver=' + encodeURIComponent('/pages/detalle-incidencia.html?id=1&origen=mapa')), '/pages/detalle-incidencia.html?id=1&origen=mapa');
+  const guardado = await e.cargar('guardar-reporte.js'); await guardado.evaluate();
+  await assert.rejects(() => guardado.namespace.guardarReporteLocal(new FormData()), /sesión/);
+  assert.equal(e.localStorage.getItem('reportesUsuario'), null);
 });
 
 test('popup sin sesión, retorno al detalle, estados sincronizados de detalle e inicio y cierre de sesión', async () => {

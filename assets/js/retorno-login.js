@@ -3,6 +3,7 @@ export function destinoTrasLogin(busqueda = window.location.search) {
   if (!retorno) return '/index.html';
   try {
     const url = new URL(retorno, window.location.origin);
+    if (url.origin === window.location.origin && url.pathname === '/pages/reporte.html') return '/pages/reporte.html';
     if (url.origin === window.location.origin && url.pathname === '/pages/detalle-incidencia.html' && url.searchParams.get('id')) {
       return url.pathname + url.search;
     }
@@ -14,6 +15,18 @@ export function enlaceLoginIncidencia(id) {
   const origen = origenDetalle();
   const detalle = `/pages/detalle-incidencia.html?id=${encodeURIComponent(id)}${origen ? `&origen=${origen}` : ''}`;
   return `/pages/login.html?volver=${encodeURIComponent(detalle)}`;
+}
+
+export function enlaceAccesoConRetorno(ruta, busqueda = window.location.search) {
+  if (!['/pages/login.html', '/pages/registro.html'].includes(ruta)) return '/pages/login.html';
+  const destino = destinoTrasLogin(busqueda);
+  return destino === '/index.html' ? ruta : `${ruta}?volver=${encodeURIComponent(destino)}`;
+}
+
+export function conservarRetornoEnlaces() {
+  document.querySelectorAll('a[data-conservar-retorno]').forEach(enlace => {
+    enlace.setAttribute('href', enlaceAccesoConRetorno(enlace.getAttribute('href')));
+  });
 }
 
 function origenDetalle() {

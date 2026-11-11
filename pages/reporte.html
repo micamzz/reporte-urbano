@@ -9,7 +9,7 @@
 </head>
 <body class="cuerpoPagina paginaReporte">
 <div id="contenedorHeader"></div>
-<main class="nuevoReporte">
+<main class="nuevoReporte" hidden>
 <header class="tituloReporte"><h1><span><i class="fa fa-bullhorn" aria-hidden="true"></i></span> Nuevo Reporte</h1><p>Contanos qué está pasando en tu barrio y ayudanos a mejorar Ituzaingó.</p></header>
 <ol class="progresoReporte" aria-label="Progreso del reporte"><li aria-current="step"><span>1</span>Problema</li><li><span>2</span>Ubicación</li><li><span>3</span>Confirmación</li></ol>
 <div class="tarjetaReporte">
@@ -34,10 +34,10 @@
 <button id="cerrarReporteEnviado" class="cerrarReporteEnviado" type="button" aria-label="Cerrar confirmación">×</button>
 <i class="fa fa-check-circle" aria-hidden="true"></i>
 <h2 id="tituloReporteEnviado">Reporte enviado correctamente</h2>
-<p id="descripcionReporteEnviado">Tu reporte quedó guardado en este navegador. Conservá tu número de seguimiento:</p>
+<p id="descripcionReporteEnviado">Conservá tu número de seguimiento:</p>
 <strong id="numeroSeguimiento"></strong>
 <a id="verReporteCreado" class="botonPrincipal">Ver mi reporte</a>
 <a class="botonSecundario" href="../index.html#seccionEstadisticas">Volver al inicio</a>
 </dialog>
-<div id="contenedorFooter"></div><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script type="module" src="../assets/js/reporte.js"></script>
+<div id="contenedorFooter"></div><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script type="module" src="../assets/js/inicio-reporte.js"></script>
 </body></html>

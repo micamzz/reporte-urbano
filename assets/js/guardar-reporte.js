@@ -10,6 +10,7 @@ function leerFotografia(archivo) {
 }
 
 export async function guardarReporteLocal(datos) {
+  if (!obtenerUsuarioActual()) throw new Error('Iniciá sesión para crear un reporte.');
   const categoria = datos.get('categoria');
   const titulo = String(datos.get('titulo') || '').trim();
   const descripcion = String(datos.get('descripcion') || '').trim();
@@ -22,6 +23,8 @@ export async function guardarReporteLocal(datos) {
     || !archivo.size || archivo.size > 5 * 1024 * 1024)) throw new Error('Revisá el formato, tamaño y cantidad de fotografías.');
   const fotografias = await Promise.all(archivos.map(leerFotografia));
   const guardar = () => {
+    const usuario = obtenerUsuarioActual();
+    if (!usuario) throw new Error('Iniciá sesión para crear un reporte.');
     let reportes;
     try {
       reportes = JSON.parse(localStorage.getItem('reportesUsuario') || '[]');
@@ -37,7 +40,7 @@ export async function guardarReporteLocal(datos) {
       id: crypto.randomUUID(), numeroSeguimiento, categoria, titulo, descripcion,
       direccion: String(datos.get('direccion') || '').trim(), lat, lng, estado: 'reportado',
       fecha: new Intl.DateTimeFormat('es-AR', { timeZone: 'America/Argentina/Buenos_Aires', day: '2-digit', month: '2-digit', year: 'numeric' }).format(ahora),
-      creadoEn: ahora.toISOString(), usuarioId: obtenerUsuarioActual()?.id || null,
+      creadoEn: ahora.toISOString(), usuarioId: usuario.id,
       fotografias, imagen: fotografias[0] || ''
     };
     try { localStorage.setItem('reportesUsuario', JSON.stringify([...reportes, reporte])); }
