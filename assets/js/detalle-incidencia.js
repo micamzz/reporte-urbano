@@ -76,7 +76,6 @@ function cargarDetalleReporte() {
           <div class="tituloEtiquetasDetalle"><h2 class="tituloDetalle">${textoSeguro(reporte.titulo)}</h2><div class="etiquetasDetalle"><span class="badgeCategoria">${categoria}</span><span class="badgeEstado estado-${estado}">${estados[estado]}</span></div></div>
         </header>
         <div class="metadatosDetalle"><p><i class="fa fa-map-marker" aria-hidden="true"></i> ${textoSeguro(reporte.direccion || 'Sin dirección ingresada')}</p><p><i class="fa fa-calendar" aria-hidden="true"></i> ${textoSeguro(reporte.fecha || 'Sin fecha')}</p></div>
-        ${reporte.numeroSeguimiento ? `<p class="numeroSeguimientoDetalle">Número de seguimiento: <strong>${textoSeguro(reporte.numeroSeguimiento)}</strong></p>` : ''}
         <section class="seccionInfoDetalle"><h3>Descripción</h3><p class="descripcionDetalle">${textoSeguro(reporte.descripcion)}</p></section>
         <section class="seccionInfoDetalle"><h3>Fotografías</h3><div id="fotografiasDetalle" class="fotografiasDetalle"></div></section>
       </article>

@@ -58,7 +58,7 @@ export function actualizarBotonHeader() {
   const contenedor = document.getElementById('contenedorBotonUsuario');
   if (!contenedor) return;
   if (obtenerEstadoSesion()) {
-    contenedor.innerHTML = '<button class="botonMiPerfil" id="btnCerrarSesion" type="button">Cerrar sesión</button>';
+    contenedor.innerHTML = '<a class="enlaceNavegacion" href="/pages/perfil.html">Mi perfil</a><button class="botonMiPerfil" id="btnCerrarSesion" type="button">Cerrar sesión</button>';
     document.getElementById('btnCerrarSesion').addEventListener('click', cerrarSesion);
   } else {
     contenedor.innerHTML = '<a class="botonIngresar" href="/pages/login.html">Ingresar</a>';
@@ -66,3 +66,5 @@ export function actualizarBotonHeader() {
 }
 
 window.addEventListener('storage', actualizarBotonHeader);
+window.addEventListener('sesionActualizada', actualizarBotonHeader);
+window.addEventListener('pageshow', actualizarBotonHeader);

@@ -47,6 +47,14 @@
   color: #007bbf;
 }
 
+#contenedorBotonUsuario { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.botonMiPerfil { font-family: inherit; }
+
+@media (min-width: 701px) and (max-width: 1000px) {
+  .encabezadoPrincipal { height: auto; min-height: 75px; padding-block: 14px; flex-wrap: wrap; gap: 16px; }
+  .navegacionMenu { flex-wrap: wrap; }
+}
+
 .botonIngresar {
   display: inline-flex;
   align-items: center;

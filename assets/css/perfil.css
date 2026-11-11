@@ -1,0 +1,14 @@
+.paginaPerfil { background: radial-gradient(ellipse at 15% 35%, #e6f3ff, transparent 65%), #f8fbff; }
+.contenidoPerfil { max-width: 960px; margin: 1.5rem auto 2rem; padding: 0 24px; color: #333333; }
+.contenidoPerfil * { box-sizing: border-box; }
+.contenidoPerfil h1 { margin: 0 0 1.5rem; color: #092553; font-size: 1.5rem; }
+.contenidoPerfil h2 { margin: 0; color: #092553; font-size: 1.05rem; }
+.tarjetaPerfil, .reportePersonal, .vacioPerfil { padding: 1.25rem; border: 1px solid #e2e8f0; border-radius: 10px; background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+.datosPerfil { display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 12px; margin: 1rem 0 0; font-size: 0.85rem; }
+.datosPerfil dt { font-weight: 600; color: #64748b; }.datosPerfil dd { margin: 0; overflow-wrap: anywhere; }
+.seccionReportesPerfil { margin-top: 1.5rem; }.cabeceraReportesPerfil { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
+.reportesPerfil { display: grid; gap: 1rem; }.reportePersonal h3 { margin: 0 0 0.75rem; font-size: 0.95rem; color: #1e293b; overflow-wrap: anywhere; }
+.reportePersonal p, .vacioPerfil { font-size: 0.85rem; line-height: 1.5; }.reportePersonal p { margin: 0.5rem 0; overflow-wrap: anywhere; }.reportePersonal .metadatosPerfil { color: #64748b; font-size: 0.8rem; }
+.reportePersonal a { display: inline-block; margin-top: 0.5rem; color: #007bbf; font-size: 0.85rem; font-weight: 600; }
+.contenidoPerfil :focus-visible { outline: 3px solid #45b51c; outline-offset: 3px; }
+@media(max-width:600px) { .contenidoPerfil { padding: 0 20px; }.datosPerfil { grid-template-columns: minmax(0,1fr); gap: 6px; }.datosPerfil dd { margin-bottom: 10px; }.cabeceraReportesPerfil .botonIngresar { min-height: 44px; } }

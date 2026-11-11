@@ -49,6 +49,50 @@ test('sin sesión no registra; persiste, evita duplicados, separa incidencias y 
   assert.equal(e.apoyo.obtenerEstadoApoyo(1).apoyado, false);
 });
 
+test('header muestra Mi perfil al iniciar sesión y restaura Ingresar al cerrar sesión', async () => {
+  const e = await entorno();
+  const contenedor = { innerHTML: '' };
+  e.contexto.document.getElementById = id => id === 'contenedorBotonUsuario' ? contenedor
+    : id === 'btnCerrarSesion' ? { addEventListener() {} } : null;
+  e.auth.actualizarBotonHeader();
+  assert.match(contenedor.innerHTML, /Ingresar/);
+  assert.doesNotMatch(contenedor.innerHTML, /Mi perfil/);
+  e.auth.iniciarSesion('test@unlam.com', 'Unlam2026!');
+  assert.match(contenedor.innerHTML, /href="\/pages\/perfil.html">Mi perfil/);
+  assert.match(contenedor.innerHTML, /Cerrar sesión/);
+  assert.doesNotMatch(contenedor.innerHTML, /Ingresar/);
+  e.auth.cerrarSesion();
+  assert.match(contenedor.innerHTML, /Ingresar/);
+  assert.doesNotMatch(contenedor.innerHTML, /Mi perfil/);
+});
+
+test('perfil presenta únicamente reportes propios y se bloquea al cerrar sesión', async () => {
+  const e = await entorno();
+  e.auth.iniciarSesion('test@unlam.com', 'Unlam2026!');
+  e.localStorage.setItem('reportesUsuario', JSON.stringify([
+    { id: 'propio', usuarioId: 'test@unlam.com', titulo: 'Reporte propio', numeroSeguimiento: 'RU12345678IT', creadoEn: '2026-11-11T12:00:00Z' },
+    { id: 'ajeno', usuarioId: 'otro@example.com', titulo: 'Reporte ajeno', numeroSeguimiento: 'RU99999999IT' }
+  ]));
+  const contenido = { hidden: true };
+  const nodos = Object.fromEntries(['nombrePerfil', 'emailPerfil', 'reportesPerfil'].map(id => [id, { textContent: '', innerHTML: '', replaceChildren() { this.innerHTML = ''; } }]));
+  e.contexto.document.querySelector = () => contenido;
+  e.contexto.document.getElementById = id => nodos[id] || null;
+  e.contexto.fetch = async () => ({ ok: false });
+  let destino;
+  e.contexto.window.location.replace = url => { destino = url; };
+  const perfil = await e.cargar('perfil.js'); await perfil.evaluate();
+  assert.equal(contenido.hidden, false);
+  assert.equal(nodos.emailPerfil.textContent, 'test@unlam.com');
+  assert.match(nodos.reportesPerfil.innerHTML, /Reporte propio/);
+  assert.match(nodos.reportesPerfil.innerHTML, /RU12345678IT/);
+  assert.doesNotMatch(nodos.reportesPerfil.innerHTML, /Reporte ajeno|RU99999999IT/);
+  assert.equal(e.retorno.destinoVolverDetalle('?origen=perfil').href, '/pages/perfil.html');
+  e.auth.cerrarSesion();
+  assert.equal(contenido.hidden, true);
+  assert.equal(nodos.reportesPerfil.innerHTML, '');
+  assert.equal(e.retorno.destinoTrasLogin(new URL(destino, 'http://localhost').search), '/pages/perfil.html');
+});
+
 test('reutiliza registro y cuenta apoyos de usuarios distintos sin usar los números de ejemplo', async () => {
   const e = await entorno();
   assert.equal(e.apoyo.obtenerEstadoApoyo(1).total, 0);
