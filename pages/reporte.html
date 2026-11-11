@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reportar un problema - Reporte Urbano</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="../assets/css/styles.css">
-  <link rel="stylesheet" href="../assets/css/header.css">
-  <link rel="stylesheet" href="../assets/css/footer.css">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuevo Reporte - Reporte Urbano</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="../assets/css/styles.css"><link rel="stylesheet" href="../assets/css/reporte.css">
 </head>
-<body class="cuerpoPagina">
-  <div id="contenedorHeader"></div>
-
-  <main class="contenidoPrincipal">
-    <section class="seccionPasos">
-      <h2>Va el reporte</h2>
-    </section>
-  </main>
-
-  <div id="contenedorFooter"></div>
-  <script type="module">
-    import { cargarComponentesModulares } from '../assets/js/utils/include.js';
-    import { actualizarBotonHeader } from '../assets/js/auth.js';
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      await cargarComponentesModulares();
-      actualizarBotonHeader();
-    });
-  </script>
-</body>
-</html>
+<body class="cuerpoPagina paginaReporte">
+<div id="contenedorHeader"></div>
+<main class="nuevoReporte">
+<header class="tituloReporte"><h1><span><i class="fa fa-bullhorn" aria-hidden="true"></i></span> Nuevo Reporte</h1><p>Contanos qué está pasando en tu barrio y ayudanos a mejorar Ituzaingó.</p></header>
+<ol class="progresoReporte" aria-label="Progreso del reporte"><li aria-current="step"><span>1</span>Problema</li><li><span>2</span>Ubicación</li><li><span>3</span>Confirmación</li></ol>
+<div class="tarjetaReporte">
+<aside class="ilustracionReporte" aria-hidden="true"><svg viewBox="0 0 260 310" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="parque" x2="0" y2="1"><stop stop-color="#e5f3ff"/><stop offset="1" stop-color="#edf9dc"/></linearGradient></defs><path d="M25 190C5 140 48 131 40 96S78 12 131 24s60 64 74 98 55 63 30 123S52 292 25 244Z" fill="url(#parque)"/><path d="M28 268h205" stroke="#b6df8e" stroke-width="13" stroke-linecap="round"/><path d="M52 265V77c0-35 42-35 42-5" stroke="#065487" stroke-width="7" fill="none"/><path d="M76 80q18-26 36 0Z" fill="#007bbf"/><path d="m81 83-28 132h82L108 83" fill="#fff4ae" opacity=".3"/><path d="M82 81a12 12 0 0 0 24 0" fill="#ffeb65"/><path d="M173 106c-35-34-65 0-55 25-40 5-35 58-2 63-8 34 55 40 64 16 35 15 65-19 45-41 21-32-9-69-32-57-1-20-15-25-20-6" fill="#7fd63e"/><path d="M170 265V139m0 75-23-24m23-3 23-25m-23 53 22-21" stroke="#529736" stroke-width="5" stroke-linecap="round"/><path d="M83 237h68M83 226h68M81 247h74" stroke="#84af5c" stroke-width="7"/><path d="M90 220v44m54-44v44" stroke="#176287" stroke-width="5"/><path d="M36 266q-28-41-11-53 20 7 15 37 4-50 21-48 12 14-13 64" fill="#76c34a"/></svg></aside>
+<form id="formularioReporte" novalidate>
+<section data-paso="1" aria-labelledby="tituloPaso1">
+<h2 id="tituloPaso1" tabindex="-1">Paso 1: Contanos el problema</h2><p class="ayudaReporte">Seleccioná la categoría, completá la información y sumá fotos si es necesario.</p>
+<fieldset id="grupoCategoria" aria-describedby="errorCategoria"><legend>Categoría del reporte <b>*</b></legend><div class="categoriasReporte">
+<label><input type="radio" name="categoria" value="bache"><span><i class="fa fa-car" aria-hidden="true"></i>Bache</span></label>
+<label><input type="radio" name="categoria" value="luminaria"><span><i class="fa fa-lightbulb-o" aria-hidden="true"></i>Luminaria</span></label>
+<label><input type="radio" name="categoria" value="arbolado"><span><i class="fa fa-tree" aria-hidden="true"></i>Arbolado</span></label>
+<label><input type="radio" name="categoria" value="transito"><span><i class="fa fa-road" aria-hidden="true"></i>Tránsito</span></label>
+</div><p class="errorReporte" id="errorCategoria" aria-live="polite"></p></fieldset>
+<div class="camposReporte"><div><label for="titulo">Título del reporte <b>*</b></label><input id="titulo" maxlength="150" placeholder="Ej. Bache profundo en la calzada" aria-describedby="errorTitulo"><p id="errorTitulo" class="errorReporte" aria-live="polite"></p></div><div><label for="descripcion">Descripción <b>*</b></label><textarea id="descripcion" rows="3" maxlength="3000" placeholder="Contanos con más detalle qué está ocurriendo..." aria-describedby="errorDescripcion"></textarea><p id="errorDescripcion" class="errorReporte" aria-live="polite"></p></div></div>
+<label for="fotos">Fotografías <small>(opcional)</small></label><label class="cargaFotos" id="zonaFotos" for="fotos"><i class="fa fa-picture-o" aria-hidden="true"></i><span>Arrastrá tus fotos acá o <strong>seleccioná archivos</strong><small>Máximo 5 imágenes. JPG, PNG o WEBP. Hasta 5 MB por foto.</small></span><input id="fotos" type="file" accept="image/jpeg,image/png,image/webp" multiple aria-describedby="errorFotos"></label><p id="errorFotos" class="errorReporte" aria-live="polite"></p><div id="vistaFotos" class="galeriaFotos"></div>
+</section>
+<section data-paso="2" hidden aria-labelledby="tituloPaso2"><h2 id="tituloPaso2" tabindex="-1">Paso 2: Seleccioná la ubicación</h2><p class="ayudaReporte">Hacé clic en el mapa o mové el marcador hasta el lugar del problema.</p><div id="mapaReporte" aria-label="Mapa para seleccionar la ubicación" tabindex="0"></div><button class="seleccionarCentro" type="button" id="seleccionarCentro">Usar el centro del mapa</button><p id="coordenadas" class="ayudaReporte" aria-live="polite">Todavía no seleccionaste una ubicación.</p><p id="errorUbicacion" class="errorReporte" aria-live="polite"></p><div class="camposReporte"><div><label for="direccion">Dirección <small>(opcional)</small></label><div class="busquedaDireccion"><input id="direccion" maxlength="250" placeholder="Calle y altura" aria-describedby="estadoDireccion"><button id="buscarDireccion" type="button" class="botonSecundario">Buscar dirección</button></div><p id="estadoDireccion" class="ayudaReporte" role="status"></p><ul id="resultadosDireccion" class="resultadosDireccion" aria-label="Direcciones encontradas" hidden></ul><small>Búsqueda: Photon · datos de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>.</small></div></div></section>
+<section data-paso="3" hidden aria-labelledby="tituloPaso3"><h2 id="tituloPaso3" tabindex="-1">Paso 3: Revisá y confirmá</h2><p class="ayudaReporte">Revisá la información antes de enviar. Podés volver para modificarla.</p><dl id="resumenReporte" class="resumenReporte"></dl><div id="resumenFotos" class="galeriaFotos"></div><div id="mapaResumen" aria-label="Ubicación seleccionada"></div><p class="avisoConexion">El envío está pendiente de conexión con el servidor. Tus datos no se registrarán hasta que el servicio esté disponible.</p></section>
+<p id="estadoEnvio" role="status" tabindex="-1"></p><div class="accionesReporte"><a id="cancelarReporte" class="botonSecundario" href="../index.html">Cancelar</a><button id="anteriorReporte" class="botonSecundario" type="button" hidden>Anterior</button><button id="siguienteReporte" class="botonPrincipal" type="button">Siguiente <i class="fa fa-arrow-right" aria-hidden="true"></i></button><button id="enviarReporte" class="botonPrincipal" type="submit" hidden>Enviar reporte <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button></div>
+</form></div></main>
+<div id="contenedorFooter"></div><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script type="module" src="../assets/js/reporte.js"></script>
+</body></html>
