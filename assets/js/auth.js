@@ -31,19 +31,26 @@ export function iniciarSesion(email, password) {
   const usuario = obtenerUsuarios().find((usuario) => usuario.email === normalizarEmail(email) && usuario.password === password);
   if (!usuario) throw new Error('El correo o la contraseña son incorrectos.');
   localStorage.setItem(CLAVE_SESION, usuario.email);
+  window.dispatchEvent(new Event('sesionActualizada'));
+}
+
+export function obtenerUsuarioActual() {
+  try {
+    const usuarios = obtenerUsuarios();
+    const usuario = usuarios.find((usuario) => usuario.email === localStorage.getItem(CLAVE_SESION));
+    return usuario ? { id: normalizarEmail(usuario.email), email: usuario.email, nombre: usuario.nombre } : null;
+  } catch {
+    return null;
+  }
 }
 
 export function obtenerEstadoSesion() {
-  try {
-    const usuarios = obtenerUsuarios();
-    return usuarios.some((usuario) => usuario.email === localStorage.getItem(CLAVE_SESION));
-  } catch {
-    return false;
-  }
+  return Boolean(obtenerUsuarioActual());
 }
 
 export function cerrarSesion() {
   localStorage.removeItem(CLAVE_SESION);
+  window.dispatchEvent(new Event('sesionActualizada'));
   actualizarBotonHeader();
 }
 

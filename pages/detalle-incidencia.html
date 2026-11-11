@@ -1,40 +1,27 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detalle de Incidencia - Municipio de Ituzaingó</title>
-  
-  <!-- CSS Modularizado -->
+  <title>Detalle de Incidencia - Reporte Urbano</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="../assets/css/header.css">
-  <link rel="stylesheet" href="../assets/css/detalle-incidencia.css">
   <link rel="stylesheet" href="../assets/css/footer.css">
-
-  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="../assets/css/detalle-incidencia.css">
+  <link rel="stylesheet" href="../assets/css/apoyos.css">
 </head>
-<body class="cuerpoPagina">
-
-  <!-- CONTENEDOR HEADER MODULAR -->
+<body class="cuerpoPagina paginaDetalle">
   <div id="contenedorHeader"></div>
-
-  <main class="contenidoPrincipalDetalle">
-    <!-- 🔹 BOTÓN DINÁMICO QUE REGRESA A LA PÁGINA ANTERIOR DE DONDE VINO EL USUARIO -->
-    <button class="botonVolverDinamico" onclick="window.history.back()">
-      Atras
-    </button>
-
-    <!-- CONTENEDOR DINÁMICO DEL DETALLE -->
-    <div id="contenedorDetalle" class="tarjetaDetallePrincipal">
-      <p class="textoCargando">Cargando información del reporte...</p>
-    </div>
+  <main class="contenidoPrincipalDetalle" aria-labelledby="tituloPaginaDetalle">
+    <a class="botonVolverDinamico" href="/pages/mapa-incidencias.html"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver al mapa</a>
+    <h1 class="encabezadoDetalle" id="tituloPaginaDetalle">Detalle de Incidencia</h1>
+    <p class="subtituloDetalle">Consultá el estado y seguimiento de los reportes de tu comunidad.</p>
+    <div id="contenedorDetalle"><p class="textoCargando" role="status">Cargando información del reporte...</p></div>
   </main>
-
-  <!-- CONTENEDOR FOOTER MODULAR -->
   <div id="contenedorFooter"></div>
-
-  <!-- Script exclusivo para la pantalla de Detalle -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="../assets/js/detalle-incidencia.js"></script>
 </body>
 </html>

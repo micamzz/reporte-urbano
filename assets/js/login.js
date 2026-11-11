@@ -1,5 +1,6 @@
 import { cargarComponentesModulares } from './utils/include.js';
 import { actualizarBotonHeader, iniciarSesion } from './auth.js';
+import { destinoTrasLogin } from './retorno-login.js';
 
 const formulario = document.getElementById('formularioLogin');
 const email = document.getElementById('emailLogin');
@@ -56,7 +57,7 @@ formulario.addEventListener('submit', (evento) => {
   else {
     try {
       iniciarSesion(email.value, password.value);
-      window.location.href = '/index.html';
+      window.location.href = destinoTrasLogin();
     } catch (error) {
       mensaje.textContent = error.message === 'El correo o la contraseña son incorrectos.'
         ? error.message

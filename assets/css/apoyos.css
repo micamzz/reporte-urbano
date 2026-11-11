@@ -1,0 +1,24 @@
+﻿.popupApoyo {
+  box-sizing: border-box;
+  width: min(360px, calc(100% - 40px));
+  max-height: calc(100dvh - 40px);
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #333333;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  font-family: inherit;
+}
+.popupApoyo::backdrop { background: rgba(0, 0, 0, 0.5); }
+.cerrarPopupApoyo { position: absolute; right: 8px; top: 4px; width: 32px; height: 32px; border: 0; background: none; color: #64748b; font-size: 1.5rem; cursor: pointer; }
+.iconoPopupApoyo { display: inline-grid; place-items: center; width: 42px; height: 42px; background: #d8f5c9; color: #087841; border-radius: 50%; font-size: 1.4rem; }
+.popupApoyo h2 { margin: 1rem 0 0.6rem; color: #092553; font-size: 1.05rem; font-weight: 700; }
+.popupApoyo p { margin: 0 0 1.25rem; font-size: 0.85rem; line-height: 1.5; }
+.enlaceLoginApoyo { display: block; box-sizing: border-box; text-align: center; }
+.cancelarPopupApoyo { margin-top: 1rem; padding: 0.5rem; background: none; border: 0; color: #64748b; cursor: pointer; font: inherit; font-size: 0.8rem; }
+[data-error-apoyo] { color: #b42338; font-size: 0.75rem; line-height: 1.5; }
+[data-error-apoyo]:empty { display: none; }
+.botonAfectado.apoyoRegistrado { background: #d8f5c9; color: #087841; border-color: #5aa45e; cursor: default; }
+.popupApoyo :focus-visible { outline: 3px solid #45b51c; outline-offset: 4px; }
