@@ -1,11 +1,19 @@
 ﻿import { cargarComponentesModulares } from './utils/include.js';
-import { actualizarBotonHeader } from './auth.js';
+import { actualizarBotonHeader, obtenerUsuarioActual } from './auth.js';
 import { obtenerReportes, textoSeguro, imagenSegura } from './reportes.js';
 import { actualizarApoyos } from './apoyos-ui.js';
 import { destinoVolverDetalle } from './retorno-login.js';
 import { obtenerSeguimiento } from './seguimiento-incidencias.js';
 
 let mapaDetalle;
+let reporteActual;
+
+function actualizarVisibilidadApoyo() {
+  const tarjeta = document.querySelector('.tarjetaApoyoDetalle');
+  if (!tarjeta) return;
+  const usuario = obtenerUsuarioActual();
+  tarjeta.hidden = Boolean(usuario && reporteActual?.usuarioId === usuario.id);
+}
 const categorias = { bache: ['Bache', 'car'], luminaria: ['Luminaria', 'lightbulb-o'], arbolado: ['Arbolado', 'tree'], transito: ['Tránsito', 'road'] };
 const estados = { reportado: 'Reportado', en_proceso: 'En proceso', finalizado: 'Finalizado' };
 
@@ -51,6 +59,7 @@ function cargarDetalleReporte() {
   const contenedor = document.getElementById('contenedorDetalle');
   const id = new URLSearchParams(window.location.search).get('id');
   const reporte = obtenerReportes().find(item => String(item.id) === id);
+  reporteActual = reporte;
   if (!reporte) {
     contenedor.innerHTML = '<section class="tarjetaDetallePrincipal"><h2>Reporte no encontrado</h2><p>El reporte solicitado no existe o fue removido.</p></section>';
     return;
@@ -67,6 +76,7 @@ function cargarDetalleReporte() {
           <div class="tituloEtiquetasDetalle"><h2 class="tituloDetalle">${textoSeguro(reporte.titulo)}</h2><div class="etiquetasDetalle"><span class="badgeCategoria">${categoria}</span><span class="badgeEstado estado-${estado}">${estados[estado]}</span></div></div>
         </header>
         <div class="metadatosDetalle"><p><i class="fa fa-map-marker" aria-hidden="true"></i> ${textoSeguro(reporte.direccion || 'Sin dirección ingresada')}</p><p><i class="fa fa-calendar" aria-hidden="true"></i> ${textoSeguro(reporte.fecha || 'Sin fecha')}</p></div>
+        ${reporte.numeroSeguimiento ? `<p class="numeroSeguimientoDetalle">Número de seguimiento: <strong>${textoSeguro(reporte.numeroSeguimiento)}</strong></p>` : ''}
         <section class="seccionInfoDetalle"><h3>Descripción</h3><p class="descripcionDetalle">${textoSeguro(reporte.descripcion)}</p></section>
         <section class="seccionInfoDetalle"><h3>Fotografías</h3><div id="fotografiasDetalle" class="fotografiasDetalle"></div></section>
       </article>
@@ -104,6 +114,7 @@ function cargarDetalleReporte() {
     imagen.addEventListener('error', () => { enlace.replaceWith(document.createTextNode('No se pudo cargar esta fotografía.')); }, { once: true });
     enlace.append(imagen); galeria.append(enlace);
   });
+  actualizarVisibilidadApoyo();
   cargarMapa(reporte);
   actualizarApoyos();
 }
@@ -119,4 +130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 window.addEventListener('storage', evento => {
   if (!evento.key || evento.key === 'reportesUsuario') cargarDetalleReporte();
+  else if (['reporteUrbanoSesion', 'reporteUrbanoUsuarios'].includes(evento.key)) actualizarVisibilidadApoyo();
 });
+window.addEventListener('sesionActualizada', actualizarVisibilidadApoyo);
+window.addEventListener('pageshow', actualizarVisibilidadApoyo);

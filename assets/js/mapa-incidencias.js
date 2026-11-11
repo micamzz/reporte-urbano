@@ -91,7 +91,7 @@ function renderizarMapaIncidencias(categoriaFiltro) {
         <h4 style="color: #007bbf; margin: 6px 0 2px 0; font-size: 13px;">${textoSeguro(reporte.titulo)}</h4>
         <small style="color: #555555; font-size: 11px;">📍 ${textoSeguro(reporte.direccion)}</small>
         
-        <img src="${textoSeguro(imagenSegura(reporte.imagen))}" alt="${textoSeguro(reporte.titulo)}" class="imagenReportePopup" onerror="this.src='${imagenDefault}';">
+        ${imagenSegura(reporte.imagen) ? `<img src="${textoSeguro(imagenSegura(reporte.imagen))}" alt="${textoSeguro(reporte.titulo)}" class="imagenReportePopup" onerror="this.onerror=null;this.src='${imagenDefault}';">` : ''}
 
         <a href="/pages/detalle-incidencia.html?id=${encodeURIComponent(reporte.id)}&origen=mapa" class="botonVerDetallePopup">
           Ver detalle completo →
@@ -130,7 +130,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 window.addEventListener('storage', evento => {
   if (!evento.key || evento.key === 'reportesUsuario') {
-    const filtro = document.querySelector('.filtroActivo')?.dataset.categoria || 'todos';
-    renderizarMapaIncidencias(filtro);
+    actualizarReportesMapa();
   }
 });
+function actualizarReportesMapa() {
+  const filtro = document.querySelector('.filtroActivo')?.dataset.categoria || 'todos';
+  renderizarMapaIncidencias(filtro);
+}
+window.addEventListener('reportesActualizados', actualizarReportesMapa);
+window.addEventListener('pageshow', actualizarReportesMapa);

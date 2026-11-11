@@ -1,6 +1,7 @@
 ﻿import { cargarComponentesModulares } from './utils/include.js';
 import { actualizarBotonHeader } from './auth.js';
 import { buscarDirecciones } from './direcciones.js';
+import { guardarReporteLocal } from './guardar-reporte.js';
 
 const $ = (id) => document.getElementById(id);
 const categorias = { bache: 'Bache', luminaria: 'Luminaria', arbolado: 'Arbolado', transito: 'Tránsito' };
@@ -200,11 +201,8 @@ function agregarFotos(archivos) {
   $('fotos').value = '';
   renderizarFotos($('vistaFotos'));
 }
-// Punto de integración: reemplazar esta función por el servicio real de creación.
-// Debe resolver solo cuando el servidor confirme el registro, o rechazar ante un error.
 export async function crearReporte(datos) {
-  void datos;
-  throw new Error('El servicio de envío todavía no está conectado. Tu reporte no se envió. Conservamos los datos en esta página para que puedas revisarlos.');
+  return guardarReporteLocal(datos);
 }
 function prepararDatos() {
   const datos = new FormData();
@@ -246,16 +244,20 @@ $('formularioReporte').addEventListener('submit', async (evento) => {
   $('enviarReporte').disabled = true; $('anteriorReporte').disabled = true;
   $('estadoEnvio').textContent = 'Enviando reporte…';
   try {
-    await crearReporte(prepararDatos());
+    const reporte = await crearReporte(prepararDatos());
     enviado = true;
-    $('estadoEnvio').textContent = 'El servidor confirmó que tu reporte fue registrado.';
+    $('estadoEnvio').textContent = `Reporte enviado correctamente. Número de seguimiento: ${reporte.numeroSeguimiento}.`;
+    $('numeroSeguimiento').textContent = reporte.numeroSeguimiento;
+    $('verReporteCreado').href = `/pages/detalle-incidencia.html?id=${encodeURIComponent(reporte.id)}&origen=inicio`;
+    $('popupReporteEnviado').showModal();
   } catch (fallo) {
     $('estadoEnvio').textContent = fallo.message || 'No pudimos enviar el reporte. Intentá nuevamente sin cerrar esta página.';
   } finally {
     enviando = false; $('formularioReporte').removeAttribute('aria-busy');
     $('enviarReporte').disabled = enviado; $('anteriorReporte').disabled = enviado;
-    $('estadoEnvio').focus();
+    if (!$('popupReporteEnviado').open) $('estadoEnvio').focus();
   }
 });
+$('cerrarReporteEnviado').addEventListener('click', () => $('popupReporteEnviado').close());
 await cargarComponentesModulares();
 actualizarBotonHeader();

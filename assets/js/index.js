@@ -4,6 +4,7 @@ import { cargarComponentesModulares } from './utils/include.js';
 import { actualizarBotonHeader } from './auth.js';
 
 let mapaPrevisualizacion;
+let capaReportesInicio;
 
 function crearPinNativo(colorHex) {
   const svgHtml = `
@@ -34,6 +35,13 @@ function inicializarMapaCompacto() {
     attribution: '© OpenStreetMap - Municipio de Ituzaingó'
   }).addTo(mapaPrevisualizacion);
 
+  capaReportesInicio = L.layerGroup().addTo(mapaPrevisualizacion);
+  renderizarMarcadoresInicio();
+}
+
+function renderizarMarcadoresInicio() {
+  if (!capaReportesInicio) return;
+  capaReportesInicio.clearLayers();
   obtenerReportes().forEach(reporte => {
     let colorPin = '#ef4444';
     let textoEstado = 'Reportado';
@@ -47,7 +55,7 @@ function inicializarMapaCompacto() {
     }
 
     const icono = crearPinNativo(colorPin);
-    const marcador = L.marker([reporte.lat, reporte.lng], { icon: icono }).addTo(mapaPrevisualizacion);
+    const marcador = L.marker([reporte.lat, reporte.lng], { icon: icono }).addTo(capaReportesInicio);
 
     marcador.bindPopup(`
       <div style="font-family: Montserrat, sans-serif; padding: 4px;">
@@ -88,7 +96,7 @@ function renderizarReportesRecientes() {
 
   // 2. Ordenar cronológicamente de más RECIENTE a más ANTIGUO
   const ordenadosPorFecha = listaCompleta.sort((a, b) => {
-    return parsearFecha(b.fecha) - parsearFecha(a.fecha);
+    return (Date.parse(b.creadoEn) || parsearFecha(b.fecha).getTime()) - (Date.parse(a.creadoEn) || parsearFecha(a.fecha).getTime());
   });
 
   // 3. Tomar los 5 más recientes para la portada
@@ -154,5 +162,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 window.addEventListener('storage', evento => {
-  if (!evento.key || evento.key === 'reportesUsuario') renderizarReportesRecientes();
+  if (!evento.key || evento.key === 'reportesUsuario') actualizarReportesInicio();
 });
+function actualizarReportesInicio() {
+  renderizarReportesRecientes();
+  renderizarMarcadoresInicio();
+}
+window.addEventListener('reportesActualizados', actualizarReportesInicio);
+window.addEventListener('pageshow', actualizarReportesInicio);

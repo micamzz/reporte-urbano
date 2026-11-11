@@ -101,6 +101,49 @@ test('vuelve al origen y lo conserva al iniciar sesión', async () => {
   assert.match(retorno.enlaceLoginIncidencia(1), /origen%3Dinicio/);
 });
 
+test('guarda reportes con seguimiento de ocho dígitos, los integra al listado y permite apoyarlos', async () => {
+  const e = await entorno();
+  e.contexto.crypto = require('node:crypto').webcrypto;
+  const modulo = await e.cargar('guardar-reporte.js'); await modulo.evaluate();
+  const datos = new FormData();
+  for (const [clave, valor] of Object.entries({ categoria: 'bache', titulo: 'Bache nuevo', descripcion: 'Calzada dañada', direccion: 'Soler 450', lat: '-34.658', lng: '-58.670' })) datos.set(clave, valor);
+  const primero = await modulo.namespace.guardarReporteLocal(datos);
+  const segundo = await modulo.namespace.guardarReporteLocal(datos);
+  assert.match(primero.numeroSeguimiento, /^RU\d{8}IT$/);
+  assert.match(segundo.numeroSeguimiento, /^RU\d{8}IT$/);
+  assert.notEqual(primero.numeroSeguimiento, segundo.numeroSeguimiento);
+  assert.notEqual(primero.id, segundo.id);
+  assert.equal(primero.estado, 'reportado');
+  assert.equal(primero.lat, -34.658);
+  assert.ok(Number.isFinite(Date.parse(primero.creadoEn)));
+  const guardados = JSON.parse(e.localStorage.getItem('reportesUsuario'));
+  assert.equal(guardados.length, 2);
+  const reportes = (await e.cargar('reportes.js')).namespace.obtenerReportes();
+  assert.ok(reportes.some(reporte => reporte.id === primero.id));
+  e.auth.iniciarSesion('test@unlam.com', 'Unlam2026!');
+  assert.equal(e.apoyo.registrarApoyo(primero.id).total, 1);
+  e.localStorage.setItem = () => { throw new Error('Sin espacio'); };
+  await assert.rejects(() => modulo.namespace.guardarReporteLocal(datos), /almacenamiento/);
+  datos.set('titulo', '   ');
+  await assert.rejects(() => modulo.namespace.guardarReporteLocal(datos), /datos/);
+});
+
+test('las fotos se almacenan como datos persistentes y no como URLs temporales', async () => {
+  const e = await entorno();
+  e.contexto.crypto = require('node:crypto').webcrypto;
+  e.contexto.FileReader = class {
+    readAsDataURL() { this.result = 'data:image/png;base64,aW1hZ2Vu'; this.onload(); }
+  };
+  const modulo = await e.cargar('guardar-reporte.js'); await modulo.evaluate();
+  const datos = new FormData();
+  for (const [clave, valor] of Object.entries({ categoria: 'luminaria', titulo: 'Luz apagada', descripcion: 'Sin iluminación', lat: '-34.658', lng: '-58.670' })) datos.set(clave, valor);
+  datos.append('fotografias', new Blob(['imagen'], { type: 'image/png' }), 'foto.png');
+  const reporte = await modulo.namespace.guardarReporteLocal(datos);
+  assert.equal(reporte.fotografias.length, 1);
+  assert.match(reporte.imagen, /^data:image\/png;base64,/);
+  assert.equal(JSON.parse(e.localStorage.getItem('reportesUsuario'))[0].fotografias[0], reporte.imagen);
+});
+
 test('popup sin sesión, retorno al detalle, estados sincronizados de detalle e inicio y cierre de sesión', async () => {
   const e = await entorno();
   const nodos = new Map();
