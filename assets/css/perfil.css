@@ -12,3 +12,12 @@
 .reportePersonal a { display: inline-block; margin-top: 0.5rem; color: #007bbf; font-size: 0.85rem; font-weight: 600; }
 .contenidoPerfil :focus-visible { outline: 3px solid #45b51c; outline-offset: 3px; }
 @media(max-width:600px) { .contenidoPerfil { padding: 0 20px; }.datosPerfil { grid-template-columns: minmax(0,1fr); gap: 6px; }.datosPerfil dd { margin-bottom: 10px; }.cabeceraReportesPerfil .botonIngresar { min-height: 44px; } }
+
+.tarjetaGamificacion { padding: 1.5rem; margin-top: 1.5rem; border: 1px solid #e2e8f0; border-radius: 10px; background: linear-gradient(145deg, #ffffff, #f8fafc); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+.badgeRango { background: #d8f5c9; color: #087841; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+.infoProgreso { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.barraFondo { width: 100%; height: 12px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
+.barraLlenado { height: 100%; background: #45b51c; border-radius: 10px; transition: width 0.5s ease; }
+.medallasContenedor { display: flex; gap: 1rem; margin-top: 1.5rem; }
+.medalla { width: 45px; height: 45px; border-radius: 50%; background: #e2e8f0; color: #94a3b8; display: grid; place-items: center; font-size: 1.2rem; filter: grayscale(100%); transition: all 0.3s; }
+.medalla.activa { background: #fef3c7; color: #f59e0b; filter: grayscale(0%); box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2); }

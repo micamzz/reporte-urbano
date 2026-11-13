@@ -127,3 +127,14 @@
 .tituloFechaEtapa h3 { margin: 0; color: #092553; font-size: 0.85rem; font-weight: 700; }
 .tituloFechaEtapa time { color: #64748b; font-size: 0.8rem; }
 .contenidoEtapa p { margin: 0.4rem 0 0; font-size: 0.8rem; line-height: 1.5; overflow-wrap: anywhere; }
+
+.esqueletoAnimado {
+  background: #e2e8f0;
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: pulsoEsqueleto 1.5s infinite linear;
+}
+@keyframes pulsoEsqueleto {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

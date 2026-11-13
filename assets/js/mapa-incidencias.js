@@ -48,21 +48,21 @@ function inicializarMapaGrande() {
   renderizarMapaIncidencias('todos');
 }
 
-function renderizarMapaIncidencias(categoriaFiltro) {
+let filtroCat = 'todos';
+let filtroEst = 'todos';
+
+function renderizarMapaIncidencias() {
   if (!capaMarcadores) return;
   capaMarcadores.clearLayers();
-
-  // Integrar reportes creados en localStorage si los hay
-  const listaCompleta = obtenerReportes();
-
-  const filtrados = categoriaFiltro === 'todos' 
-    ? listaCompleta 
-    : listaCompleta.filter(reporte => reporte.categoria === categoriaFiltro);
+  
+  let filtrados = obtenerReportes();
+  
+  // Aplicar Filtro Cruzado
+  if (filtroCat !== 'todos') filtrados = filtrados.filter(r => r.categoria === filtroCat);
+  if (filtroEst !== 'todos') filtrados = filtrados.filter(r => r.estado === filtroEst);
 
   const elementoTotal = document.getElementById('totalReportes');
-  if (elementoTotal) {
-    elementoTotal.innerText = filtrados.length;
-  }
+  if (elementoTotal) elementoTotal.innerText = filtrados.length;
 
   filtrados.forEach(reporte => {
     let colorPin = '#ef4444';
@@ -105,23 +105,26 @@ function renderizarMapaIncidencias(categoriaFiltro) {
 }
 
 function vincularEventosMapa() {
-  const botonesFiltro = document.querySelectorAll('.botonFiltroFlotante');
-  botonesFiltro.forEach(boton => {
+  const botonesCat = document.querySelectorAll('#filtrosCategoria .botonFiltroFlotante');
+  const botonesEst = document.querySelectorAll('#filtrosEstado .botonFiltroFlotante');
+
+  botonesCat.forEach(boton => {
     boton.addEventListener('click', (e) => {
-      botonesFiltro.forEach(b => b.classList.remove('filtroActivo'));
+      botonesCat.forEach(b => b.classList.remove('filtroActivo'));
       e.target.classList.add('filtroActivo');
-      
-      const categoria = e.target.dataset.categoria || 'todos';
-      renderizarMapaIncidencias(categoria);
+      filtroCat = e.target.dataset.categoria || 'todos';
+      renderizarMapaIncidencias();
     });
   });
 
-  const btnReportar = document.getElementById('btnNuevoReporteMapa');
-  if (btnReportar) {
-    btnReportar.addEventListener('click', () => {
-      alert('Iniciando proceso para crear un nuevo reporte desde el mapa de incidencias.');
+  botonesEst.forEach(boton => {
+    boton.addEventListener('click', (e) => {
+      botonesEst.forEach(b => b.classList.remove('filtroActivo', 'estadoActivo'));
+      e.target.classList.add('filtroActivo', 'estadoActivo');
+      filtroEst = e.target.dataset.estado || 'todos';
+      renderizarMapaIncidencias();
     });
-  }
+  });
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
