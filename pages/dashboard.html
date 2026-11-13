@@ -34,13 +34,21 @@
     <div class="graficosGrilla">
       <div class="graficoTarjeta">
         <h3 style="color: #092553; margin-bottom: 1rem; text-align: center;">Incidencias por Categoría</h3>
-        <canvas id="graficoCategorias"></canvas>
+        <!-- Contenedor con altura fija para frenar a Chart.js -->
+        <div style="position: relative; height: 300px; width: 100%;">
+          <canvas id="graficoCategorias"></canvas>
+        </div>
       </div>
+      
       <div class="graficoTarjeta">
         <h3 style="color: #092553; margin-bottom: 1rem; text-align: center;">Estado General</h3>
-        <canvas id="graficoEstados"></canvas>
+        <!-- Contenedor con altura fija para frenar a Chart.js -->
+        <div style="position: relative; height: 300px; width: 100%;">
+          <canvas id="graficoEstados"></canvas>
+        </div>
       </div>
     </div>
+    
   </main>
   <div id="contenedorFooter"></div>
   
