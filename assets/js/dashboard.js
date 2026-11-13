@@ -40,6 +40,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     options: { responsive: true, maintainAspectRatio: false }
   });
 
+  // LÓGICA DE DESCARGA DE DATOS ABIERTOS (CSV)
+  const btnDescargarCsv = document.getElementById('btnDescargarCsv');
+  if (btnDescargarCsv) {
+    btnDescargarCsv.addEventListener('click', () => {
+      if (!reportes.length) {
+        alert('No hay datos disponibles para descargar.');
+        return;
+      }
+      
+      // 1. Armar las cabeceras de las columnas
+      let contenidoCsv = "ID,Fecha_Reporte,Categoria,Estado,Titulo,Direccion,Latitud,Longitud\n";
+      
+      // 2. Iterar sobre los reportes y armar las filas
+      reportes.forEach(r => {
+        // Escapamos las comas en los textos para no romper el formato CSV
+        const tituloLimpio = `"${(r.titulo || '').replace(/"/g, '""')}"`;
+        const direccionLimpia = `"${(r.direccion || '').replace(/"/g, '""')}"`;
+        
+        const fila = `${r.id},${r.fecha},${r.categoria},${r.estado},${tituloLimpio},${direccionLimpia},${r.lat},${r.lng}`;
+        contenidoCsv += fila + "\n";
+      });
+      
+      // 3. Crear el archivo virtual (Blob) y forzar la descarga
+      const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), contenidoCsv], { type: 'text/csv;charset=utf-8;' }); // El Uint8Array fuerza a que Excel lea bien los acentos (BOM)
+      const urlDestino = URL.createObjectURL(blob);
+      
+      const enlaceDescarga = document.createElement("a");
+      enlaceDescarga.href = urlDestino;
+      enlaceDescarga.download = "reporte_urbano_ituzaingo_dataset.csv";
+      
+      document.body.appendChild(enlaceDescarga);
+      enlaceDescarga.click();
+      document.body.removeChild(enlaceDescarga);
+      URL.revokeObjectURL(urlDestino);
+    });
+  }
+
   // Gráfico de Barras (Estados)
   new Chart(document.getElementById('graficoEstados'), {
     type: 'bar',
@@ -64,3 +101,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 });
+
