@@ -113,7 +113,6 @@ function seleccionarUbicacion(punto) {
     marcador = L.marker(punto, { draggable: true, autoPan: true }).addTo(mapa);
     marcador.on('dragend', () => seleccionarUbicacion(marcador.getLatLng()));
   } else marcador.setLatLng(punto);
-  $('coordenadas').textContent = `Latitud: ${punto.lat.toFixed(6)} · Longitud: ${punto.lng.toFixed(6)}`;
   validarUbicacion();
 }
 function iniciarMapa() {
@@ -130,8 +129,7 @@ function iniciarMapa() {
 }
 function mostrarResumen() {
   const pares = [ ['Categoría', categorias[categoria()]], ['Título', $('titulo').value.trim()],
-    ['Descripción', $('descripcion').value.trim()], ['Dirección', $('direccion').value.trim() || 'Sin dirección ingresada'],
-    ['Ubicación', `${ubicacion.lat.toFixed(6)}, ${ubicacion.lng.toFixed(6)}`] ];
+    ['Descripción', $('descripcion').value.trim()], ['Dirección', $('direccion').value.trim() || 'Sin dirección ingresada'] ];
   $('resumenReporte').replaceChildren();
   for (const [nombre, valor] of pares) {
     const termino = document.createElement('dt');
@@ -220,7 +218,11 @@ $('direccion').addEventListener('input', limpiarBusquedaDireccion);
 $('direccion').addEventListener('keydown', (evento) => {
   if (evento.key === 'Enter') { evento.preventDefault(); buscarDireccion(); }
 });
-$('seleccionarCentro').addEventListener('click', () => { if (mapa) seleccionarUbicacion(mapa.getCenter()); });
+function actualizarContadorDescripcion() {
+  $('contadorDescripcion').textContent = `${$('descripcion').value.length}/500`;
+}
+$('descripcion').addEventListener('input', actualizarContadorDescripcion);
+actualizarContadorDescripcion();
 for (const [id, campo] of [['titulo', 'Titulo'], ['descripcion', 'Descripcion']]) {
   $(id).addEventListener('input', () => { if ($(id).value.trim()) error(campo, '', $(id)); });
 }

@@ -49,6 +49,7 @@
 .cargaFotos {display:flex;position:relative;align-items:center;gap:12px;border:1px dashed #aebed8;border-radius:8px;padding:12px 14px;margin-top:8px;max-width:100%;background:#f8faff;cursor:pointer;line-height:1.5;}
 .cargaFotos i {font-size:26px;color:#7c8ca7;}.cargaFotos strong {color:#0058aa;}.cargaFotos small {display:block;font-size:11px;margin-top:3px;}
 .cargaFotos input {position:absolute;inset:0;opacity:0;width:100%;cursor:pointer;}.cargaFotos:focus-within,.cargaFotos.arrastrando {outline:2px solid #007bbf;}
+.contadorCaracteres {margin:5px 0 0;text-align:right;font-size:12px;color:#64748b;}
 .errorReporte {font-size:12px;color:#b42338;margin:5px 0;}.errorReporte:empty {display:none;}
 .nuevoReporte [aria-invalid=true]:not(#grupoCategoria):not(#titulo):not(#descripcion) {border:1px solid #c02c3e;}
 .accionesReporte {display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px;margin-top:16px;}
@@ -58,7 +59,7 @@
 .nuevoReporte button:disabled {opacity:.55;cursor:wait;}
 .galeriaFotos {display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}.fotoReporte {position:relative;margin:0;}.fotoReporte img {width:92px;height:76px;object-fit:cover;border-radius:8px;}.fotoReporte button {position:absolute;right:2px;top:2px;border:0;background:#fff;color:#b42338;border-radius:50%;width:25px;height:25px;}
 #mapaReporte,#mapaResumen {height:280px;border:1px solid #e2e8f0;border-radius:8px;z-index:0;margin:12px 0;}
-#mapaResumen {height:210px;}.seleccionarCentro {border:1px solid #b6c8dc;background:#eff7ff;border-radius:6px;padding:10px;min-height:40px;color:#007bbf;}
+#mapaResumen {height:210px;}
 .resumenReporte {display:grid;grid-template-columns:130px minmax(0,1fr);gap:12px;font-size:13px;overflow-wrap:anywhere;}.resumenReporte dt {font-weight:700;}.resumenReporte dd {margin:0;white-space:pre-wrap;}
 #estadoEnvio {font-size:12px;line-height:1.6;color:#73541a;}#estadoEnvio:empty {display:none;}
 .popupReporteEnviado {position:relative;box-sizing:border-box;width:min(380px,calc(100% - 32px));max-height:calc(100dvh - 32px);padding:28px 24px 24px;border:1px solid #e2e8f0;border-radius:10px;background:white;color:#333333;text-align:center;font-family:inherit;}
