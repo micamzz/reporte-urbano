@@ -140,6 +140,11 @@
 
 #formularioReporte,
 .camposReporte>div {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  padding: 20px;
   min-width: 0;
 }
 
@@ -245,6 +250,18 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
+.direccionCampos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(100px, 0.4fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.direccionCampos input {
+  width: 100%;
+  margin-top: 7px;
+}
+
 .busquedaDireccion {
   display: flex;
   flex-wrap: wrap;
@@ -266,6 +283,11 @@
 #estadoDireccion {
   margin: 7px 0;
   font-size: 12px;
+}
+
+#estadoDireccion.estadoResultados {
+  color: black;
+  font-weight: 700;
 }
 
 .resultadosDireccion {

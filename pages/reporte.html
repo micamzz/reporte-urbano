@@ -23,31 +23,7 @@
             <li><span>2</span>Ubicación</li>
             <li><span>3</span>Confirmación</li>
         </ol>
-        <div class="tarjetaReporte">
-            <aside class="ilustracionReporte" aria-hidden="true"><svg viewBox="0 0 260 310"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="parque" x2="0" y2="1">
-                            <stop stop-color="#e5f3ff" />
-                            <stop offset="1" stop-color="#edf9dc" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M25 190C5 140 48 131 40 96S78 12 131 24s60 64 74 98 55 63 30 123S52 292 25 244Z"
-                        fill="url(#parque)" />
-                    <path d="M28 268h205" stroke="#b6df8e" stroke-width="13" stroke-linecap="round" />
-                    <path d="M52 265V77c0-35 42-35 42-5" stroke="#065487" stroke-width="7" fill="none" />
-                    <path d="M76 80q18-26 36 0Z" fill="#007bbf" />
-                    <path d="m81 83-28 132h82L108 83" fill="#fff4ae" opacity=".3" />
-                    <path d="M82 81a12 12 0 0 0 24 0" fill="#ffeb65" />
-                    <path
-                        d="M173 106c-35-34-65 0-55 25-40 5-35 58-2 63-8 34 55 40 64 16 35 15 65-19 45-41 21-32-9-69-32-57-1-20-15-25-20-6"
-                        fill="#7fd63e" />
-                    <path d="M170 265V139m0 75-23-24m23-3 23-25m-23 53 22-21" stroke="#529736" stroke-width="5"
-                        stroke-linecap="round" />
-                    <path d="M83 237h68M83 226h68M81 247h74" stroke="#84af5c" stroke-width="7" />
-                    <path d="M90 220v44m54-44v44" stroke="#176287" stroke-width="5" />
-                    <path d="M36 266q-28-41-11-53 20 7 15 37 4-50 21-48 12 14-13 64" fill="#76c34a" />
-                </svg></aside>
+        <!-- <div class="tarjetaReporte"> -->
             <form id="formularioReporte" novalidate>
                 <section data-paso="1" aria-labelledby="tituloPaso1">
                     <h2 id="tituloPaso1" tabindex="-1">Paso 1: Contanos el problema</h2>
@@ -68,9 +44,10 @@
                         <p class="errorReporte" id="errorCategoria" aria-live="polite"></p>
                     </fieldset>
                     <div class="camposReporte">
-                        <div><label for="titulo">Título del reporte <b>*</b></label><input id="titulo" maxlength="150"
+                        <div><label for="titulo">Título del reporte <b>*</b></label><input id="titulo" maxlength="50"
                                 placeholder="Ej. Bache profundo en la calzada" aria-describedby="errorTitulo">
                             <p id="errorTitulo" class="errorReporte" aria-live="polite"></p>
+                            <p id="contadorTitulo" class="contadorCaracteres">0/20</p>
                         </div>
                         <div><label for="descripcion">Descripción <b>*</b></label><textarea id="descripcion" rows="3"
                                 maxlength="200" placeholder="Contanos con más detalle qué está ocurriendo..."
@@ -93,11 +70,18 @@
                     <div id="mapaReporte" aria-label="Mapa para seleccionar la ubicación" tabindex="0"></div>
                     <p id="errorUbicacion" class="errorReporte" aria-live="polite"></p>
                     <div class="camposReporte">
-                        <div><label for="direccion">Dirección <small>(opcional)</small></label>
-                            <div class="busquedaDireccion"><input id="direccion" maxlength="250"
-                                    placeholder="Calle y altura" aria-describedby="estadoDireccion"><button
-                                    id="buscarDireccion" type="button" class="botonSecundario">Buscar dirección</button>
+                        <div>
+                            <div class="direccionCampos">
+                                <div><label for="calle">Calle<b>*</b></label>
+                                    <input id="calle" maxlength="200" placeholder="Nombre de la calle"
+                                        aria-describedby="estadoDireccion">
+                                </div>
+                                <div><label for="altura">Altura</label>
+                                    <input id="altura" maxlength="20" placeholder="Ej. 1234"
+                                        aria-describedby="estadoDireccion">
+                                </div>
                             </div>
+                            <button id="buscarDireccion" type="button" class="botonSecundario">Buscar dirección</button>
                             <p id="estadoDireccion" class="ayudaReporte" role="status"></p>
                             <ul id="resultadosDireccion" class="resultadosDireccion"
                                 aria-label="Direcciones encontradas" hidden></ul><small>Búsqueda: Photon · datos de <a
@@ -121,7 +105,6 @@
                         id="enviarReporte" class="botonPrincipal" type="submit" hidden>Enviar reporte <i
                             class="fa fa-paper-plane-o" aria-hidden="true"></i></button></div>
             </form>
-        </div>
     </main>
     <dialog id="popupReporteEnviado" class="popupReporteEnviado" aria-labelledby="tituloReporteEnviado"
         aria-describedby="descripcionReporteEnviado">
