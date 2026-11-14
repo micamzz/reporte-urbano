@@ -15,7 +15,6 @@
   <div id="contenedorHeader"></div>
 
   <main class="seccionAcceso accesoLogin">
-    <div class="fotoAcceso" aria-hidden="true"></div>
     <section class="tarjetaAcceso" aria-labelledby="tituloAcceso">
       <div class="encabezadoAcceso">
         <a class="logoAcceso" href="/index.html" aria-label="Reporte Urbano: ir al inicio"><img src="/public/img/logo.png" alt="Reporte Urbano"></a>
@@ -36,13 +35,32 @@
           <span class="errorCampo" id="errorPassword" aria-live="polite"></span>
         </div>
 
-        <a class="enlaceOlvidePassword" href="#" id="enlaceRecuperar" aria-describedby="mensajeAcceso">¿Olvidaste tu contraseña?</a>
+        <a class="enlaceOlvidePassword" href="#" id="enlaceRecuperar" aria-haspopup="dialog" aria-controls="popupRecuperar">¿Olvidaste tu contraseña?</a>
         <button class="botonAcceso" type="submit">Iniciar sesión</button>
         <p class="leyendaRegistro">¿No tenés una cuenta? <a href="/pages/registro.html" data-conservar-retorno>Registrate</a></p>
         <p class="mensajeAcceso" id="mensajeAcceso" role="status" aria-live="polite"></p>
       </form>
     </section>
   </main>
+
+  <dialog id="popupRecuperar" class="popupRecuperar" aria-labelledby="tituloRecuperar" aria-describedby="descripcionRecuperar">
+    <button id="cerrarRecuperar" class="cerrarRecuperar" type="button" aria-label="Cerrar">&times;</button>
+    <h2 id="tituloRecuperar">Recuperar contraseña</h2>
+    <p id="descripcionRecuperar">Ingresá tu correo para recibir un enlace de recuperación.</p>
+    <form id="formularioRecuperar" class="formularioAcceso" novalidate>
+      <div class="campoAcceso">
+        <label for="emailRecuperar">Correo electrónico</label>
+        <input id="emailRecuperar" name="email" type="email" autocomplete="email" placeholder="nombre@correo.com" aria-describedby="errorRecuperar" required autofocus>
+        <span id="errorRecuperar" class="errorCampo" aria-live="polite"></span>
+      </div>
+      <button class="botonAcceso" type="submit">Enviar</button>
+    </form>
+    <div id="confirmacionRecuperar" class="confirmacionRecuperar" role="status" tabindex="-1" hidden>
+      <i class="fa fa-envelope-o" aria-hidden="true"></i>
+      <p>Si el correo está registrado, vas a recibir un link para recuperar tu contraseña. Revisá también la carpeta de spam.</p>
+      <button id="aceptarRecuperar" class="botonAcceso" type="button">Entendido</button>
+    </div>
+  </dialog>
 
   <div id="contenedorFooter"></div>
   <script type="module" src="../assets/js/login.js"></script>
