@@ -219,7 +219,7 @@ $('direccion').addEventListener('keydown', (evento) => {
   if (evento.key === 'Enter') { evento.preventDefault(); buscarDireccion(); }
 });
 function actualizarContadorDescripcion() {
-  $('contadorDescripcion').textContent = `${$('descripcion').value.length}/500`;
+  $('contadorDescripcion').textContent = `${$('descripcion').value.length}/200`;
 }
 $('descripcion').addEventListener('input', actualizarContadorDescripcion);
 actualizarContadorDescripcion();
