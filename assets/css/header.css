@@ -18,15 +18,27 @@
 }
 
 .enlaceLogo {
+  position: relative;
   display: inline-block;
   text-decoration: none;
 }
 
 .imagenLogoHeader {
-  height: 48px;
+  height: 60px;
   width: auto;
   object-fit: contain;
   display: block;
+}
+
+.subtituloLogoHeader {
+  position: absolute;
+  left: 33%;
+  bottom: 0;
+  color: #092553;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .navegacionMenu {

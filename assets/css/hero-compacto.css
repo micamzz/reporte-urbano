@@ -2,27 +2,91 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 38px max(24px, 5.2vw) 44px;
-  background: radial-gradient(ellipse at 30% 85%, #e6f3ff, transparent 65%), #f8fbff;
+  padding: 56px max(24px, 5.2vw) 76px;
+  background: radial-gradient(ellipse at 65% 100%, #e5f1fb, transparent 70%), linear-gradient(115deg, #fbfdff, #f1f6fc);
   color: #092553;
 }
 
 .seccionHeroCompacto::before,
-.seccionHeroCompacto::after {
+.seccionHeroCompacto::after,
+.contenedorHeroInterior::before,
+.contenedorHeroInterior::after {
   content: '';
   position: absolute;
-  inset: 0 0 0 28%;
-  z-index: -1;
-  clip-path: url(#recorteFotoHero);
+  z-index: -2;
+  pointer-events: none;
 }
 
 .seccionHeroCompacto::before {
-  background: linear-gradient(to right, transparent 55%, #8cdb3e 75%);
-  translate: 0 10px;
+  width: clamp(80px, 9vw, 140px);
+  aspect-ratio: 1;
+  top: calc(clamp(80px, 9vw, 140px) * -0.6);
+  left: calc(clamp(80px, 9vw, 140px) * -0.6);
+  border-radius: 50%;
+  background: #d5e9fa;
 }
 
 .seccionHeroCompacto::after {
-  background: url('../../public/img/hero-ituzaingo.png') center / cover no-repeat;
+  width: clamp(190px, 25vw, 420px);
+  height: clamp(90px, 11vw, 175px);
+  right: 0;
+  bottom: 0;
+  background: #cde5bb;
+  /* La mascara genera una inflexion suave, sin una silueta circular. */
+  mask-image: radial-gradient(ellipse 72% 82% at 12% -5%, transparent 98%, #000 100%);
+  border-radius: 85% 0 0 0 / 100% 0 0 0;
+}
+
+@supports (clip-path: shape(from 0% 100%, line to 100% 100%, close)) {
+  .seccionHeroCompacto::after {
+    mask-image: none;
+    border-radius: 0;
+    clip-path: shape(
+      from 0% 100%,
+      curve to 43% 68% with 10% 78% / 29% 84%,
+      curve to 76% 23% with 60% 50% / 55% 37%,
+      curve to 100% 0% with 88% 10% / 94% 5%,
+      line to 100% 100%,
+      close
+    );
+  }
+}
+
+/* Ondas de fondo ancladas al Hero, sin alterar el espacio de la grilla. */
+.contenedorHeroInterior::before {
+  left: -8%;
+  bottom: -85px;
+  width: 58%;
+  height: 140px;
+  border-radius: 50% 65% 0 0 / 65% 85% 0 0;
+  background: #deebf6;
+  transform: rotate(4deg);
+}
+
+.contenedorHeroInterior::after {
+  left: 17%;
+  bottom: -105px;
+  width: 52%;
+  height: 145px;
+  border-radius: 55% 70% 0 0 / 90% 100% 0 0;
+  background: #d8e8f5;
+  opacity: 0.6;
+  transform: rotate(-4deg);
+}
+
+/* imagen del parque */
+.ilustracionParqueHero {
+  position: absolute;
+  bottom: 0;
+  /* left: 16%; */
+  z-index: -1;
+  width: min(59%, 756px);
+  height: auto;
+  object-fit: contain;
+  object-position: center bottom;
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
 }
 
 .contenedorHeroInterior {
@@ -30,7 +94,7 @@
   min-height: 370px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
   gap: clamp(28px, 4vw, 72px);
   align-items: center;
 }
@@ -39,6 +103,7 @@
   min-width: 0;
   position: relative;
   padding: 28px 0 0;
+  align-self: center;
 }
 
 .bloqueHeroTexto::before {
@@ -73,8 +138,7 @@
   flex-wrap: wrap;
 }
 
-.botonReportarPrincipal,
-.botonVerMapaHero {
+.botonReportarPrincipal {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -95,10 +159,6 @@
   background: #0068be;
 }
 
-.botonVerMapaHero {
-  color: #092553;
-  background: #ffffffed;
-}
 
 .accionesHero svg {
   width: 26px;
@@ -107,7 +167,6 @@
 }
 
 .botonReportarPrincipal:hover { background: #005399; }
-.botonVerMapaHero:hover { background: #eaf4ff; }
 .accionesHero a:focus-visible,
 .botonAmpliarMapa:focus-visible {
   outline: 3px solid #45b51c;
@@ -120,7 +179,7 @@
   position: relative;
   isolation: isolate;
   width: 100%;
-  height: clamp(300px, 23vw, 400px);
+  height: clamp(320px, 25vw, 440px);
   box-sizing: border-box;
   border: 10px solid #fff;
   border-radius: 32px;
@@ -157,22 +216,18 @@
 
 @media (max-width: 1050px) {
   .contenedorHeroInterior { grid-template-columns: 1fr 1fr; gap: 28px; }
-  .seccionHeroCompacto::before,
-  .seccionHeroCompacto::after { left: 28%; }
   .descripcionHero { max-width: 370px; }
   .accionesHero { gap: 10px; }
   .accionesHero a { min-height: 48px; padding: 10px 14px; }
 }
 
 @media (max-width: 700px) {
-  .seccionHeroCompacto { padding: 32px 20px; }
+  .seccionHeroCompacto { padding: 32px 20px 110px; }
   .contenedorHeroInterior { grid-template-columns: minmax(0, 1fr); gap: 30px; }
-  .seccionHeroCompacto::before,
-  .seccionHeroCompacto::after {
-    inset: 52% -15% 0 0;
-    clip-path: none;
-    border-radius: 45% 0 0 0;
-  }
+  .ilustracionParqueHero { left: 14%; width: min(72%, 390px); opacity: 0.4; }
+  .seccionHeroCompacto::after { width: 145px; height: 65px; }
+  .contenedorHeroInterior::before { width: 85%; height: 115px; }
+  .contenedorHeroInterior::after { left: 30%; width: 75%; height: 125px; }
   .tituloPrincipalHero { font-size: clamp(36px, 7vw, 48px); }
   .descripcionHero { max-width: 490px; margin-bottom: 22px; }
   .accionesHero a { flex: 1 1 220px; }
