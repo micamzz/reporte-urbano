@@ -27,7 +27,15 @@ function mostrarAcceso(id) {
   if (!popup.open) popup.showModal();
 }
 
+export function resumenApoyos(reporte) {
+  const total = obtenerEstadoApoyo(reporte.id).total;
+  return `<span class="resumenApoyos" aria-label="Cantidad de apoyos recibidos"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><span data-resumen-apoyo-id="${String(reporte.id).replace(/[&<>"']/g, caracter => '&#' + caracter.charCodeAt(0) + ';')}">${total}</span></span>`;
+}
+
 export function actualizarApoyos() {
+  document.querySelectorAll('[data-resumen-apoyo-id]').forEach(contador => {
+    if (contador.dataset.resumenApoyoId) contador.textContent = obtenerEstadoApoyo(contador.dataset.resumenApoyoId).total;
+  });
   document.querySelectorAll('[data-apoyo-id]').forEach(boton => {
     const mensaje = boton.parentElement.querySelector('[data-error-apoyo]');
     try {

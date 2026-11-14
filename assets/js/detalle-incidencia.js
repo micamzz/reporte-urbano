@@ -1,7 +1,7 @@
 ﻿import { cargarComponentesModulares } from './utils/include.js';
 import { actualizarBotonHeader, obtenerUsuarioActual } from './auth.js';
 import { obtenerReportes, textoSeguro, imagenSegura } from './reportes.js';
-import { actualizarApoyos } from './apoyos-ui.js';
+import { actualizarApoyos, resumenApoyos } from './apoyos-ui.js';
 import { destinoVolverDetalle } from './retorno-login.js';
 import { obtenerSeguimiento } from './seguimiento-incidencias.js';
 
@@ -12,7 +12,7 @@ function actualizarVisibilidadApoyo() {
   const tarjeta = document.querySelector('.tarjetaApoyoDetalle');
   if (!tarjeta) return;
   const usuario = obtenerUsuarioActual();
-  tarjeta.hidden = Boolean(usuario && reporteActual?.usuarioId === usuario.id);
+  tarjeta.hidden = reporteActual?.estado !== 'finalizado' && Boolean(usuario && reporteActual?.usuarioId === usuario.id);
 }
 const categorias = { bache: ['Bache', 'car'], luminaria: ['Luminaria', 'lightbulb-o'], arbolado: ['Arbolado', 'tree'], transito: ['Tránsito', 'road'] };
 const estados = { reportado: 'Reportado', en_proceso: 'En proceso', finalizado: 'Finalizado' };
@@ -91,8 +91,8 @@ function cargarDetalleReporte() {
       </div>
       <aside class="columnaDetalle" aria-label="Ubicación y apoyos">
         <section class="tarjetaMapaDetalle"><h2 class="tituloMapaDetalle"><i class="fa fa-map-marker" aria-hidden="true"></i> Ubicación del reporte</h2><div id="mapaDetalle" aria-label="Mapa de la incidencia"></div><p class="direccionMapaDetalle"><i class="fa fa-map-marker" aria-hidden="true"></i> ${textoSeguro(reporte.direccion || 'Ubicación seleccionada')}, Ituzaingó</p></section>
-        <section class="tarjetaApoyoDetalle" aria-label="Apoyar esta incidencia">
-          <button type="button" class="botonAfectado botonApoyoDetalle" data-apoyo-id="${textoSeguro(reporte.id)}" aria-pressed="false"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><span data-etiqueta-apoyo>A mí también me afecta</span><span data-total-apoyos aria-label="Cantidad de apoyos">0</span></button>
+        <section class="tarjetaApoyoDetalle" aria-label="Apoyos de esta incidencia">
+          ${reporte.estado === 'finalizado' ? resumenApoyos(reporte) : `<button type="button" class="botonAfectado botonApoyoDetalle" data-apoyo-id="${textoSeguro(reporte.id)}" aria-pressed="false"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><span data-etiqueta-apoyo>A mí también me afecta</span><span data-total-apoyos aria-label="Cantidad de apoyos">0</span></button>`}
           <p data-error-apoyo role="status"></p>
         </section>
       </aside>

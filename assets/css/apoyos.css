@@ -22,3 +22,5 @@
 [data-error-apoyo]:empty { display: none; }
 .botonAfectado.apoyoRegistrado { background: #d8f5c9; color: #087841; border-color: #5aa45e; cursor: default; }
 .popupApoyo :focus-visible { outline: 3px solid #45b51c; outline-offset: 4px; }
+
+.resumenApoyos {display:inline-flex;align-items:center;gap:8px;color:#087841;font-size:14px;font-weight:600;}

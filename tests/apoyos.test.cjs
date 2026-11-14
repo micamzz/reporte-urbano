@@ -33,19 +33,19 @@ test('sin sesión no registra; persiste, evita duplicados, separa incidencias y 
   assert.equal(e.apoyo.obtenerApoyos(1).length, 0);
   e.auth.iniciarSesion('test@unlam.com', 'Unlam2026!');
   assert.equal(e.auth.obtenerUsuarioActual().id, 'test@unlam.com');
-  assert.equal(e.apoyo.registrarApoyo(1).total, 1);
+  assert.equal(e.apoyo.registrarApoyo(1).total, 25);
   const registro = e.apoyo.obtenerApoyos(1)[0];
   assert.equal(registro.incidenciaId, '1');
   assert.equal(registro.usuarioId, 'test@unlam.com');
   assert.ok(Number.isFinite(Date.parse(registro.fecha)));
-  assert.equal(e.apoyo.registrarApoyo('1').total, 1);
+  assert.equal(e.apoyo.registrarApoyo('1').total, 25);
   assert.equal(e.apoyo.obtenerApoyos(1)[0].fecha, registro.fecha);
-  assert.equal(e.apoyo.registrarApoyo(2).total, 1);
+  assert.equal(e.apoyo.registrarApoyo(2).total, 18);
   const recarga = await entorno(e.datos);
-  assert.equal(recarga.apoyo.obtenerEstadoApoyo(1).total, 1);
+  assert.equal(recarga.apoyo.obtenerEstadoApoyo(1).total, 25);
   assert.equal(recarga.apoyo.obtenerEstadoApoyo(1).apoyado, true);
   e.auth.cerrarSesion();
-  assert.equal(e.apoyo.obtenerEstadoApoyo(1).total, 1);
+  assert.equal(e.apoyo.obtenerEstadoApoyo(1).total, 25);
   assert.equal(e.apoyo.obtenerEstadoApoyo(1).apoyado, false);
 });
 
@@ -93,15 +93,15 @@ test('perfil presenta únicamente reportes propios y se bloquea al cerrar sesió
   assert.equal(e.retorno.destinoTrasLogin(new URL(destino, 'http://localhost').search), '/pages/perfil.html');
 });
 
-test('reutiliza registro y cuenta apoyos de usuarios distintos sin usar los números de ejemplo', async () => {
+test('suma los apoyos de ejemplo y los de usuarios distintos sin duplicarlos', async () => {
   const e = await entorno();
-  assert.equal(e.apoyo.obtenerEstadoApoyo(1).total, 0);
+  assert.equal(e.apoyo.obtenerEstadoApoyo(1).total, 24);
   e.auth.iniciarSesion('test@unlam.com', 'Unlam2026!'); e.apoyo.registrarApoyo(1);
   e.auth.registrarUsuario('Vecina', 'vecina@example.com', 'Prueba2026!');
   e.auth.iniciarSesion('vecina@example.com', 'Prueba2026!');
   assert.equal(e.apoyo.obtenerEstadoApoyo(1).apoyado, false);
-  assert.equal(e.apoyo.registrarApoyo(1).total, 2);
-  assert.equal(e.apoyo.registrarApoyo(1).total, 2);
+  assert.equal(e.apoyo.registrarApoyo(1).total, 26);
+  assert.equal(e.apoyo.registrarApoyo(1).total, 26);
 });
 
 test('dos pestañas comparten registros y admiten IDs existentes de reportes locales', async () => {
@@ -308,7 +308,7 @@ test('popup sin sesión, retorno al detalle, estados sincronizados de detalle e 
   e.auth.iniciarSesion('test@unlam.com', 'Unlam2026!');
   eventos.get('click')({ target: { closest: () => detalle } });
   for (const boton of [detalle, inicio]) {
-    assert.equal(boton.querySelector('[data-total-apoyos]').textContent, 1);
+    assert.equal(boton.querySelector('[data-total-apoyos]').textContent, 25);
     assert.equal(boton.disabled, true);
     assert.equal(boton.querySelector('[data-etiqueta-apoyo]').textContent, 'Ya indicaste que te afecta');
   }
@@ -317,5 +317,26 @@ test('popup sin sesión, retorno al detalle, estados sincronizados de detalle e 
   assert.equal(e.apoyo.obtenerApoyos(1).length, 1);
   e.auth.cerrarSesion();
   assert.equal(detalle.disabled, false);
-  assert.equal(detalle.querySelector('[data-total-apoyos]').textContent, 1);
+  assert.equal(detalle.querySelector('[data-total-apoyos]').textContent, 25);
+});
+
+test('los reportes finalizados muestran solo el resumen y no admiten nuevos apoyos', async () => {
+  const e = await entorno();
+  const reportes = (await e.cargar('reportes.js')).namespace.obtenerReportes();
+  e.contexto.document.addEventListener = () => {};
+  e.contexto.document.querySelectorAll = () => [];
+  const ui = await e.cargar('apoyos-ui.js'); await ui.evaluate();
+  for (const reporte of reportes.filter(reporte => reporte.estado === 'finalizado')) {
+    const inicial = e.apoyo.obtenerEstadoApoyo(reporte.id).total;
+    assert.ok(inicial > 0);
+    assert.equal(e.apoyo.registrarApoyo(reporte.id).cerrado, true);
+    e.auth.iniciarSesion('test@unlam.com', 'Unlam2026!');
+    assert.equal(e.apoyo.registrarApoyo(reporte.id).cerrado, true);
+    assert.equal(e.apoyo.obtenerEstadoApoyo(reporte.id).total, inicial);
+    assert.equal(e.apoyo.obtenerApoyos(reporte.id).length, 0);
+    const html = ui.namespace.resumenApoyos(reporte);
+    assert.match(html, /fa-thumbs-o-up/);
+    assert.doesNotMatch(html, /<button|data-apoyo-id|data-etiqueta-apoyo/);
+    e.auth.cerrarSesion();
+  }
 });
