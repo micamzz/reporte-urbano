@@ -4,8 +4,8 @@
 
 .contenidoPerfil {
     max-width: 960px;
-    margin: 1.5rem auto 2rem;
-    padding: 0 24px;
+    margin: 1.5rem auto 0;
+    padding: 0 24px 2rem;
     color: #333333;
 }
 
@@ -109,7 +109,7 @@
 
 @media(max-width:600px) {
     .contenidoPerfil {
-        padding: 0 20px;
+        padding: 0 20px 2rem;
     }
 
     .datosPerfil {
