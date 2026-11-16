@@ -158,3 +158,70 @@
   color: #ffffff;
   border-color: #007bbf;
 }
+
+/* =========================================
+   RESPONSIVE MAPA DE INCIDENCIAS
+   ========================================= */
+@media (max-width: 768px) {
+  .seccionMapaGrande {
+    height: calc(100dvh - 75px);
+    min-height: 480px;
+  }
+
+  /* Barra de filtros flotante adaptable y con scroll horizontal suave si no entra */
+  .contenedorFiltrosSuperiores {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    transform: none;
+    width: auto;
+    max-width: 100%;
+    padding: 0.6rem 0.75rem;
+    border-radius: 16px;
+    overflow-x: auto;
+  }
+
+  /* Permitir que las filas internas hagan wrap o scroll sin desbordar */
+  .contenedorFiltrosSuperiores > div {
+    flex-wrap: wrap;
+    justify-content: center !important;
+    gap: 0.4rem !important;
+  }
+
+  .botonFiltroFlotante {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+
+  /* Mover el botón de bajar al footer para que no pise los filtros ni el zoom */
+  .botonIrAlFooter {
+    top: auto;
+    bottom: 85px;
+    right: 12px;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.75rem;
+  }
+
+  /* Botón principal de reportar adaptado al ancho móvil */
+  .contenedorCtaInferior {
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    transform: none;
+    text-align: center;
+  }
+
+  .botonReportarInferior {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.85rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  /* Popups de Leaflet más compactos en móvil */
+  .tarjetaPopup {
+    width: 190px;
+  }
+}

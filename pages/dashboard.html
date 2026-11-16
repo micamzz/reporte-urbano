@@ -8,16 +8,28 @@
   <link rel="stylesheet" href="../assets/css/header.css">
   <link rel="stylesheet" href="../assets/css/footer.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
   <style>
     .dashboardContenedor { max-width: 1200px; margin: 2rem auto; padding: 0 24px; color: #333; }
     .kpiGrilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
     .kpiTarjeta { background: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; text-align: center; }
     .kpiValor { font-size: 2.5rem; font-weight: 700; color: #007bbf; margin-bottom: 0.5rem; }
     .kpiEtiqueta { font-size: 0.85rem; color: #64748b; font-weight: 600; text-transform: uppercase; }
-    .graficosGrilla { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .graficoTarjeta { background: #fff; padding: 1.5rem; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-    @media (max-width: 768px) { .graficosGrilla { grid-template-columns: 1fr; } }
+    .graficosGrilla { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+    .graficoTarjeta { background: #fff; padding: 1.5rem; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.04); min-width: 0; }
+
+    @media (max-width: 768px) {
+      .dashboardContenedor { margin: 1.25rem auto; padding: 0 16px; }
+      .kpiGrilla { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+      .kpiGrilla .kpiTarjeta:first-child { grid-column: 1 / -1; } /* El total ocupa todo el ancho arriba */
+      .kpiTarjeta { padding: 1rem; }
+      .kpiValor { font-size: 2rem; }
+      .graficosGrilla { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+      .graficoTarjeta { padding: 1rem; }
+      #btnDescargarCsv { width: 100%; justify-content: center; }
+    }
   </style>
+
 </head>
 <body class="cuerpoPagina">
   <div id="contenedorHeader"></div>
@@ -31,8 +43,6 @@
         <i class="fa fa-download" aria-hidden="true"></i> Descargar Estadísticas
       </button>
     </div>
-
-    <p style="color: #64748b; margin-bottom: 2rem;">Datos abiertos sobre la gestión de incidencias en el municipio.</p>
     
     <div class="kpiGrilla">
       <div class="kpiTarjeta"><div class="kpiValor" id="kpiTotal">0</div><div class="kpiEtiqueta">Reportes Totales</div></div>

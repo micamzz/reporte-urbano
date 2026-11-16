@@ -139,3 +139,13 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+@media (max-width: 480px) {
+  .seccionReportesRecientes {
+    padding: 0 16px 3rem 16px;
+  }
+  .grillaReportesRecientes {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+}
