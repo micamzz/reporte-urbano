@@ -1,4 +1,4 @@
-import { actualizarApoyos } from './apoyos-ui.js';
+import { actualizarApoyos, resumenApoyos } from './apoyos-ui.js';
 import { configurarEnlacesReporte } from './acceso-reporte.js';
 
 configurarEnlacesReporte();
@@ -140,9 +140,9 @@ function renderizarReportesRecientes() {
       </div>
       <div class="contenedorAccionesTarjeta">
         <span class="enlaceVerMasDetalle">Ver detalle completo </span>
-        <button type="button" class="botonAfectado" data-apoyo-id="${textoSeguro(reporte.id)}" aria-pressed="false">
+        ${reporte.estado === 'finalizado' ? resumenApoyos(reporte) : `<button type="button" class="botonAfectado" data-apoyo-id="${textoSeguro(reporte.id)}" aria-pressed="false">
           <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> <span data-etiqueta-apoyo>A mí también me afecta</span> (<span data-total-apoyos>0</span>)
-        </button><p data-error-apoyo role="status"></p>
+        </button>`}<p data-error-apoyo role="status"></p>
       </div>
     `;
     

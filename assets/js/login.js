@@ -68,9 +68,41 @@ formulario.addEventListener('submit', (evento) => {
   }
 });
 
-document.getElementById('enlaceRecuperar')?.addEventListener('click', (evento) => {
+const popupRecuperar = document.getElementById('popupRecuperar');
+const formularioRecuperar = document.getElementById('formularioRecuperar');
+const emailRecuperar = document.getElementById('emailRecuperar');
+const errorRecuperar = document.getElementById('errorRecuperar');
+const confirmacionRecuperar = document.getElementById('confirmacionRecuperar');
+
+document.getElementById('enlaceRecuperar').addEventListener('click', (evento) => {
   evento.preventDefault();
-  mensaje.textContent = 'La recuperación de contraseña todavía no está disponible.';
+  formularioRecuperar.reset();
+  emailRecuperar.value = email.value.trim();
+  mostrarError(emailRecuperar, errorRecuperar, '');
+  formularioRecuperar.hidden = false;
+  confirmacionRecuperar.hidden = true;
+  document.getElementById('descripcionRecuperar').hidden = false;
+  popupRecuperar.showModal();
+  emailRecuperar.focus();
+});
+for (const id of ['cerrarRecuperar', 'aceptarRecuperar']) {
+  document.getElementById(id).addEventListener('click', () => popupRecuperar.close());
+}
+popupRecuperar.addEventListener('close', () => document.getElementById('enlaceRecuperar').focus());
+emailRecuperar.addEventListener('input', () => mostrarError(emailRecuperar, errorRecuperar, ''));
+formularioRecuperar.addEventListener('submit', (evento) => {
+  evento.preventDefault();
+  const valor = emailRecuperar.value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor)) {
+    mostrarError(emailRecuperar, errorRecuperar, valor ? 'Ingresá un correo electrónico válido.' : 'Ingresá tu correo electrónico.');
+    emailRecuperar.focus();
+    return;
+  }
+  // Flujo de demostracion: no hay un servicio de correo conectado.
+  formularioRecuperar.hidden = true;
+  document.getElementById('descripcionRecuperar').hidden = true;
+  confirmacionRecuperar.hidden = false;
+  confirmacionRecuperar.focus();
 });
 
 document.addEventListener('DOMContentLoaded', async () => {

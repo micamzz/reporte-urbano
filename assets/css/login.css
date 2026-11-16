@@ -1,6 +1,6 @@
 .seccionAcceso {
   position: relative;
-  isolation: isolate;
+  /* isolation: isolate; */
   overflow: hidden;
   box-sizing: border-box;
   min-height: min(650px, calc(100svh - 75px));
@@ -19,14 +19,14 @@
   pointer-events: none;
 }
 
-.seccionAcceso::before {
+/* .seccionAcceso::before {
   width: 75%;
   height: 75%;
   top: -35%;
   left: -30%;
   border-radius: 0 0 90% 0;
   background: linear-gradient(130deg, #d9ecff, #ffffffd9);
-}
+} */
 
 .seccionAcceso::after {
   width: 80%;
@@ -37,40 +37,6 @@
   transform: rotate(-18deg);
   background: linear-gradient(110deg, #81d33e, #b0e579);
   box-shadow: -30px -30px 0 #bde99c40;
-}
-
-.accesoLogin {
-  background: radial-gradient(ellipse at 35% 45%, #ffffff 0%, #f3f8ff 65%, #eaf3ff 100%);
-}
-
-.accesoLogin::before {
-  width: 46%;
-  height: 46%;
-  left: -22%;
-  top: -27%;
-  border-radius: 0 0 100% 0;
-  background: linear-gradient(125deg, #76cb36, #a4df64);
-  box-shadow: 42px 16px 0 #cce8ba80;
-}
-
-.accesoLogin::after {
-  width: 62%;
-  height: 47%;
-  right: -32%;
-  bottom: -29%;
-  border-radius: 100% 0 0 0;
-  background: linear-gradient(110deg, #8bd247, #b0e17b);
-  box-shadow: -32px -30px 0 #d1eac280;
-}
-
-.fotoAcceso {
-  position: absolute;
-  z-index: -1;
-  inset: 0 0 0 calc(50% + 236px);
-  background: url('../../public/img/hero-ituzaingo.png') 22% center / auto 100% no-repeat;
-  mask-image: linear-gradient(to right, transparent 0%, #0009 40%, #000c 100%), linear-gradient(to bottom, #000 0%, #000 48%, transparent 92%);
-  mask-composite: intersect;
-  pointer-events: none;
 }
 
 .tarjetaAcceso {
@@ -92,16 +58,6 @@
   font-size: 28px;
   line-height: 1.2;
   letter-spacing: -0.8px;
-}
-
-.accesoLogin .encabezadoAcceso h1::after {
-  content: '';
-  display: block;
-  width: 64px;
-  height: 3px;
-  margin: 10px auto;
-  border-radius: 3px;
-  background: #5dbd24;
 }
 
 .encabezadoAcceso p { margin: 0; color: #586477; font-size: 13px; line-height: 1.45; }
@@ -166,7 +122,7 @@
   box-shadow: 0 5px 12px #0070bf1a;
   transition: filter 0.2s;
 }
-.accesoRegistro .botonAcceso { background: linear-gradient(115deg, #52a326, #489624); box-shadow: 0 5px 12px #4b9b241a; }
+.accesoRegistro .botonAcceso, .accesoLogin .botonAcceso { background: linear-gradient(115deg, #52a326, #489624); box-shadow: 0 5px 12px #4b9b241a; }
 .botonAcceso:hover { filter: brightness(0.93); }
 .botonAcceso:focus-visible, .alternarPassword:focus-visible, .logoAcceso:focus-visible, .leyendaRegistro a:focus-visible, .enlaceOlvidePassword:focus-visible {
   outline: 3px solid #007bc066;
@@ -229,6 +185,97 @@
   .seccionAcceso::after { right: -45%; bottom: -25%; }
 }
 
-@media (max-width: 900px) {
-  .fotoAcceso { display: none; }
+/* Curva inferior exclusiva del Login; no ocupa espacio en el formulario. */
+.accesoLogin::after {
+  width: clamp(145px, 26vw, 360px);
+  height: clamp(55px, 9vw, 120px);
+  right: 0;
+  bottom: 0;
+  border-radius: 85% 0 0 0 / 100% 0 0 0;
+  transform: none;
+  box-shadow: none;
+  mask-image: radial-gradient(ellipse 72% 82% at 12% -5%, transparent 98%, #000 100%);
 }
+
+@supports (clip-path: shape(from 0% 100%, line to 100% 100%, close)) {
+  .accesoLogin::after {
+    border-radius: 0;
+    mask-image: none;
+    clip-path: shape(
+      from 0% 100%,
+      curve to 43% 68% with 10% 78% / 29% 84%,
+      curve to 76% 23% with 60% 50% / 55% 37%,
+      curve to 100% 0% with 88% 10% / 94% 5%,
+      line to 100% 100%, close
+    );
+  }
+}
+
+
+/* Prolonga la curva en el margen existente antes de la onda del footer. */
+.accesoLogin {
+  --alto-union-verde: 48px;
+}
+
+.accesoLogin::after {
+  background-size: 100% calc(100% + var(--alto-union-verde));
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+.accesoLogin + #contenedorFooter {
+  position: relative;
+  isolation: isolate;
+}
+
+.accesoLogin + #contenedorFooter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(145px, 26vw, 360px);
+  height: 48px;
+  mask-image: linear-gradient(to right, transparent, #000 12%);
+  background: linear-gradient(110deg, #81d33e, #b0e579);
+  background-size: 100% calc(clamp(55px, 9vw, 120px) + 48px);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Evita que el margen del footer colapse fuera del contenedor de la union. */
+/* .accesoLogin + #contenedorFooter { display: flow-root; } */
+
+@media (max-width: 576px) {
+  .accesoLogin { --alto-union-verde: 32px; }
+  .accesoLogin + #contenedorFooter::before {
+    height: 32px;
+    background-size: 100% calc(clamp(55px, 9vw, 120px) + 32px);
+  }
+}
+
+.popupRecuperar {
+  box-sizing: border-box;
+  position: relative;
+  width: min(420px, calc(100% - 32px));
+  max-height: calc(100svh - 32px);
+  overflow-y: auto;
+  padding: 32px 28px 28px;
+  border: 1px solid #e2e8f0;
+  border-radius: 22px;
+  background: #fff;
+  color: #0c2b58;
+  font-family: inherit;
+  box-shadow: 0 12px 34px #2d649726;
+}
+.popupRecuperar::backdrop { background: #062c4d66; }
+.popupRecuperar [hidden] { display: none !important; }
+.popupRecuperar h2 { margin: 0 16px 12px 0; font-size: 22px; }
+.popupRecuperar p { margin: 0 0 20px; font-size: 14px; line-height: 1.6; color: #586477; }
+.cerrarRecuperar { position: absolute; top: 8px; right: 12px; width: 32px; height: 32px; border: 0; background: transparent; color: #64748b; font-size: 26px; cursor: pointer; }
+.popupRecuperar .botonAcceso { width: 100%; background: linear-gradient(115deg, #52a326, #489624); }
+.confirmacionRecuperar { text-align: center; }
+.confirmacionRecuperar > i { display: block; margin-bottom: 16px; color: #0070bf; font-size: 32px; }
+.confirmacionRecuperar small { display: block; margin-bottom: 20px; color: #64748b; font-size: 12px; line-height: 1.5; }
+.cerrarRecuperar:focus-visible { outline: 3px solid #007bc066; outline-offset: 2px; }

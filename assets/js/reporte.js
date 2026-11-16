@@ -1,6 +1,6 @@
 ﻿import { cargarComponentesModulares } from './utils/include.js';
 import { actualizarBotonHeader } from './auth.js';
-import { buscarDirecciones } from './direcciones.js';
+import { buscarDireccionPorCoordenadas, buscarDirecciones } from './direcciones.js';
 import { guardarReporteLocal } from './guardar-reporte.js';
 
 const $ = (id) => document.getElementById(id);
@@ -13,14 +13,45 @@ let enviado = false;
 const fotos = [];
 const limites = [[-34.7000, -58.7300], [-34.6100, -58.6200]];
 let consultaDireccion = null;
+let consultaDireccionCoordenadas = null;
 
 function limpiarBusquedaDireccion() {
   consultaDireccion?.abort();
   consultaDireccion = null;
+  consultaDireccionCoordenadas?.abort();
+  consultaDireccionCoordenadas = null;
   $('buscarDireccion').disabled = false;
   $('resultadosDireccion').replaceChildren();
   $('resultadosDireccion').hidden = true;
   $('estadoDireccion').textContent = '';
+  $('estadoDireccion').classList.remove('estadoResultados');
+}
+
+async function completarDireccion(punto) {
+  consultaDireccionCoordenadas?.abort();
+  const controlador = new AbortController();
+  consultaDireccionCoordenadas = controlador;
+  const temporizador = setTimeout(() => controlador.abort(), 12000);
+  $('calle').value = '';
+  $('altura').value = '';
+  $('estadoDireccion').textContent = 'Buscando calle y altura…';
+  try {
+    const direccion = await buscarDireccionPorCoordenadas(punto, controlador.signal);
+    if (consultaDireccionCoordenadas !== controlador) return;
+    $('calle').value = direccion?.calle || '';
+    $('altura').value = direccion?.altura || '';
+    $('estadoDireccion').textContent = direccion
+      ? 'Dirección completada automáticamente. Revisá la calle y la altura.'
+      : 'No encontramos una calle cercana. Podés ingresar la dirección manualmente.';
+  } catch (fallo) {
+    if (consultaDireccionCoordenadas !== controlador) return;
+    $('estadoDireccion').textContent = fallo.name === 'AbortError'
+      ? 'La búsqueda tardó demasiado. Podés ingresar la dirección manualmente.'
+      : `${fallo.message} Podés ingresar la dirección manualmente.`;
+  } finally {
+    clearTimeout(temporizador);
+    if (consultaDireccionCoordenadas === controlador) consultaDireccionCoordenadas = null;
+  }
 }
 
 async function buscarDireccion() {
@@ -29,7 +60,11 @@ async function buscarDireccion() {
     $('estadoDireccion').textContent = 'El mapa no está disponible. Revisá tu conexión y recargá la página.';
     return;
   }
-  const consulta = $('direccion').value.trim();
+  const consulta = [$('calle').value.trim(), $('altura').value.trim()].filter(Boolean).join(' ');
+  if (!consulta) {
+    $('estadoDireccion').textContent = 'Ingresá una calle para buscarla en el mapa.';
+    return;
+  }
   limpiarBusquedaDireccion();
   const controlador = new AbortController();
   consultaDireccion = controlador;
@@ -39,8 +74,9 @@ async function buscarDireccion() {
   try {
     const resultados = await buscarDirecciones(consulta, limites, controlador.signal);
     if (consultaDireccion !== controlador) return;
+    $('estadoDireccion').classList.toggle('estadoResultados', resultados.length > 0);
     $('estadoDireccion').textContent = resultados.length
-      ? 'Elegí un resultado para colocar el pin. Revisá la ubicación y ajustala si hace falta.'
+      ? 'SELECCIONÁ EL RESULTADO PARA COLOCAR EL PIN EN EL MAPA'
       : 'No encontramos esa dirección en la zona del mapa de Ituzaingó. Probá otra forma de escribirla o marcá el lugar en el mapa.';
     for (const resultado of resultados) {
       const item = document.createElement('li');
@@ -48,8 +84,9 @@ async function buscarDireccion() {
       boton.type = 'button';
       boton.textContent = `${resultado.nombre}${resultado.aproximada ? ' · Sin altura exacta' : ''}`;
       boton.addEventListener('click', () => {
-        seleccionarUbicacion(resultado);
+        seleccionarUbicacion(resultado, resultado);
         mapa.setView(resultado, 17);
+        $('estadoDireccion').classList.remove('estadoResultados');
         $('estadoDireccion').textContent = `${resultado.aproximada ? 'Ubicación aproximada: no se encontró una altura exacta.' : 'Ubicación seleccionada.'} Revisá y ajustá el pin antes de continuar.`;
         $('resultadosDireccion').hidden = true;
         $('mapaReporte').focus();
@@ -76,12 +113,15 @@ function error(campo, mensaje, control) {
   $(`error${campo}`).textContent = mensaje;
   if (control) control.setAttribute('aria-invalid', String(Boolean(mensaje)));
 }
+
 function categoria() { return document.querySelector('[name="categoria"]:checked')?.value; }
+
 function ubicacionValida() {
   return ubicacion && Number.isFinite(ubicacion.lat) && Number.isFinite(ubicacion.lng)
     && ubicacion.lat >= limites[0][0] && ubicacion.lat <= limites[1][0]
     && ubicacion.lng >= limites[0][1] && ubicacion.lng <= limites[1][1];
 }
+
 function validarProblema() {
   const seleccion = Object.hasOwn(categorias, categoria());
   error('Categoria', seleccion ? '' : 'Seleccioná una categoría para continuar.', $('grupoCategoria'));
@@ -91,31 +131,42 @@ function validarProblema() {
   error('Descripcion', descripcion ? '' : 'Contanos qué está ocurriendo.', $('descripcion'));
   return seleccion && Boolean(titulo) && Boolean(descripcion);
 }
+
 function validarUbicacion() {
   const valida = Boolean(ubicacionValida());
-  error('Ubicacion', valida ? '' : 'Seleccioná una ubicación en el mapa de Ituzaingó.', $('mapaReporte'));
+  error('Ubicacion', valida ? '' : 'Marcá una ubicación en el mapa o escribí una dirección y seleccionala.', $('mapaReporte'));
   return valida;
 }
+
 function enfocarError() {
   const control = document.querySelector('[data-paso]:not([hidden]) [aria-invalid="true"]');
   if (control?.id === 'grupoCategoria') control.querySelector('input').focus();
   else control?.focus();
 }
+
 function agregarCapa(mapaDestino) {
   const capa = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 19
   });
   capa.addTo(mapaDestino);
 }
-function seleccionarUbicacion(punto) {
+
+function seleccionarUbicacion(punto, direccion) {
   ubicacion = { lat: punto.lat, lng: punto.lng };
   if (!marcador) {
     marcador = L.marker(punto, { draggable: true, autoPan: true }).addTo(mapa);
     marcador.on('dragend', () => seleccionarUbicacion(marcador.getLatLng()));
   } else marcador.setLatLng(punto);
-  $('coordenadas').textContent = `Latitud: ${punto.lat.toFixed(6)} · Longitud: ${punto.lng.toFixed(6)}`;
+  if (direccion === undefined) completarDireccion(punto);
+  else {
+    consultaDireccionCoordenadas?.abort();
+    consultaDireccionCoordenadas = null;
+    $('calle').value = direccion.calle;
+    $('altura').value = direccion.altura;
+  }
   validarUbicacion();
 }
+
 function iniciarMapa() {
   if (!window.L) {
     error('Ubicacion', 'No se pudo cargar el mapa. Revisá tu conexión y recargá la página.', $('mapaReporte'));
@@ -128,10 +179,10 @@ function iniciarMapa() {
   }
   requestAnimationFrame(() => mapa.invalidateSize());
 }
+
 function mostrarResumen() {
-  const pares = [ ['Categoría', categorias[categoria()]], ['Título', $('titulo').value.trim()],
-    ['Descripción', $('descripcion').value.trim()], ['Dirección', $('direccion').value.trim() || 'Sin dirección ingresada'],
-    ['Ubicación', `${ubicacion.lat.toFixed(6)}, ${ubicacion.lng.toFixed(6)}`] ];
+  const pares = [['Categoría', categorias[categoria()]], ['Título', $('titulo').value.trim()],
+  ['Descripción', $('descripcion').value.trim()], ['Dirección', direccionCompleta() || 'Sin dirección ingresada']];
   $('resumenReporte').replaceChildren();
   for (const [nombre, valor] of pares) {
     const termino = document.createElement('dt');
@@ -147,6 +198,7 @@ function mostrarResumen() {
     requestAnimationFrame(() => { mapaResumen.invalidateSize(); mapaResumen.setView(ubicacion, 16); });
   }
 }
+
 function mostrarPaso(numero) {
   if (paso === 2 && numero !== 2) limpiarBusquedaDireccion();
   paso = numero;
@@ -165,6 +217,7 @@ function mostrarPaso(numero) {
   if (paso === 3) mostrarResumen();
   $(`tituloPaso${paso}`).focus();
 }
+
 function renderizarFotos(contenedor, editable = true) {
   contenedor.replaceChildren();
   fotos.forEach((foto, indice) => {
@@ -185,6 +238,7 @@ function renderizarFotos(contenedor, editable = true) {
     contenedor.append(figura);
   });
 }
+
 function agregarFotos(archivos) {
   const errores = [];
   for (const archivo of archivos) {
@@ -201,35 +255,63 @@ function agregarFotos(archivos) {
   $('fotos').value = '';
   renderizarFotos($('vistaFotos'));
 }
+
 export async function crearReporte(datos) {
   return guardarReporteLocal(datos);
 }
+
 function prepararDatos() {
   const datos = new FormData();
-  for (const [clave, valor] of Object.entries({ categoria: categoria(), titulo: $('titulo').value.trim(), descripcion: $('descripcion').value.trim(), direccion: $('direccion').value.trim(), lat: ubicacion.lat, lng: ubicacion.lng })) datos.append(clave, valor);
+  for (const [clave, valor] of Object.entries({ categoria: categoria(), titulo: $('titulo').value.trim(), descripcion: $('descripcion').value.trim(), direccion: direccionCompleta(), lat: ubicacion.lat, lng: ubicacion.lng })) datos.append(clave, valor);
   fotos.forEach(({ archivo }) => datos.append('fotografias', archivo));
   return datos;
 }
+
+function direccionCompleta() {
+  return [$('calle').value.trim(), $('altura').value.trim()].filter(Boolean).join(' ');
+}
+
 $('siguienteReporte').addEventListener('click', () => {
   if (paso === 1 ? validarProblema() : validarUbicacion()) mostrarPaso(paso + 1);
   else enfocarError();
 });
 $('anteriorReporte').addEventListener('click', () => mostrarPaso(paso - 1));
 $('buscarDireccion').addEventListener('click', buscarDireccion);
-$('direccion').addEventListener('input', limpiarBusquedaDireccion);
-$('direccion').addEventListener('keydown', (evento) => {
-  if (evento.key === 'Enter') { evento.preventDefault(); buscarDireccion(); }
-});
-$('seleccionarCentro').addEventListener('click', () => { if (mapa) seleccionarUbicacion(mapa.getCenter()); });
+for (const id of ['calle', 'altura']) {
+  $(id).addEventListener('input', limpiarBusquedaDireccion);
+  $(id).addEventListener('keydown', (evento) => {
+    if (evento.key === 'Enter') { evento.preventDefault(); buscarDireccion(); }
+  });
+}
+function actualizarContadorDescripcion() {
+  $('contadorDescripcion').textContent = `${$('descripcion').value.length}/200`;
+}
+$('descripcion').addEventListener('input', actualizarContadorDescripcion);
+actualizarContadorDescripcion();
+
 for (const [id, campo] of [['titulo', 'Titulo'], ['descripcion', 'Descripcion']]) {
   $(id).addEventListener('input', () => { if ($(id).value.trim()) error(campo, '', $(id)); });
 }
+
+function actualizarContadorTitulo() {
+  $('contadorTitulo').textContent = `${$('titulo').value.length}/50`;
+}
+
+$('titulo').addEventListener('input', actualizarContadorTitulo);
+actualizarContadorTitulo();
+
+for (const [id, campo] of [['titulo', 'Titulo'], ['descripcion', 'Descripcion']]) {
+  $(id).addEventListener('input', () => { if ($(id).value.trim()) error(campo, '', $(id)); });
+}
+
 document.querySelectorAll('[name="categoria"]').forEach((radio) => radio.addEventListener('change', () => error('Categoria', '', $('grupoCategoria'))));
 $('fotos').addEventListener('change', (evento) => agregarFotos(evento.target.files));
+
 for (const nombre of ['dragover', 'dragleave', 'drop']) $('zonaFotos').addEventListener(nombre, (evento) => {
   evento.preventDefault(); $('zonaFotos').classList.toggle('arrastrando', nombre === 'dragover');
   if (nombre === 'drop') agregarFotos(evento.dataTransfer.files);
 });
+
 $('formularioReporte').addEventListener('submit', async (evento) => {
   evento.preventDefault();
   if (enviando || enviado) return;
@@ -258,6 +340,7 @@ $('formularioReporte').addEventListener('submit', async (evento) => {
     if (!$('popupReporteEnviado').open) $('estadoEnvio').focus();
   }
 });
+
 $('cerrarReporteEnviado').addEventListener('click', () => $('popupReporteEnviado').close());
 await cargarComponentesModulares();
 actualizarBotonHeader();

@@ -1,0 +1,96 @@
+.dashboardContenedor {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    padding: 0 24px 2rem;
+    color: #333;
+}
+
+.dashboardContenedor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.dashboardContenedor-h1 {
+    color: #092553;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.dashboardContenedor-p {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
+.kpiGrilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.kpiGrilla-kpiTarjeta {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+.kpiTarjeta-kpiValor {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #007bbf;
+    margin-bottom: 0.5rem;
+}
+
+#kpiResueltos {
+    color: #10b981;
+}
+
+#kpiProceso {
+    color: #f59e0b;
+}
+
+.kpiEtiqueta {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.graficosGrilla {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.graficosGrilla-graficoTarjeta {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.graficoTarjeta-h3 {
+    color: #092553;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.graficoTarjeta-chart {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .graficosGrilla {
+        grid-template-columns: 1fr;
+    }
+}

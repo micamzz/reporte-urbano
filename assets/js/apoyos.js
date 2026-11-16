@@ -20,17 +20,26 @@ export function obtenerApoyos(incidenciaId) {
   return [...registros.values()];
 }
 
+// Cantidades ficticias fijas para los 20 reportes de demostraci?n.
+const apoyosIniciales = new Map(Object.entries({
+  1: 24, 2: 17, 3: 32, 4: 8, 5: 41, 6: 13,
+  7: 56, 8: 19, 9: 27, 10: 63, 11: 11, 12: 22,
+  13: 78, 14: 45, 15: 36, 16: 29, 17: 52, 18: 16, 19: 9, 20: 34
+}));
+
 export function obtenerEstadoApoyo(incidenciaId) {
   const usuario = obtenerUsuarioActual();
   const apoyos = obtenerApoyos(incidenciaId);
-  return { total: apoyos.length, apoyado: Boolean(usuario && apoyos.some(apoyo => apoyo.usuarioId === usuario.id)) };
+  return { total: (apoyosIniciales.get(String(incidenciaId)) ?? 0) + apoyos.length, apoyado: Boolean(usuario && apoyos.some(apoyo => apoyo.usuarioId === usuario.id)) };
 }
 
 export function registrarApoyo(incidenciaId) {
   const usuario = obtenerUsuarioActual();
-  if (!usuario) return { requiereSesion: true };
   const id = String(incidenciaId);
-  if (!obtenerReportes().some(reporte => String(reporte.id) === id)) throw new Error('La incidencia ya no está disponible.');
+  const reporte = obtenerReportes().find(reporte => String(reporte.id) === id);
+  if (reporte?.estado === 'finalizado') return { ...obtenerEstadoApoyo(id), cerrado: true };
+  if (!usuario) return { requiereSesion: true };
+  if (!reporte) throw new Error('La incidencia ya no está disponible.');
   const clave = claveApoyo(id, usuario.id);
   if (obtenerApoyos(id).some(apoyo => apoyo.usuarioId === usuario.id)) return obtenerEstadoApoyo(id);
   const apoyo = { incidenciaId: id, usuarioId: usuario.id, fecha: new Date().toISOString() };

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="../assets/css/header.css">
   <link rel="stylesheet" href="../assets/css/footer.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
   <style>
@@ -31,6 +33,7 @@
   </style>
 
 </head>
+
 <body class="cuerpoPagina">
   <div id="contenedorHeader"></div>
   <main class="dashboardContenedor">
@@ -45,24 +48,33 @@
     </div>
     
     <div class="kpiGrilla">
-      <div class="kpiTarjeta"><div class="kpiValor" id="kpiTotal">0</div><div class="kpiEtiqueta">Reportes Totales</div></div>
-      <div class="kpiTarjeta"><div class="kpiValor" id="kpiResueltos" style="color:#10b981;">0</div><div class="kpiEtiqueta">Resueltos</div></div>
-      <div class="kpiTarjeta"><div class="kpiValor" id="kpiProceso" style="color:#f59e0b;">0</div><div class="kpiEtiqueta">En Proceso</div></div>
+      <div class="kpiGrilla-kpiTarjeta">
+        <div class="kpiTarjeta-kpiValor" id="kpiTotal">0</div>
+        <div class="kpiTarjeta-kpiEtiqueta">Reportes Totales</div>
+      </div>
+      <div class="kpiGrilla-kpiTarjeta">
+        <div class="kpiTarjeta-kpiValor" id="kpiResueltos">0</div>
+        <div class="kpiTarjeta-kpiEtiqueta">Resueltos</div>
+      </div>
+      <div class="kpiGrilla-kpiTarjeta">
+        <div class="kpiTarjeta-kpiValor" id="kpiProceso">0</div>
+        <div class="kpiTarjeta-kpiEtiqueta">En Proceso</div>
+      </div>
     </div>
 
     <div class="graficosGrilla">
-      <div class="graficoTarjeta">
-        <h3 style="color: #092553; margin-bottom: 1rem; text-align: center;">Incidencias por Categoría</h3>
+      <div class="graficosGrilla-graficoTarjeta">
+        <h3 class="graficoTarjeta-h3">Incidencias por Categoría</h3>
         <!-- Contenedor con altura fija para frenar a Chart.js -->
-        <div style="position: relative; height: 300px; width: 100%;">
+        <div class="graficoTarjeta-chart">
           <canvas id="graficoCategorias"></canvas>
         </div>
       </div>
-      
-      <div class="graficoTarjeta">
-        <h3 style="color: #092553; margin-bottom: 1rem; text-align: center;">Estado General</h3>
+
+      <div class="graficosGrilla-graficoTarjeta">
+        <h3 class="graficoTarjeta-h3">Estado General</h3>
         <!-- Contenedor con altura fija para frenar a Chart.js -->
-        <div style="position: relative; height: 300px; width: 100%;">
+        <div class="graficoTarjeta-chart">
           <canvas id="graficoEstados"></canvas>
         </div>
       </div>
@@ -70,8 +82,9 @@
 
   </main>
   <div id="contenedorFooter"></div>
-  
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script type="module" src="../assets/js/dashboard.js"></script>
 </body>
+
 </html>

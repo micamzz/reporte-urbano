@@ -2,8 +2,8 @@
 .paginaDetalle { background: radial-gradient(ellipse at 15% 35%, #e6f3ff, transparent 65%), #f8fbff; }
 .contenidoPrincipalDetalle {
   max-width: 1200px;
-  margin: 1.5rem auto 2rem;
-  padding: 0 2rem;
+  margin: 1.5rem auto 0;
+  padding: 0 2rem 2rem;
   min-height: calc(100vh - 400px);
   color: #333333;
 }
@@ -101,7 +101,7 @@
   .grillaDetalleContenido { grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr); gap: 1rem; }
 }
 @media (max-width: 700px) {
-  .contenidoPrincipalDetalle { padding: 0 20px; }
+  .contenidoPrincipalDetalle { padding: 0 20px 4rem; }
   .grillaDetalleContenido { grid-template-columns: minmax(0, 1fr); }
   .metadatosDetalle p + p { border: 0; padding-left: 0; }
 }

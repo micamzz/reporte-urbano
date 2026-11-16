@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,21 +8,28 @@
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="../assets/css/perfil.css">
 </head>
+
 <body class="cuerpoPagina paginaPerfil">
   <div id="contenedorHeader"></div>
   <main class="contenidoPerfil" hidden aria-labelledby="tituloPerfil">
     <h1 id="tituloPerfil">Mi perfil</h1>
     <section class="tarjetaPerfil" aria-labelledby="tituloCuenta">
       <h2 id="tituloCuenta">Datos de mi cuenta</h2>
-      <dl class="datosPerfil"><dt>Nombre</dt><dd id="nombrePerfil"></dd><dt>Correo electrónico</dt><dd id="emailPerfil"></dd></dl>
+      <dl class="datosPerfil">
+        <dt>Nombre</dt>
+        <dd id="nombrePerfil"></dd>
+        <dt>Correo electrónico</dt>
+        <dd id="emailPerfil"></dd>
+      </dl>
     </section>
 
-          <section class="tarjetaGamificacion" aria-labelledby="tituloGamificacion">
+    <section class="tarjetaGamificacion" aria-labelledby="tituloGamificacion">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-        <h2 id="tituloGamificacion" style="margin:0; color:#092553; font-size:1.1rem;"><i class="fa fa-trophy" style="color:#f59e0b;"></i> Rango Vecinal</h2>
+        <h2 id="tituloGamificacion" style="margin:0; color:#092553; font-size:1.1rem;"><i class="fa fa-trophy"
+            style="color:#f59e0b;"></i> Rango Vecinal</h2>
         <span class="badgeRango">Vecino Guardián (Nivel 2)</span>
       </div>
-      
+
       <div class="contenedorProgreso">
         <div class="infoProgreso">
           <span style="font-weight: 600; color:#333;">350 puntos</span>
@@ -40,11 +48,15 @@
     </section>
 
     <section class="seccionReportesPerfil" aria-labelledby="tituloMisReportes">
-      <div class="cabeceraReportesPerfil"><h2 id="tituloMisReportes">Mis reportes</h2><a class="botonIngresar" href="/pages/reporte.html">Reportar un problema</a></div>
+      <div class="cabeceraReportesPerfil">
+        <h2 id="tituloMisReportes">Mis reportes</h2><a class="botonIngresar" href="/pages/reporte.html">Reportar un
+          problema</a>
+      </div>
       <div id="reportesPerfil" class="reportesPerfil"></div>
     </section>
   </main>
   <div id="contenedorFooter"></div>
   <script type="module" src="../assets/js/perfil.js"></script>
 </body>
+
 </html>

@@ -25,10 +25,37 @@ export async function buscarDirecciones(direccion, limites, signal) {
     if (!Number.isFinite(lat) || !Number.isFinite(lng) || lat < limites[0][0] || lat > limites[1][0]
       || lng < limites[0][1] || lng > limites[1][1]) return [];
     const p = item.properties || {};
-    const nombre = [p.street || p.name, p.housenumber].filter(Boolean).join(' ');
+    const calle = p.street || p.name || '';
+    const altura = p.housenumber || '';
+    const nombre = [calle, altura].filter(Boolean).join(' ');
     if (!nombre) return [];
-    return [{ lat, lng, nombre: [nombre, p.city || p.district, p.state].filter(Boolean).join(', '), aproximada: !p.housenumber }];
+    return [{
+      lat, lng, calle, altura,
+      nombre: [nombre, p.city || p.district, p.state].filter(Boolean).join(', '),
+      aproximada: !altura
+    }];
   });
   cache.set(clave, resultados);
   return resultados;
+}
+
+export async function buscarDireccionPorCoordenadas(punto, signal) {
+  if (!Number.isFinite(punto.lat) || !Number.isFinite(punto.lng)) {
+    throw new Error('La ubicación no es válida para buscar una dirección.');
+  }
+  const url = new URL('https://photon.komoot.io/reverse');
+  url.search = new URLSearchParams({
+    lat: String(punto.lat),
+    lon: String(punto.lng),
+    limit: '1'
+  }).toString();
+  const respuesta = await fetch(url, { signal });
+  if (!respuesta.ok) throw new Error('No pudimos obtener la dirección de esa ubicación.');
+  const datos = await respuesta.json();
+  if (!Array.isArray(datos.features)) throw new Error('No pudimos interpretar la dirección de esa ubicación.');
+  const propiedades = datos.features[0]?.properties;
+  if (!propiedades) return null;
+  const calle = propiedades.street || propiedades.name || '';
+  if (!calle) return null;
+  return { calle, altura: propiedades.housenumber || '' };
 }
