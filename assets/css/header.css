@@ -47,6 +47,10 @@
   gap: 1.5rem;
 }
 
+.botonMenuMovil {
+  display: none;
+}
+
 .enlaceNavegacion {
   text-decoration: none;
   color: #333333;
@@ -109,14 +113,66 @@
     height: auto;
     min-height: 75px;
     padding: 14px 20px;
-    flex-wrap: wrap;
-    gap: 16px;
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+
+  .contenedorLogo {
+    margin-left: 0;
+  }
+
+  .botonMenuMovil {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #092553;
+    cursor: pointer;
+  }
+
+  .botonMenuMovil:hover,
+  .botonMenuMovil:focus-visible {
+    background-color: #f4f6f8;
+  }
+
+  .botonMenuMovil span {
+    width: 24px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: currentColor;
   }
 
   .navegacionMenu {
-    flex-wrap: wrap;
-    gap: 12px 18px;
+    display: none;
   }
 
-  .enlaceNavegacion { font-size: 0.75rem; }
+  .navegacionMenu.menuAbierto {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 20px 16px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .navegacionMenu .enlaceNavegacion {
+    padding: 12px 0;
+    font-size: 0.85rem;
+  }
+
+  #contenedorBotonUsuario {
+    padding-top: 8px;
+    border-top: 1px solid #e8edf2;
+  }
 }
