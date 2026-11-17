@@ -190,3 +190,30 @@
     filter: grayscale(0%);
     box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
 }
+
+.ayudaRango {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 0.8rem;
+}
+
+.ayudaRango summary {
+    width: fit-content;
+    color: #007bbf;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.ayudaRango p {
+    max-width: 650px;
+    margin: 0.5rem 0 0;
+    line-height: 1.5;
+}
+
+.ayudaRango summary:focus-visible {
+    outline: 3px solid #45b51c;
+    outline-offset: 3px;
+    border-radius: 2px;
+}
