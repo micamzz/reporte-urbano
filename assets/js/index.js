@@ -8,6 +8,7 @@ import { actualizarBotonHeader } from './auth.js';
 
 let mapaPrevisualizacion;
 let capaReportesInicio;
+let carruselReportesConfigurado = false;
 
 function crearPinNativo(colorHex) {
   const svgHtml = `
@@ -84,8 +85,15 @@ function renderizarMarcadoresInicio() {
 // CONVERTIR STRING "DD/MM/YYYY" A OBJETO DATE PARA PODER ORDENAR
 function parsearFecha(stringFecha) {
   if (typeof stringFecha !== 'string') return new Date(0);
-  const partes = stringFecha.split('/');
-  return new Date(partes[2], partes[1] - 1, partes[0]);
+  const partes = stringFecha.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (!partes) return new Date(0);
+  return new Date(Number(partes[3]), Number(partes[2]) - 1, Number(partes[1]));
+}
+
+function obtenerFechaReporte(reporte) {
+  const fechaCreacion = Date.parse(reporte.creadoEn);
+  if (Number.isFinite(fechaCreacion)) return fechaCreacion;
+  return parsearFecha(reporte.fecha).getTime();
 }
 
 function renderizarReportesRecientes() {
@@ -94,18 +102,9 @@ function renderizarReportesRecientes() {
 
   contenedorTarjetas.innerHTML = '';
 
-  // 1. Unir reportes harcodeados + reportes guardados por el usuario en localStorage
-  const listaCompleta = obtenerReportes();
+  const ordenadosPorFecha = obtenerReportes().sort((a, b) => obtenerFechaReporte(b) - obtenerFechaReporte(a));
 
-  // 2. Ordenar cronológicamente de más RECIENTE a más ANTIGUO
-  const ordenadosPorFecha = listaCompleta.sort((a, b) => {
-    return (Date.parse(b.creadoEn) || parsearFecha(b.fecha).getTime()) - (Date.parse(a.creadoEn) || parsearFecha(a.fecha).getTime());
-  });
-
-  // 3. Tomar los 5 más recientes para la portada
-  const masRecientes = ordenadosPorFecha.slice(0, 4);
-
-  masRecientes.forEach(reporte => {
+  ordenadosPorFecha.forEach(reporte => {
     let colorBadge = '#ef4444';
     let textoEstado = 'Reportado';
 
@@ -121,9 +120,8 @@ function renderizarReportesRecientes() {
     tarjeta.className = 'tarjetaReporteReciente';
     
     // Al hacer clic en cualquier parte de la tarjeta, te redirige al detalle del reporte
-    tarjeta.addEventListener('click', (e) => {
-      // Evitamos la redirección si se clickeó específicamente el botón de "A mí también me afecta"
-      if (!e.target.closest('button, a')) {
+    tarjeta.addEventListener('click', evento => {
+      if (evento.target instanceof Element && !evento.target.closest('button, a')) {
         window.location.href = `/pages/detalle-incidencia.html?id=${encodeURIComponent(reporte.id)}&origen=inicio`;
       }
     });
@@ -148,7 +146,57 @@ function renderizarReportesRecientes() {
     
     contenedorTarjetas.appendChild(tarjeta);
   });
+
+  const viewport = document.getElementById('ventanaReportesRecientes');
+  if (viewport) viewport.scrollLeft = 0;
+  actualizarControlesReportes();
   actualizarApoyos();
+}
+
+function actualizarControlesReportes() {
+  const viewport = document.getElementById('ventanaReportesRecientes');
+  const tarjetas = [...document.querySelectorAll('#contenedorTarjetasRecientes .tarjetaReporteReciente')];
+  const contador = document.getElementById('contadorReportesRecientes');
+  const anterior = document.getElementById('reporteAnterior');
+  const siguiente = document.getElementById('reporteSiguiente');
+
+  if (!viewport || !contador || !anterior || !siguiente) return;
+
+  const limitesViewport = viewport.getBoundingClientRect();
+  const visibles = tarjetas
+    .map((tarjeta, indice) => ({ indice, limites: tarjeta.getBoundingClientRect() }))
+    .filter(({ limites }) => limites.right > limitesViewport.left + 1 && limites.left < limitesViewport.right - 1);
+
+  if (!visibles.length) {
+    contador.textContent = 'Sin reportes';
+    anterior.disabled = true;
+    siguiente.disabled = true;
+    return;
+  }
+
+  contador.textContent = `${visibles[0].indice + 1}–${visibles[visibles.length - 1].indice + 1} de ${tarjetas.length}`;
+  anterior.disabled = viewport.scrollLeft <= 1;
+  siguiente.disabled = viewport.scrollLeft + viewport.clientWidth >= viewport.scrollWidth - 1;
+}
+
+function configurarCarruselReportes() {
+  if (carruselReportesConfigurado) return;
+
+  const viewport = document.getElementById('ventanaReportesRecientes');
+  const anterior = document.getElementById('reporteAnterior');
+  const siguiente = document.getElementById('reporteSiguiente');
+  if (!viewport || !anterior || !siguiente) return;
+
+  const desplazar = direccion => {
+    viewport.scrollBy({ left: direccion * viewport.clientWidth, behavior: 'smooth' });
+  };
+
+  anterior.addEventListener('click', () => desplazar(-1));
+  siguiente.addEventListener('click', () => desplazar(1));
+  viewport.addEventListener('scroll', actualizarControlesReportes, { passive: true });
+  window.addEventListener('resize', actualizarControlesReportes);
+  carruselReportesConfigurado = true;
+  actualizarControlesReportes();
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -156,6 +204,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   actualizarBotonHeader();
   inicializarMapaCompacto();
   renderizarReportesRecientes();
+  configurarCarruselReportes();
 
   const btnNuevoReporte = document.getElementById('btnNuevoReporteIndex');
   if (btnNuevoReporte) {

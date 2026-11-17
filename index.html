@@ -145,8 +145,21 @@
         <h2 class="tituloReportesRecientes">Reportes recientes en el barrio</h2>
         <p class="subtituloReportesRecientes">Consulta las incidencias informadas por los vecinos de Ituzaingó</p>
       </div>
-      <div class="grillaReportesRecientes" id="contenedorTarjetasRecientes">
-        <!-- Tarjetas dinámicas generadas desde index.js -->
+      <div class="carruselReportesRecientes">
+        <div class="ventanaReportesRecientes" id="ventanaReportesRecientes" tabindex="0" aria-label="Reportes recientes. Deslizá para ver más reportes">
+          <div class="grillaReportesRecientes" id="contenedorTarjetasRecientes">
+            <!-- Tarjetas dinámicas generadas desde index.js -->
+          </div>
+        </div>
+        <div class="controlesReportesRecientes">
+          <button class="botonNavegacionReportes" id="reporteAnterior" type="button" aria-label="Ver reportes anteriores" disabled>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+          </button>
+          <span class="contadorReportesRecientes" id="contadorReportesRecientes" aria-live="polite"></span>
+          <button class="botonNavegacionReportes" id="reporteSiguiente" type="button" aria-label="Ver reportes siguientes" disabled>
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
     </section>
 
