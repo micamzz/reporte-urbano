@@ -14,7 +14,7 @@
 .contenedorLogo {
   display: flex;
   align-items: center;
-  margin-left: max(0px, calc(5.2vw - 2rem), calc((100% - 1560px) / 2));
+  margin-left: 0;
 }
 
 .enlaceLogo {

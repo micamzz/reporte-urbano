@@ -3,7 +3,9 @@
 }
 
 .contenidoPerfil {
+    width: 100%;
     max-width: 960px;
+    box-sizing: border-box;
     margin: 1.5rem auto 0;
     padding: 0 24px 2rem;
     color: #333333;

@@ -8,11 +8,18 @@
 
 .cuerpoPagina {
   box-sizing: border-box;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
   font-family: 'Montserrat', sans-serif;
   background-color: #f4f6f8;
   color: #333333;
+}
+
+.cuerpoPagina > #contenedorFooter {
+  margin-top: auto;
 }
 
 .color{
