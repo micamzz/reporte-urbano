@@ -16,15 +16,69 @@
   position: absolute;
   top: 20px;
   left: 50%;
-  transform: translateX(-50%);
   z-index: 500;
   display: flex;
-  gap: 0.6rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transform: translateX(-50%);
+}
+
+.botonAbrirFiltros {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 130px;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background-color: rgba(255, 255, 255, 0.96);
+  color: #092553;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.botonAbrirFiltros:hover,
+.botonAbrirFiltros:focus-visible {
+  background-color: #edf6ff;
+}
+
+.panelFiltrosMapa {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: max-content;
+  max-width: min(620px, calc(100vw - 32px));
   background-color: rgba(255, 255, 255, 0.94);
   padding: 0.6rem 1rem;
-  border-radius: 30px;
+  border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(4px);
+}
+
+.panelFiltrosMapa[hidden] {
+  display: none;
+}
+
+.grupoFiltroMapa {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.grupoFiltroEstado {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 0.5rem;
+}
+
+.tituloGrupoFiltro {
+  display: none;
 }
 
 .botonFiltroFlotante {
@@ -78,7 +132,7 @@
 /* BOTÓN REPORTAR UN PROBLEMA (ABAJO EN EL MEDIO) */
 .contenedorCtaInferior {
   position: absolute;
-  bottom: 25px;
+  bottom: 45px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 500;
@@ -168,30 +222,52 @@
     min-height: 480px;
   }
 
-  /* Barra de filtros flotante adaptable y con scroll horizontal suave si no entra */
   .contenedorFiltrosSuperiores {
     top: 12px;
-    left: 12px;
-    right: 12px;
-    transform: none;
-    width: auto;
-    max-width: 100%;
-    padding: 0.6rem 0.75rem;
-    border-radius: 16px;
-    overflow-x: auto;
+    left: 50%;
+    width: calc(100% - 24px);
+    box-sizing: border-box;
+    align-items: center;
+    transform: translateX(-50%);
   }
 
-  /* Permitir que las filas internas hagan wrap o scroll sin desbordar */
-  .contenedorFiltrosSuperiores > div {
-    flex-wrap: wrap;
-    justify-content: center !important;
-    gap: 0.4rem !important;
+  .panelFiltrosMapa {
+    width: 100%;
+    max-width: 420px;
+    padding: 0.75rem;
+  }
+
+  .grupoFiltroMapa {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .tituloGrupoFiltro {
+    display: block;
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 0.4rem;
+    border-radius: 6px;
+    background: #eaf4fa;
+    color: #092553;
+    font-size: 0.75rem;
+    text-align: center;
   }
 
   .botonFiltroFlotante {
-    padding: 0.4rem 0.75rem;
-    font-size: 0.7rem;
-    white-space: nowrap;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    padding: 0.45rem 0.5rem;
+    font-size: 0.68rem;
+    white-space: normal;
+  }
+
+  .grupoFiltroEstado {
+    border-top: 0;
+    padding-top: 0;
   }
 
   /* Mover el botón de bajar al footer para que no pise los filtros ni el zoom */
@@ -205,7 +281,7 @@
 
   /* Botón principal de reportar adaptado al ancho móvil */
   .contenedorCtaInferior {
-    bottom: 16px;
+    bottom: 32px;
     left: 16px;
     right: 16px;
     transform: none;

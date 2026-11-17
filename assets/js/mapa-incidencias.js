@@ -107,21 +107,47 @@ function renderizarMapaIncidencias() {
 function vincularEventosMapa() {
   const botonesCat = document.querySelectorAll('#filtrosCategoria .botonFiltroFlotante');
   const botonesEst = document.querySelectorAll('#filtrosEstado .botonFiltroFlotante');
+  const contenedorFiltros = document.querySelector('.contenedorFiltrosSuperiores');
+  const botonAbrirFiltros = document.querySelector('.botonAbrirFiltros');
+  const panelFiltros = document.getElementById('panelFiltrosMapa');
+
+  if (contenedorFiltros && botonAbrirFiltros && panelFiltros) {
+    const cerrarFiltros = () => {
+      panelFiltros.hidden = true;
+      botonAbrirFiltros.setAttribute('aria-expanded', 'false');
+    };
+
+    botonAbrirFiltros.addEventListener('click', () => {
+      panelFiltros.hidden = !panelFiltros.hidden;
+      botonAbrirFiltros.setAttribute('aria-expanded', String(!panelFiltros.hidden));
+    });
+
+    document.addEventListener('click', evento => {
+      if (!contenedorFiltros.contains(evento.target)) cerrarFiltros();
+    });
+
+    document.addEventListener('keydown', evento => {
+      if (evento.key === 'Escape' && !panelFiltros.hidden) {
+        cerrarFiltros();
+        botonAbrirFiltros.focus();
+      }
+    });
+  }
 
   botonesCat.forEach(boton => {
-    boton.addEventListener('click', (e) => {
+    boton.addEventListener('click', (evento) => {
       botonesCat.forEach(b => b.classList.remove('filtroActivo'));
-      e.target.classList.add('filtroActivo');
-      filtroCat = e.target.dataset.categoria || 'todos';
+      evento.currentTarget.classList.add('filtroActivo');
+      filtroCat = evento.currentTarget.dataset.categoria || 'todos';
       renderizarMapaIncidencias();
     });
   });
 
   botonesEst.forEach(boton => {
-    boton.addEventListener('click', (e) => {
+    boton.addEventListener('click', (evento) => {
       botonesEst.forEach(b => b.classList.remove('filtroActivo', 'estadoActivo'));
-      e.target.classList.add('filtroActivo', 'estadoActivo');
-      filtroEst = e.target.dataset.estado || 'todos';
+      evento.currentTarget.classList.add('filtroActivo', 'estadoActivo');
+      filtroEst = evento.currentTarget.dataset.estado || 'todos';
       renderizarMapaIncidencias();
     });
   });

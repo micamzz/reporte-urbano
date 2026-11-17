@@ -23,24 +23,30 @@
   <!-- PANTALLA DE MAPA INTERACTIVO -->
   <main class="seccionMapaGrande">
     
-    <!-- FILTROS POR CATEGORÍA EN LA PARTE SUPERIOR -->
-    <div class="contenedorFiltrosSuperiores" style="flex-direction: column; align-items: center; gap: 0.5rem; padding: 0.8rem 1.2rem;">
-  <!-- Filtro Categoría -->
-  <div style="display: flex; gap: 0.5rem;" id="filtrosCategoria">
-    <button class="botonFiltroFlotante filtroActivo" data-categoria="todos">Todos (<span id="totalReportes">0</span>)</button>
-    <button class="botonFiltroFlotante" data-categoria="bache">Baches</button>
-    <button class="botonFiltroFlotante" data-categoria="luminaria">Luminarias</button>
-    <button class="botonFiltroFlotante" data-categoria="arbolado">Arbolado</button>
-    <button class="botonFiltroFlotante" data-categoria="transito">Tránsito</button>
-  </div>
-  <!-- Filtro Estado (Cruzado) -->
-  <div style="display: flex; gap: 0.5rem; border-top: 1px solid #e2e8f0; padding-top: 0.5rem; width: 100%; justify-content: center;" id="filtrosEstado">
-    <button class="botonFiltroFlotante filtroActivo" data-estado="todos">Cualquier estado</button>
-    <button class="botonFiltroFlotante" data-estado="reportado" style="color: #ef4444; border-color: #fca5a5;">Pendientes</button>
-    <button class="botonFiltroFlotante" data-estado="en_proceso" style="color: #f59e0b; border-color: #fcd34d;">En proceso</button>
-    <button class="botonFiltroFlotante" data-estado="finalizado" style="color: #10b981; border-color: #6ee7b7;">Resueltos</button>
-  </div>
-</div>
+    <!-- FILTROS POR CATEGORÍA Y ESTADO -->
+    <div class="contenedorFiltrosSuperiores">
+      <button class="botonAbrirFiltros" type="button" aria-expanded="false" aria-controls="panelFiltrosMapa">
+        <i class="fa fa-filter" aria-hidden="true"></i>
+        Filtros
+      </button>
+      <div class="panelFiltrosMapa" id="panelFiltrosMapa" hidden>
+        <div class="grupoFiltroMapa" id="filtrosCategoria">
+          <h2 class="tituloGrupoFiltro">Tipo</h2>
+          <button class="botonFiltroFlotante filtroActivo" data-categoria="todos">Todos (<span id="totalReportes">0</span>)</button>
+          <button class="botonFiltroFlotante" data-categoria="bache">Baches</button>
+          <button class="botonFiltroFlotante" data-categoria="luminaria">Luminarias</button>
+          <button class="botonFiltroFlotante" data-categoria="arbolado">Arbolado</button>
+          <button class="botonFiltroFlotante" data-categoria="transito">Tránsito</button>
+        </div>
+        <div class="grupoFiltroMapa grupoFiltroEstado" id="filtrosEstado">
+          <h2 class="tituloGrupoFiltro">Estado</h2>
+          <button class="botonFiltroFlotante filtroActivo" data-estado="todos">Cualquier estado</button>
+          <button class="botonFiltroFlotante" data-estado="reportado" style="color: #ef4444; border-color: #fca5a5;">Pendientes</button>
+          <button class="botonFiltroFlotante" data-estado="en_proceso" style="color: #f59e0b; border-color: #fcd34d;">En proceso</button>
+          <button class="botonFiltroFlotante" data-estado="finalizado" style="color: #10b981; border-color: #6ee7b7;">Resueltos</button>
+        </div>
+      </div>
+    </div>
 
     <!-- BOTÓN IR AL FOOTER (ARRIBA A LA DERECHA) -->
     <button class="botonIrAlFooter" onclick="document.getElementById('contenedorFooter').scrollIntoView({ behavior: 'smooth' })" title="Ir al footer">
