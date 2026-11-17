@@ -1,4 +1,5 @@
 import { obtenerReportes, textoSeguro, imagenSegura } from './reportes.js';
+import { actualizarApoyos, resumenApoyos } from './apoyos-ui.js';
 import { configurarEnlacesReporte } from './acceso-reporte.js';
 
 configurarEnlacesReporte();
@@ -99,8 +100,15 @@ function renderizarMapaIncidencias() {
         <a href="/pages/detalle-incidencia.html?id=${encodeURIComponent(reporte.id)}&origen=mapa" class="botonVerDetallePopup">
           Ver detalle completo →
         </a>
+        <div class="accionesApoyoPopup">
+          ${reporte.estado === 'finalizado' ? resumenApoyos(reporte) : `<button type="button" class="botonAfectado" data-apoyo-id="${textoSeguro(reporte.id)}" aria-pressed="false">
+            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> <span data-etiqueta-apoyo>A mí también me afecta</span> (<span data-total-apoyos>0</span>)
+          </button>`}
+          <p data-error-apoyo role="status"></p>
+        </div>
       </div>
     `);
+    marcador.on('popupopen', actualizarApoyos);
   });
 }
 
